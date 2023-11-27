@@ -4,8 +4,9 @@ import Profile from './pages/Profile'
 import Cart from './pages/Cart'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
-import Navbar from './components/Navbar'
-import Container from './UI/Container'
+import Navbar from './ui/Navbar'
+import Container from './ui/Container'
+import Footer from './ui/Footer'
 
 function App() {
    return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/signup' element={<SignUp />} />
             <Route path='*' element={<div>Not found</div>} />
          </Routes>
+         <Footer />
       </Container>
    )
 }
