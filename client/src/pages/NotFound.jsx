@@ -1,5 +1,3 @@
-import Button from "../ui/Button"
-
 function NotFound() {
   return (<>
    <div className="bg-gray-100">
