@@ -4,7 +4,7 @@ function connectDb(cb) {
    mongoose
       .connect(process.env.DB_URI)
       .then(cb)
-      .catch(err => console.err(err))
+      .catch(err => console.error(err))
 }
 
 module.exports = connectDb

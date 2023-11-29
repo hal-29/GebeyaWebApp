@@ -1,6 +1,6 @@
 function Ads() {
    return (
-      <section className='py-4'>
+      <section className='p-2  max-w-6xl mx-auto'>
          <div className='flex justify-between border-b-2 py-3'>
             <h2 className='prose text-3xl border-primary'>
                Top

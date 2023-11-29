@@ -2,7 +2,7 @@ import CatagoryItem from './CatagoryItem'
 
 function Catagories() {
    return (
-      <section className='py-4'>
+      <section className='p-2 max-w-6xl mx-auto'>
          <div className='flex justify-between border-b-2 py-3'>
             <h2 className='prose text-3xl border-primary'>
                Shop from
@@ -13,9 +13,9 @@ function Catagories() {
                <span className='fa-angle-right fa-solid'></span>
             </div>
          </div>
-         <div className='flex py-4  gap-6'>
+         <div className='flex py-4 justify-center  gap-6'>
             <CatagoryItem
-               label='Mobiles'
+               label='Mobiles'   
                img='https://images.unsplash.com/photo-1605404771292-1b900467c5e8?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdoaXRlJTIwaXBob25lJTIwMTF8ZW58MHx8MHx8fDA%3D'
             />
             <CatagoryItem

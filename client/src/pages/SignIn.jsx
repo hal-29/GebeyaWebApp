@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom'
 import LoginForm from '../features/auth/LoginForm'
 
 function SignIn() {
    return (
-      <div>
+      <div className='min-h-[90vh]'>
          <LoginForm />
       </div>
    )

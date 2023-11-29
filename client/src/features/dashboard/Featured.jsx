@@ -2,7 +2,7 @@ import Card from './Card'
 
 function Featured() {
    return (
-      <section>
+      <section className='p-2 max-w-6xl mx-auto'>
          <div className='flex justify-between border-b-2 items-end py-2'>
             <h2 className='prose text-3xl border-primary'>
                Grab the best deal on

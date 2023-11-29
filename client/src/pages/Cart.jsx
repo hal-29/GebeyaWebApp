@@ -1,7 +1,9 @@
-import React from 'react'
+import Checkout from "../features/cart/Checkout"
 
 function Cart() {
-   return <main className='min-h-screen'>Cart</main>
+   return <main className='min-h-screen p-1'>
+     <Checkout />
+   </main>
 }
 
 export default Cart
