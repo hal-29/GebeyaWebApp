@@ -9,19 +9,32 @@ import Container from './ui/Container'
 import Footer from './ui/Footer'
 import Product from './pages/Product'
 import NotFound from './pages/NotFound'
+import SideNav from './ui/SideNav'
+import About from './features/profile/About'
+import Wishlist from './features/profile/Wishlist'
+import Orders from './features/profile/Orders'
+import Records from './features/profile/Records'
+import Update from './features/profile/Update'
 
 function App() {
    return (
       <Container>
+         <SideNav />
          <Navbar />
          <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile' element={<Profile />}>
+               <Route index element={<About />} />
+               <Route path='wishlist' element={<Wishlist />} />
+               <Route path='orders' element={<Orders />} />
+               <Route path='records' element={<Records />} />
+               <Route path='update' element={<Update />} />
+            </Route>
             <Route path='/cart' element={<Cart />} />
-            <Route path='/item/:id' element={<Product />} />
+            <Route path='/product' element={<Product />} />
             <Route path='/signin' element={<SignIn />} />
             <Route path='/signup' element={<SignUp />} />
-            <Route path='*' element={<NotFound/>} />
+            <Route path='*' element={<NotFound />} />
          </Routes>
          <Footer />
       </Container>

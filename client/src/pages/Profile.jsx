@@ -1,7 +1,11 @@
-import React from 'react'
+import ProfileItem from '../features/profile/ProfileItem'
 
 function Profile() {
-   return <div>Profile</div>
+   return (
+      <main className='min-h-[90vh] py-4 px-1 flex'>
+         <ProfileItem />
+      </main>
+   )
 }
 
 export default Profile
