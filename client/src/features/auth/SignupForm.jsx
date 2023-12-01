@@ -1,28 +1,23 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { useFormic } from 'formic'
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
 
 function SignupForm() {
-   const submitHanlder = async e => {
-      e.preventDefault()
-      const form = new FormData(e.target)
-      const formData = {}
-      for (let [name, value] of form) {
-         formData[name] = value
-      }
+   const formic = useFormic({
+      initialValues: {
+         name: '',
+         email: '',
+         password: '',
+         cpassword: '',
+      },
+      onSubmit: values => {
+         console.log(values)
+      },
+   })
 
-      try {
-         const res = await axios.post(
-            'http://localhost:5000/api/auth/signup',
-            formData
-         )
-         console.log(res)
-      } catch (error) {
-         console.log(error)
-      }
-   }
+   // const dispatch = useDispatch()
 
    return (
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8'>
@@ -33,36 +28,39 @@ function SignupForm() {
          </div>
 
          <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-            <form
-               className='space-y-6'
-               action='#'
-               method='POST'
-               onSubmit={submitHanlder}
-            >
+            <form className='space-y-6' onSubmit={formic.handleSubmit}>
                <Input
-                  id='name'
                   label='Full Name'
                   name='name'
                   placeholder='John Doe'
+                  value={formic.values.name}
+                  onChange={formic.handleChange}
+                  onBlur={formic.handleBlur}
                />
                <Input
-                  id='email'
                   label='Email Address'
                   name='email'
                   type='email'
                   placeholder='e.g, john@email.com'
+                  value={formic.values.email}
+                  onChange={formic.handleChange}
+                  onBlur={formic.handleBlur}
                />
                <Input
-                  id='password'
                   label='Password'
                   name='password'
                   type='password'
+                  value={formic.values.password}
+                  onChange={formic.handleChange}
+                  onBlur={formic.handleBlur}
                />
                <Input
-                  id='cpassword'
                   label='Confirm Password'
                   name='cpassword'
                   type='password'
+                  value={formic.values.cpassword}
+                  onChange={formic.handleChange}
+                  onBlur={formic.handleBlur}
                />
 
                <Button type='submit' label={'Create My Account'} />
