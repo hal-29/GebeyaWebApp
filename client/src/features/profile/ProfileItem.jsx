@@ -1,6 +1,10 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function ProfileItem() {
+   const account = useSelector(store => store.auth.account)
+
+   if (!account) return <div>You need to sign in first!</div>
    return (
       <div className='max-w-6xl grow rounded-xl overflow-hidden border mx-auto flex'>
          <div className='bg-gray-700 p-6'>
@@ -13,7 +17,9 @@ function ProfileItem() {
                         alt='user'
                      />
                   </div>
-                  <h2 className='text-xl font-bold text-gray-100'>Jane Doe</h2>
+                  <h2 className='text-xl font-bold text-gray-100'>
+                     {account.name}
+                  </h2>
                </div>
                <NavLink
                   to=''

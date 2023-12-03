@@ -4,7 +4,7 @@ import { openNav } from '../navSlice'
 
 function Navbar() {
    const dispatch = useDispatch()
-   const account = useSelector(store => store.account)
+   const account = useSelector(store => store.auth.account)
 
    return (
       <nav className=' fixed top-0 left-0 px-4 w-full backdrop-blur shadow-sm z-[1000] bg-gray-200/50'>
