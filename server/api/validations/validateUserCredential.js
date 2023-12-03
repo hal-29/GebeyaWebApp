@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
       !emailRegex.test(email) ||
       !passwordRegex.test(password)
    )
-      return next(ERRORS.INVALID_CREDIENTIAL)
+      return next(ERRORS.BAD_REQUEST)
 
    next()
 }

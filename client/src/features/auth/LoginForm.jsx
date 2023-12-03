@@ -1,8 +1,52 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
+import { login } from './authSlice'
 
 function LoginForm() {
+   const { loading, account, error } = useSelector(store => store.auth)
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+
+   const formik = useFormik({
+      initialValues: {
+         email: '',
+         password: '',
+      },
+      validationSchema: Yup.object({
+         email: Yup.string()
+            .email('Invalid email address')
+            .required('Required'),
+         password: Yup.string().required('Required'),
+      }),
+      onSubmit: values => {
+         dispatch(login(values))
+      },
+   })
+
+   useEffect(() => {
+      if (account) {
+         navigate('/', {
+            replace: true,
+            state: {
+               toast: { message: 'Successfully Logged In!', type: 'success' },
+            },
+         })
+      }
+   }, [account, navigate])
+
+   useEffect(() => {
+      if (error) {
+         toast(error)
+      }
+   }, [error])
+
    return (
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 '>
          <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
@@ -17,22 +61,32 @@ function LoginForm() {
          </div>
 
          <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm '>
-            <form className='space-y-6' action='#' method='POST'>
+            <form className='space-y-6' onSubmit={formik.handleSubmit}>
                <Input
                   label='Email Address'
                   name='email'
                   placeholder='your email'
                   type='email'
-                  id='email'
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.email && formik.errors.email}
                />
                <Input
                   label='Password'
                   name='password'
                   type='password'
-                  id='password'
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password && formik.errors.password}
                />
 
-               <Button label='Sign in' />
+               <Button
+                  type='submit'
+                  loading={loading}
+                  label={loading ? 'Signing in...' : 'Sign in'}
+               />
             </form>
 
             <p className='mt-10 text-center text-sm text-gray-500'>
@@ -48,4 +102,5 @@ function LoginForm() {
       </div>
    )
 }
+
 export default LoginForm

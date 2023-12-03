@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema(
    {
@@ -27,17 +27,6 @@ userSchema.pre('save', async function (next) {
    this.password = await bcrypt.hash(this.password, 10)
    return next()
 })
-
-userSchema.statics.login = async function ({ email, password }) {
-   const user = await this.findOne({ email })
-   if (!user) throw new Error('User not found')
-
-   const isPasswordValid = await bcrypt.compare(password, user.password)
-   if (!isPasswordValid) throw new Error('Inavlid credentials')
-
-   user.password = undefined
-   return user
-}
 
 const User = mongoose.model('User', userSchema)
 module.exports = User

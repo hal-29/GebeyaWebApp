@@ -1,5 +1,5 @@
 function handleErrors(err, req, res, next) {
-   console.log(err)
+   console.trace('mdwr -->', err)
    res.status(500).json(err)
 }
 

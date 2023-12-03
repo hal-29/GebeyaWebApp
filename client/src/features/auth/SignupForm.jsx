@@ -50,7 +50,7 @@ function SignupForm() {
          navigate('/', {
             replace: true,
             state: {
-               toast: { message: 'Successfully Logged In!', type: 'success' },
+               toast: { message: 'Successfully Created!', type: 'success' },
             },
          })
       }

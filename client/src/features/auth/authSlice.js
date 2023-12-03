@@ -3,10 +3,10 @@ import api from '../../services/api'
 
 const initialState = {
    account: null,
-   loggedIn: false,
    loading: false,
    error: null,
 }
+
 const authSlice = createSlice({
    name: 'auth',
    initialState,
@@ -38,9 +38,32 @@ const authSlice = createSlice({
    },
 })
 
-export const { login, logout, update } = authSlice.actions
+export const { update } = authSlice.actions
 
 export default authSlice.reducer
+
+export const login = credential => {
+   return async function (dispatch, getStore) {
+      try {
+         dispatch({ type: 'auth/startLoading' })
+         console.log(credential)
+         const response = await api.post('auth/login', credential)
+         dispatch({ type: 'auth/login', payload: response.account })
+      } catch (error) {
+         console.log(error)
+         dispatch({ type: 'auth/startError', payload: error.message })
+      } finally {
+         dispatch({ type: 'auth/stopLoading' })
+      }
+   }
+}
+
+export const logout = () => {
+   return async function (dispatch, getStore) {
+      await api.get('auth/logout')
+      dispatch({ type: 'auth/logout' })
+   }
+}
 
 export const signup = credential => {
    return async function (dispatch, getStore) {
@@ -49,7 +72,7 @@ export const signup = credential => {
          const response = await api.post('auth/signup', credential)
 
          // Assuming the response contains the account information
-         dispatch(login(response.account)) // Assuming you have a login action to set the account
+         dispatch({ type: 'auth/signup', payload: response.account }) // Assuming you have a login action to set the account
 
          console.log(response)
       } catch (error) {

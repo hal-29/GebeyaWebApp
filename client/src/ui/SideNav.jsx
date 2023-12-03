@@ -2,9 +2,11 @@ import { NavLink } from 'react-router-dom'
 import Button from './Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeNav } from '../navSlice'
+import { logout } from '../features/auth/authSlice'
 
 function SideNav() {
    const isNavOpened = useSelector(store => store.navbar.isNavOpened)
+   const account = useSelector(store => store.auth.account)
    const dispatch = useDispatch()
 
    return (
@@ -33,7 +35,9 @@ function SideNav() {
                Profile
             </NavLink>
 
-            <Button label='Logout' />
+            {account && (
+               <Button label='Logout' onClick={() => dispatch(logout())} />
+            )}
          </ul>
       </aside>
    )
