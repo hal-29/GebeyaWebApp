@@ -1,6 +1,20 @@
-const { Router } = require('express')
-const router = Router()
+const express = require('express')
+const router = express.Router()
+const {
+   createProduct,
+   getAllProducts,
+   getProductById,
+   updateProductById,
+   deleteProductById,
+   bestDealSmartphones,
+} = require('../controllers/product.controller') // Adjust the path based on your project structure
 
-router.get('/', (req, res) => res.send('product'))
+router.post('/', createProduct)
+router.get('/', getAllProducts)
+router.get('/phones', bestDealSmartphones)
+
+router.get('/:productId', getProductById)
+router.put('/:productId', updateProductById)
+router.delete('/:productId', deleteProductById)
 
 module.exports = router

@@ -8,10 +8,31 @@ const userSchema = new mongoose.Schema(
          type: String,
          required: true,
          unique: true,
-         match: /^\S+@\S+\.\S+$/,
       },
       password: { type: String, required: true },
-      avatar: String,
+      avatar: { type: String },
+      contact: { type: String },
+      address: { type: String },
+      wishlists: [
+         {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product',
+         },
+      ],
+
+      purchasedItems: [
+         {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product',
+         },
+      ],
+
+      orderedItems: [
+         {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product',
+         },
+      ],
    },
    {
       versionKey: false,

@@ -1,47 +1,29 @@
 import { useEffect, useState } from 'react'
-import axios from '../config/axios-config'
+import api from '../services/api'
 
-function useFetch({
-   url,
-   method = 'get',
-   payload = {},
-   contentType = 'application/json',
-   headers: customHeaders = {},
-}) {
+function useFetch({ url, method = 'get', payload = {} }) {
    const [data, setData] = useState(null)
    const [loading, setLoading] = useState(false)
    const [error, setError] = useState(null)
 
    useEffect(() => {
       let isMounted = true
-      const source = axios.CancelToken.source()
-
       async function makeRequest() {
          try {
             setLoading(true)
-            const response = await axios[method](
-               url,
-               {
-                  ...payload,
-                  cancelToken: source.token,
-               },
-               {
-                  headers: {
-                     'Content-Type': contentType,
-                     ...customHeaders,
-                  },
-               }
-            )
+
+            let response = {}
+            if (method === 'get') {
+               response = await api.get(url)
+            } else if (method === 'post') {
+               response = await api.post(url, payload)
+            }
 
             if (isMounted) {
                setData(response.data)
             }
          } catch (err) {
-            if (axios.isCancel(err)) {
-               console.error('Request canceled', err.message)
-            } else {
-               setError(err)
-            }
+            setError(err)
          } finally {
             if (isMounted) {
                setLoading(false)
@@ -54,9 +36,8 @@ function useFetch({
       // Cleanup function to cancel the request on unmount
       return () => {
          isMounted = false
-         source.cancel('Request canceled on component unmount.')
       }
-   }, [url, method, payload, contentType, customHeaders])
+   }, [url, method, payload])
 
    return { data, loading, error }
 }

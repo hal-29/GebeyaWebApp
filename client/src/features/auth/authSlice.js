@@ -46,11 +46,10 @@ export const login = credential => {
    return async function (dispatch, getStore) {
       try {
          dispatch({ type: 'auth/startLoading' })
-         console.log(credential)
          const response = await api.post('auth/login', credential)
          dispatch({ type: 'auth/login', payload: response.account })
       } catch (error) {
-         console.log(error)
+         console.error(error)
          dispatch({ type: 'auth/startError', payload: error.message })
       } finally {
          dispatch({ type: 'auth/stopLoading' })

@@ -1,6 +1,13 @@
+import useFetch from '../../hooks/useFetch'
 import Card from './Card'
 
 function Featured() {
+   // const { data, loading, error } = useFetch({ url: 'product/phones' })
+
+   // if (loading) {
+   //    return <section className='text-5xl'>Loading...</section>
+   // }
+
    return (
       <section className='p-2 max-w-6xl mx-auto'>
          <div className='flex justify-between border-b-2 items-end py-2'>

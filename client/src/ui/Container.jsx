@@ -1,10 +1,6 @@
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-
 function Container({ children }) {
    return (
-      <div className='flex flex-col mx-auto min-h-screen relative pt-16'>
-         <ToastContainer />
+      <div className='grid grid-cols-[14rem_1fr] grid-rows-[min-content_1fr_min-content] min-h-screen'>
          {children}
       </div>
    )

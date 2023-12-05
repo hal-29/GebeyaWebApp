@@ -47,7 +47,7 @@ async function loginUser(req, res, next) {
 
 async function logoutUser(req, res, next) {
    res.clearCookie('jwt')
-   res.send(200).json({ message: 'logout successful' })
+   res.send(204).json({ message: 'logout successful' })
 }
 
 module.exports = {

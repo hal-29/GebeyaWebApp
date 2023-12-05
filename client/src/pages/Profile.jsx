@@ -1,11 +1,12 @@
-import ProfileItem from '../features/profile/ProfileItem'
+import { Outlet } from 'react-router-dom'
+import About from '../features/profile/About'
 
 function Profile() {
    return (
-      <main className='min-h-[90vh] py-4 px-1 flex'>
-         <ProfileItem />
-      </main>
+      <>
+         <About />
+         <Outlet />
+      </>
    )
 }
-
 export default Profile

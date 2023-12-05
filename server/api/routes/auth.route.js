@@ -10,6 +10,6 @@ const router = Router()
 
 router.post('/login', loginUser)
 router.post('/signup', validateUserCrediential, createUser)
-router.get('./logout', logoutUser)
+router.get('/logout', logoutUser)
 
 module.exports = router
