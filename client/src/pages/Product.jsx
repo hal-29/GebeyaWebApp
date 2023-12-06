@@ -1,6 +1,6 @@
+import ProductsList from "../features/products/ProductsList"
+
 function Product() {
-  return (
-    <div>Product</div>
-  )
+   return <ProductsList />
 }
 export default Product

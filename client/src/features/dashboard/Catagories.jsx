@@ -8,14 +8,14 @@ function Catagories() {
                Shop from
                <span className='text-primary'> Top Catagories</span>
             </h2>
-            <div className='btn btn-sm btn-ghost rounded-full'>
+            {/* <div className='btn btn-sm btn-ghost rounded-full'>
                View All
                <span className='fa-angle-right fa-solid'></span>
-            </div>
+            </div> */}
          </div>
-         <div className='flex py-4 justify-center  gap-6'>
+         <div className='overflow-x-auto whitespace-nowrap min-w-full'>
             <CatagoryItem
-               label='Mobiles'   
+               label='Mobiles'
                img='https://images.unsplash.com/photo-1605404771292-1b900467c5e8?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdoaXRlJTIwaXBob25lJTIwMTF8ZW58MHx8MHx8fDA%3D'
             />
             <CatagoryItem

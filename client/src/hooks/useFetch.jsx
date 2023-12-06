@@ -7,7 +7,6 @@ function useFetch({ url, method = 'get', payload = {} }) {
    const [error, setError] = useState(null)
 
    useEffect(() => {
-      let isMounted = true
       async function makeRequest() {
          try {
             setLoading(true)
@@ -19,24 +18,15 @@ function useFetch({ url, method = 'get', payload = {} }) {
                response = await api.post(url, payload)
             }
 
-            if (isMounted) {
-               setData(response.data)
-            }
+            setData(response.data)
          } catch (err) {
             setError(err)
          } finally {
-            if (isMounted) {
-               setLoading(false)
-            }
+            setLoading(false)
          }
       }
 
       makeRequest()
-
-      // Cleanup function to cancel the request on unmount
-      return () => {
-         isMounted = false
-      }
    }, [url, method, payload])
 
    return { data, loading, error }

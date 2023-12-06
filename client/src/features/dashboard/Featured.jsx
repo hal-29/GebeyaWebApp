@@ -1,13 +1,20 @@
-import useFetch from '../../hooks/useFetch'
+import { useDispatch, useSelector } from 'react-redux'
 import Card from './Card'
+import { fetchPhones } from './homeSlice'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 function Featured() {
-   // const { data, loading, error } = useFetch({ url: 'product/phones' })
+   const { phones, loading } = useSelector(store => store.home)
+   const dispatch = useDispatch()
 
-   // if (loading) {
-   //    return <section className='text-5xl'>Loading...</section>
-   // }
+   useEffect(() => {
+      dispatch(fetchPhones(10))
+   }, [dispatch])
 
+   if (loading) {
+      return <div className='text-5xl'>Loading...</div>
+   }
    return (
       <section className='p-2 max-w-6xl mx-auto'>
          <div className='flex justify-between border-b-2 items-end py-2'>
@@ -15,19 +22,18 @@ function Featured() {
                Grab the best deal on
                <span className='text-primary'> Smartphones</span>
             </h2>
-            <div className='btn btn-sm btn-ghost rounded-full'>
+            <Link
+               to={`product?category=mobiles`}
+               className='btn btn-sm btn-ghost rounded-full'
+            >
                View All
                <span className='fa-angle-right fa-solid'></span>
-            </div>
+            </Link>
          </div>
-         <div className='flex py-4 gap-4'>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+         <div className='flex py-4 gap-4 overflow-x-auto'>
+            {phones.map(phone => {
+               return <Card key={phone._id} phone={phone} />
+            })}
          </div>
       </section>
    )

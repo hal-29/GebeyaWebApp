@@ -47,7 +47,7 @@ async function bestDealSmartphones(req, res, next) {
          $sort: { ratingToPriceRatio: -1 },
       },
       {
-         $limit: limit,
+         $limit: Number(limit),
       },
    ])
    res.status(200).json(smartphones)
