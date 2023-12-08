@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom'
 
-function Card({ phone }) {
-   const { name, images, rating, price, _id } = phone
+function Card({ product }) {
+   const { name, images, rating, price, id } = product
    return (
       <div className='flex flex-col bg-gray-100/70 border shadow-md rounded-lg max-w-sm max-h-[20rem]'>
-         <Link
-            to={`product/${_id}`}
-            className='basis-2/3 h-32 overflow-hidden '
-         >
+         <Link to={`/product/${id}`} className='basis-2/3 h-32 overflow-hidden '>
             <img
                className='rounded-t-lg p-3 bg-trans  w-full h-full object-cover '
                src={images[0]}

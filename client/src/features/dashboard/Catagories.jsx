@@ -15,7 +15,7 @@ function Catagories() {
          </div>
          <div className='overflow-x-auto whitespace-nowrap min-w-full'>
             <CatagoryItem
-               category='mobile'
+               category='phone'
                label='Mobiles'
                img='https://images.unsplash.com/photo-1605404771292-1b900467c5e8?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdoaXRlJTIwaXBob25lJTIwMTF8ZW58MHx8MHx8fDA%3D'
             />
@@ -30,8 +30,8 @@ function Catagories() {
                img='https://i.ebayimg.com/images/g/lH0AAOSwJfhj6s6x/s-l1200.jpg'
             />
             <CatagoryItem
-               category='airpod'
-               label='Airpods'
+               category='earpod'
+               label='Earpods'
                img='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-Y9chYaOBUVSIgDUp8G8MTAb7rgH3GTUudQ&usqp=CAU'
             />
             <CatagoryItem

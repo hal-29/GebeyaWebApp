@@ -31,7 +31,6 @@ async function getAllProducts(req, res, next) {
 async function bestDealSmartphones(req, res, next) {
    const query = req.query
    const limit = query.limit || 7
-
    const smartphones = await Product.aggregate([
       {
          $match: {
@@ -50,7 +49,15 @@ async function bestDealSmartphones(req, res, next) {
          $limit: Number(limit),
       },
    ])
-   res.status(200).json(smartphones)
+   const prepared = smartphones.map(phone => {
+      return {
+         ...phone,
+         id: phone._id,
+         _id: undefined,
+         ratingToPriceRatio: undefined,
+      }
+   })
+   res.status(200).json(prepared)
 }
 
 // Get a specific product by ID

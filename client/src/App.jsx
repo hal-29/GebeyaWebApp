@@ -15,6 +15,7 @@ import Wishlists from './pages/Wishlists'
 import Orders from './pages/Orders'
 import Records from './pages/Records'
 import Update from './features/profile/Update'
+import ProductDetails from './features/products/ProductDetails'
 
 function App() {
    return (
@@ -32,7 +33,7 @@ function App() {
                <Route path='/records' element={<Records />} />
                <Route path='/cart' element={<Cart />} />
                <Route path='/product' element={<Product />} />
-               <Route path='/product/:productId' element={<Product />} />
+               <Route path='/product/:productId' element={<ProductDetails />} />
                <Route path='/signin' element={<SignIn />} />
                <Route path='/signup' element={<SignUp />} />
                <Route path='*' element={<NotFound />} />

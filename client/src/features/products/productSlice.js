@@ -3,6 +3,7 @@ import api from '../../services/api'
 
 const initialState = {
    products: {},
+   items: {},
    loading: false,
 }
 
@@ -16,18 +17,37 @@ const productSlice = createSlice({
       setLoading: (state, action) => {
          state.loading = action.payload
       },
+      setProductItem: (state, action) => {
+         state.items[action.payload.id] = action.payload.item
+      },
    },
 })
 
-export const { setProducts, setLoading } = productSlice.actions
+export const { setProducts, setLoading, setProductItem } = productSlice.actions
 export default productSlice.reducer
 
-export function fetchProducts(query) {
-   return async dispatch => {
+export function loadProduct(id) {
+   return async (dispatch, getStore) => {
+      if (getStore().product.items[id]) return
       try {
          dispatch(setLoading(true))
-         const response = await api.get(`product${query}`)
-         response.length && dispatch(setProducts(response))
+         const response = await api.get(`product/${id}`)
+         response.id && dispatch(setProductItem({ id, item: response }))
+      } catch (error) {
+         console.error(error)
+      } finally {
+         dispatch(setLoading(false))
+      }
+   }
+}
+
+export function fetchProducts(query) {
+   return async (dispatch, getStore) => {
+      if (getStore().product.products[query]) return
+      try {
+         dispatch(setLoading(true))
+         const response = await api.get(`product${query}&limit=20`)
+         response.length && dispatch(setProducts({ query, products: response }))
       } catch (error) {
          console.error(error)
       } finally {
