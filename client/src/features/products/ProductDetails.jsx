@@ -23,9 +23,9 @@ function ProductDetails() {
    if (loading) return <h2 className='text-4xl'>Loading...</h2>
    if (!product) return <h2 className='text-4xl'>Somethig went wrong...</h2>
    return (
-      <section className='flex gap-4 p-4'>
+      <section className='flex gap-4 p-4 h-full'>
          <div className='basis-1/2 shrink-0 flex flex-col justify-between '>
-            <div className='aspect-square overflow-hidden'>
+            <div className='grow overflow-hidden'>
                {product && product.images && (
                   <img
                      src={product.images[activePhoto]}
@@ -34,7 +34,7 @@ function ProductDetails() {
                   />
                )}
             </div>
-            <div className='overflow-x-auto whitespace-nowrap min-w-full'>
+            <div className=' shrink-0 overflow-x-auto whitespace-nowrap min-w-full'>
                {product &&
                   product.images &&
                   product.images.map((img, i) => {

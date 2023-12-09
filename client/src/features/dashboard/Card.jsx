@@ -1,10 +1,19 @@
+/* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, removeCartItem } from '../cart/cartSlice'
 
 function Card({ product }) {
+   const dispatch = useDispatch()
+   const { cartItems } = useSelector(store => store.cart)
+
    const { name, images, rating, price, id } = product
    return (
       <div className='flex flex-col bg-gray-100/70 border shadow-md rounded-lg max-w-sm max-h-[20rem]'>
-         <Link to={`/product/${id}`} className='basis-2/3 h-32 overflow-hidden '>
+         <Link
+            to={`/product/${id}`}
+            className='basis-2/3 h-32 overflow-hidden '
+         >
             <img
                className='rounded-t-lg p-3 bg-trans  w-full h-full object-cover '
                src={images[0]}
@@ -61,10 +70,24 @@ function Card({ product }) {
                </span>
             </div>
             <div className='flex items-center justify-between'>
-               <span className=' font-bold text-gray-900 '>{`$${price}`}</span>
-               <span className='text-white text-xs bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded px-2 py-1 text-center '>
-                  Add to cart
-               </span>
+               <span className=' font-bold text-gray-900 '>{`$${Number(
+                  price
+               ).toFixed(2)}`}</span>
+               {!cartItems.find(item => item.id === id) ? (
+                  <span
+                     onClick={() => dispatch(addToCart(product))}
+                     className='cursor-pointer text-white text-xs bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded px-2 py-1 text-center '
+                  >
+                     Add to cart
+                  </span>
+               ) : (
+                  <span
+                     onClick={() => dispatch(removeCartItem(id))}
+                     className='cursor-pointer text-white text-xs bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded px-2 py-1 text-center '
+                  >
+                     Remove item
+                  </span>
+               )}
             </div>
          </div>
       </div>
