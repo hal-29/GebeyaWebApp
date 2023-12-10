@@ -13,26 +13,6 @@ const userSchema = new mongoose.Schema(
       avatar: { type: String },
       contact: { type: String },
       address: { type: String },
-      wishlists: [
-         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
-         },
-      ],
-
-      purchasedItems: [
-         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
-         },
-      ],
-
-      orderedItems: [
-         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
-         },
-      ],
    },
    {
       versionKey: false,

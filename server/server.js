@@ -16,6 +16,8 @@ app.use(cookieParser())
 app.use('/api/auth', require('./api/routes/auth.route'))
 app.use('/api/user', require('./api/routes/user.route'))
 app.use('/api/product', require('./api/routes/product.route'))
+app.use('/api/wishlist', require('./api/routes/wishList.route'))
+app.use('/api/order', require('./api/routes/order.route'))
 
 app.use(handleErrors)
 

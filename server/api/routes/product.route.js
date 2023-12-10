@@ -7,7 +7,7 @@ const {
    updateProductById,
    deleteProductById,
    bestDealSmartphones,
-} = require('../controllers/product.controller') // Adjust the path based on your project structure
+} = require('../controllers/product.controller')
 
 router.post('/', createProduct)
 router.get('/', getAllProducts)
