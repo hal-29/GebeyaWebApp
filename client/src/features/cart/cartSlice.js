@@ -16,23 +16,13 @@ const cartSlice = createSlice({
             item => item.id !== action.payload
          )
       },
-      incrementCartCount: (state, action) => {
-         state.cartItems = state.cartItems.map(item =>
-            item.id === action.payload ? item.count++ : item
-         )
-      },
-      decrementCartCount: (state, action) => {
-         state.cartItems = state.cartItems.map(item => {
-            item.id === action.payload && item.count > 1 ? item.count-- : item
+      setCartCount: (state, action) => {
+         state.cartItems.forEach(item => {
+            if (item.id === action.payload.id) item.count = action.payload.count
          })
       },
    },
 })
 
-export const {
-   addToCart,
-   removeCartItem,
-   incrementCartCount,
-   decrementCartCount,
-} = cartSlice.actions
+export const { addToCart, removeCartItem, setCartCount } = cartSlice.actions
 export default cartSlice.reducer

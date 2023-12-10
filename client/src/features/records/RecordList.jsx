@@ -1,8 +1,14 @@
+import { useSelector } from 'react-redux'
+import Redirect from '../../ui/Redirect'
+
 function RecordList() {
+   const account = useSelector(store => store.auth.account)
+
+   if (!account) return <Redirect />
    return (
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-            <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+         <table className='w-full text-sm text-left rtl:text-right text-gray-500'>
+            <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
                <tr>
                   <th scope='col' className='px-6 py-3'>
                      Product name
@@ -48,10 +54,10 @@ function RecordList() {
                </tr>
             </thead>
             <tbody>
-               <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+               <tr className='bg-white border-b'>
                   <th
                      scope='row'
-                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
                   >
                      Apple MacBook Pro 17"
                   </th>
@@ -60,10 +66,10 @@ function RecordList() {
                   <td className='px-6 py-4'>$2999</td>
                   <td className='px-6 py-4 '>Nov 03, 2023</td>
                </tr>
-               <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+               <tr className='bg-white border-b'>
                   <th
                      scope='row'
-                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
                   >
                      Microsoft Surface Pro
                   </th>
@@ -72,10 +78,10 @@ function RecordList() {
                   <td className='px-6 py-4'>$1999</td>
                   <td className='px-6 py-4 '>Nov 03, 2023</td>
                </tr>
-               <tr className='bg-white dark:bg-gray-800'>
+               <tr className='bg-white'>
                   <th
                      scope='row'
-                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'
+                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
                   >
                      Magic Mouse 2
                   </th>
@@ -89,4 +95,5 @@ function RecordList() {
       </div>
    )
 }
+
 export default RecordList

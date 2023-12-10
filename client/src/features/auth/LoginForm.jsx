@@ -95,7 +95,7 @@ function LoginForm() {
                   to='/signup'
                   className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
                >
-                  Let's get started
+                  Create account
                </Link>
             </p>
          </div>
