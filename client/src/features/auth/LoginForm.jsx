@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
-import { login } from './authSlice'
+import { loginUser } from './authSlice'
 
 function LoginForm() {
    const { loading, account, error } = useSelector(store => store.auth)
@@ -26,7 +26,7 @@ function LoginForm() {
          password: Yup.string().required('Required'),
       }),
       onSubmit: values => {
-         dispatch(login(values))
+         dispatch(loginUser(values))
       },
    })
 

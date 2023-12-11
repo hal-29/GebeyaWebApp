@@ -6,9 +6,10 @@ const {
    removeAllWishList,
    removeWishList,
 } = require('../controllers/wishList.controller')
+const authenticate = require('../middlewares/authenticate')
 
-router.get('/:productId', addToWishList)
-router.delete('/all', removeAllWishList)
-router.delete('/:productId', removeWishList)
+router.get('/:productId', authenticate, addToWishList)
+router.delete('/all', authenticate, removeAllWishList)
+router.delete('/:productId', authenticate, removeWishList)
 
 module.exports = router

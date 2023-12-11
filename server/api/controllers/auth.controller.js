@@ -1,7 +1,7 @@
+const User = require('../models/user.model')
 const bcrypt = require('bcryptjs')
 const ERRORS = require('../../config/errors')
 const generateToken = require('../helperes/generateToken')
-const User = require('../models/user.model')
 
 async function createUser(req, res, next) {
    const { name, email, password, avatar } = req.body
@@ -13,14 +13,21 @@ async function createUser(req, res, next) {
 
    res.cookie('jwt', token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === 'prod',
       maxAge: 7 * 24 * 60 * 60 * 1000,
    })
    newUser.password = undefined
-   res.status(201).json({
-      message: 'account created successfully.',
-      account: newUser,
-   })
+   res.status(201)
+      .cookie('jwt', token, {
+         httpOnly: true,
+         sameSite: 'None',
+         secure: true,
+         maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({
+         message: 'account created successfully.',
+         account: newUser,
+      })
 }
 
 async function loginUser(req, res, next) {
@@ -35,23 +42,35 @@ async function loginUser(req, res, next) {
 
    const token = generateToken({ id: user._id })
 
-   res.cookie('jwt', token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-   })
-
    user.password = undefined
-   res.status(200).json({ account: user, message: 'successfully logged in' })
+   res.status(200)
+      .cookie('jwt', token, {
+         httpOnly: true,
+         sameSite: 'None',
+         secure: true,
+         maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({ account: user, message: 'successfully logged in' })
+}
+
+async function getAuth(req, res, next) {
+   const user = await User.findById(req.userId)
+   if (!user) return next(ERRORS.NOT_FOUND)
+   user.password = undefined
+   res.status(200).json({
+      message: 'Successfully authenticated',
+      account: user,
+   })
 }
 
 async function logoutUser(req, res, next) {
    res.clearCookie('jwt')
-   res.send(204).json({ message: 'logout successful' })
+   res.status(204).json({ message: 'logout successful' })
 }
 
 module.exports = {
    createUser,
    loginUser,
    logoutUser,
+   getAuth,
 }

@@ -23,62 +23,65 @@ const authSlice = createSlice({
       logout: state => {
          state.account = null
       },
-      startLoading: state => {
-         state.loading = true
+      setLoading: (state, action) => {
+         state.loading = action.payload
       },
-      stopLoading: state => {
-         state.loading = false
-      },
-      startError: (state, action) => {
+      setError: (state, action) => {
          state.error = action.payload
-      },
-      stopError: state => {
-         state.error = null
       },
    },
 })
 
-export const { update } = authSlice.actions
+export const { signup, login, update, logout, setLoading, setError } =
+   authSlice.actions
 
 export default authSlice.reducer
 
-export const login = credential => {
-   return async function (dispatch, getStore) {
+export function authenticate() {
+   return async dispatch => {
       try {
-         dispatch({ type: 'auth/startLoading' })
-         const response = await api.post('auth/login', credential)
-         dispatch({ type: 'auth/login', payload: response.account })
+         dispatch(setLoading(true))
+         const response = await api.get('auth')
+         dispatch(login(response.account))
       } catch (error) {
-         console.error(error)
-         dispatch({ type: 'auth/startError', payload: error.message })
+         dispatch(setError(error.message))
       } finally {
-         dispatch({ type: 'auth/stopLoading' })
+         dispatch(setLoading(false))
       }
    }
 }
 
-export const logout = () => {
-   return async function (dispatch, getStore) {
-      await api.get('auth/logout')
-      dispatch({ type: 'auth/logout' })
+export function loginUser(credential) {
+   return async dispatch => {
+      try {
+         dispatch(setLoading(true))
+         const response = await api.post('auth/login', credential)
+         dispatch(login(response.account))
+      } catch (error) {
+         dispatch(setError(error.message))
+      } finally {
+         dispatch(setLoading(false))
+      }
    }
 }
 
-export const signup = credential => {
-   return async function (dispatch, getStore) {
+export function logoutUser() {
+   return async dispatch => {
+      await api.get('auth/logout')
+      dispatch(logout())
+   }
+}
+
+export function signupUser(credential) {
+   return async dispatch => {
       try {
-         dispatch({ type: 'auth/startLoading' })
+         dispatch(setLoading(true))
          const response = await api.post('auth/signup', credential)
-
-         // Assuming the response contains the account information
-         dispatch({ type: 'auth/signup', payload: response.account }) // Assuming you have a login action to set the account
-
-         console.log(response)
+         dispatch(signup(response.account))
       } catch (error) {
-         console.error(error)
-         dispatch({ type: 'auth/startError', payload: error.message })
+         dispatch(setError(error.message))
       } finally {
-         dispatch({ type: 'auth/stopLoading' })
+         dispatch(setLoading(false))
       }
    }
 }

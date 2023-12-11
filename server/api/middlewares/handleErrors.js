@@ -1,5 +1,6 @@
+const chalk = require('chalk')
 function handleErrors(err, req, res, next) {
-   console.trace('mdwr -->', err)
+   console.error(chalk.red(err))
    res.status(500).json(err)
 }
 

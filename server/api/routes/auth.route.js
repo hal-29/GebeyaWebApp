@@ -4,10 +4,13 @@ const {
    createUser,
    loginUser,
    logoutUser,
+   getAuth,
 } = require('../controllers/auth.controller')
+const authenticate = require('../middlewares/authenticate')
 
 const router = Router()
 
+router.get('/', authenticate, getAuth)
 router.post('/login', loginUser)
 router.post('/signup', validateUserCrediential, createUser)
 router.get('/logout', logoutUser)

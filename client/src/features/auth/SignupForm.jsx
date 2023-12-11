@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
-import { signup } from './authSlice'
+import { signupUser } from './authSlice'
 
 function SignupForm() {
    const { loading, account, error } = useSelector(store => store.auth)
@@ -41,7 +41,7 @@ function SignupForm() {
             .oneOf([Yup.ref('password'), null], 'Passwords must match'),
       }),
       onSubmit: values => {
-         dispatch(signup(values))
+         dispatch(signupUser(values))
       },
    })
 

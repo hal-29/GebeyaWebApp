@@ -1,4 +1,5 @@
 import axios from 'axios'
+axios.defaults.withCredentials = true
 
 const BASE_URL = 'http://localhost:5000/api/'
 
@@ -9,7 +10,7 @@ const headers = {
 const api = {
    get: async endpoint => {
       try {
-         const response = await axios.get(`${BASE_URL}${endpoint}`, { headers })
+         const response = await axios.get(`${BASE_URL}${endpoint}`)
          return response.data
       } catch (error) {
          throw handleError(error)
