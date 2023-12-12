@@ -34,5 +34,5 @@ orderSchema.set('toJSON', {
    },
 })
 
-const product = mongoose.model('Order', orderSchema)
-module.exports = product
+const Order = mongoose.model('Order', orderSchema)
+module.exports = Order

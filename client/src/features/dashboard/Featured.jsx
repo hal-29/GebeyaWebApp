@@ -1,16 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Card from './Card'
-import { fetchPhones } from './homeSlice'
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 function Featured() {
    const { phones, loading } = useSelector(store => store.home)
-   const dispatch = useDispatch()
-
-   useEffect(() => {
-      dispatch(fetchPhones(10))
-   }, [dispatch])
 
    if (loading) {
       return <div className='text-5xl'>Loading...</div>

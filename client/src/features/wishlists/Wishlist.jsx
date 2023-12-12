@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux'
 import Redirect from '../../ui/Redirect'
+import WishlistRow from './WishlistRow'
 
 function Wishlist() {
    const account = useSelector(store => store.auth.account)
+   const wishlists = useSelector(store => store.wishlist.wishlists)
 
    if (!account) return <Redirect />
    return (
@@ -11,16 +13,7 @@ function Wishlist() {
             <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
                <tr>
                   <th scope='col' className='p-4'>
-                     <div className='flex items-center'>
-                        <input
-                           id='checkbox-all'
-                           type='checkbox'
-                           className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2'
-                        />
-                        <label htmlFor='checkbox-all' className='sr-only'>
-                           checkbox
-                        </label>
-                     </div>
+                     No
                   </th>
                   <th scope='col' className='px-6 py-3'>
                      Product name
@@ -37,29 +30,20 @@ function Wishlist() {
                </tr>
             </thead>
             <tbody>
-               <tr className='bg-white border-b hover:bg-gray-50'>
-                  <td className='w-4 p-4'>
-                     <div className='flex items-center'>
-                        <input
-                           id='checkbox-table-1'
-                           type='checkbox'
-                           className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2'
-                        />
-                        <label htmlFor='checkbox-table-1' className='sr-only'>
-                           checkbox
-                        </label>
-                     </div>
-                  </td>
-                  <th
-                     scope='row'
-                     className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
-                  >
-                     Apple MacBook Pro 17"
-                  </th>
-                  <td className='px-6 py-4'>Laptop</td>
-                  <td className='px-6 py-4'>$2999</td>
-                  <td className='px-6 py-4'>remove</td>
-               </tr>
+               {wishlists.length ? (
+                  wishlists.map((list, index) => (
+                     <WishlistRow key={list.id} index={index} product={list} />
+                  ))
+               ) : (
+                  <tr>
+                     <td
+                        colSpan='4'
+                        className='py-6 text-3xl font-semibold text-center'
+                     >
+                        there are no wishlists.
+                     </td>
+                  </tr>
+               )}
             </tbody>
          </table>
       </div>

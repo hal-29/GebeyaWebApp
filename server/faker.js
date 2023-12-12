@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker')
 const mongoose = require('mongoose')
 const Product = require('./api/models/product.model.js')
 
-mongoose.connect('mongodb://192.168.228.78:27017/emarket')
+mongoose.connect('mongodb://192.168.48.1:27017/emarket')
 const electronicDevicesData = [
    {
       name: 'Smartphone X1',
@@ -146,8 +146,6 @@ const generateDummyProducts = count => {
 
 const populateDatabase = async () => {
    try {
-      await Product.deleteMany() // Clear existing data
-
       const dummyProducts = generateDummyProducts(200) // Adjust the count as needed
       await Product.insertMany(dummyProducts)
 

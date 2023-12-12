@@ -13,7 +13,6 @@ import Main from './ui/Main'
 import Profile from './pages/Profile'
 import Wishlists from './pages/Wishlists'
 import Orders from './pages/Orders'
-import Records from './pages/Records'
 import Update from './features/profile/Update'
 import ProductDetails from './features/products/ProductDetails'
 
@@ -30,7 +29,6 @@ function App() {
                </Route>
                <Route path='/wishlist' element={<Wishlists />} />
                <Route path='/orders' element={<Orders />} />
-               <Route path='/records' element={<Records />} />
                <Route path='/cart' element={<Cart />} />
                <Route path='/product' element={<Product />} />
                <Route path='/product/:productId' element={<ProductDetails />} />

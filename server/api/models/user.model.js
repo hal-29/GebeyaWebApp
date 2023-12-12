@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
       avatar: { type: String },
       contact: { type: String },
       address: { type: String },
+      wishlist: { type: [mongoose.Schema.Types.ObjectId], ref: 'Product' },
    },
    {
       versionKey: false,

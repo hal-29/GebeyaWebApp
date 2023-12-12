@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import api from '../../services/api'
+import { resetWishlist } from '../wishlists/wishlistSlice'
+import { resetCart } from '../cart/cartSlice'
 
 const initialState = {
    account: null,
@@ -21,7 +23,7 @@ const authSlice = createSlice({
          state.account = action.payload
       },
       logout: state => {
-         state.account = null
+         state = initialState
       },
       setLoading: (state, action) => {
          state.loading = action.payload
@@ -68,6 +70,8 @@ export function loginUser(credential) {
 export function logoutUser() {
    return async dispatch => {
       await api.get('auth/logout')
+      dispatch(resetCart())
+      dispatch(resetWishlist())
       dispatch(logout())
    }
 }

@@ -6,7 +6,7 @@ const initialState = {
    items: {},
    loading: false,
 }
-
+// TODO: create a separate slice for items
 const productSlice = createSlice({
    name: 'product',
    initialState,
@@ -23,12 +23,12 @@ const productSlice = createSlice({
    },
 })
 
-export const { setProducts, setLoading, setProductItem } = productSlice.actions
+const { setProducts, setLoading, setProductItem } = productSlice.actions
 export default productSlice.reducer
 
 export function loadProduct(id) {
    return async (dispatch, getStore) => {
-      if (getStore().product.items[id]) return
+      // if (getStore().product.items[id]) return
       try {
          dispatch(setLoading(true))
          const response = await api.get(`product/${id}`)

@@ -68,13 +68,6 @@ function SideNav() {
                <span className='pr-2 text-lg fa-solid fa-bag-shopping'></span>
                Orders
             </NavLink>
-            <NavLink
-               to='/records'
-               className='bg-gray-600/10 px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-600 hover:text-gray-100'
-            >
-               <span className='pr-2 text-lg fa-solid fa-folder-open'></span>
-               Records
-            </NavLink>
 
             {account && <Button label='Logout' onClick={logoutHandler} />}
          </ul>

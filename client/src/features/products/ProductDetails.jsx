@@ -5,39 +5,39 @@ import { useParams } from 'react-router-dom'
 import { loadProduct } from './productSlice'
 import Button from '../../ui/Button'
 import Rating from '../../ui/Rating'
+import { addToCart, removeCartItem } from '../cart/cartSlice'
 
 function ProductDetails() {
+   const [activePhoto, setActivePhoto] = useState(0)
    const { productId } = useParams()
-
-   const { items, loading } = useSelector(store => store.product)
-
    const dispatch = useDispatch()
 
-   const [activePhoto, setActivePhoto] = useState(0)
+   const items = useSelector(store => store.product.items)
+   const loading = useSelector(store => store.product.loading)
+   const cartItems = useSelector(store => store.cart.cartItems)
 
    useEffect(() => {
-      dispatch(loadProduct(productId))
-   }, [productId, dispatch])
+      if (!items[productId]) dispatch(loadProduct(productId))
+   }, [productId, dispatch, items])
 
-   const product = items[productId]
-   if (loading) return <h2 className='text-4xl'>Loading...</h2>
-   if (!product) return <h2 className='text-4xl'>Somethig went wrong...</h2>
+   if (loading || !items[productId])
+      return <h2 className='text-4xl'>Loading...</h2>
    return (
       <section className='flex gap-4 p-4 h-full'>
          <div className='basis-1/2 shrink-0 flex flex-col justify-between '>
             <div className='grow overflow-hidden'>
-               {product && product.images && (
+               {items[productId] && items[productId].images && (
                   <img
-                     src={product.images[activePhoto]}
-                     alt={product.name}
+                     src={items[productId].images[activePhoto]}
+                     alt={items[productId].name}
                      className='w-full h-full object-cover'
                   />
                )}
             </div>
             <div className=' shrink-0 overflow-x-auto whitespace-nowrap min-w-full'>
-               {product &&
-                  product.images &&
-                  product.images.map((img, i) => {
+               {items[productId] &&
+                  items[productId].images &&
+                  items[productId].images.map((img, i) => {
                      return (
                         <div
                            key={img}
@@ -49,7 +49,7 @@ function ProductDetails() {
                            <img
                               src={img}
                               className='w-full h-full object-cover'
-                              alt={product.name}
+                              alt={items[productId].name}
                            />
                         </div>
                      )
@@ -57,11 +57,13 @@ function ProductDetails() {
             </div>
          </div>
          <div className='flex flex-col gap-4'>
-            <h2 className='text-3xl font-semibold'>{product.name}</h2>
-            <p className=''>{product.description}</p>
+            <h2 className='text-3xl font-semibold'>{items[productId].name}</h2>
+            <p className=''>{items[productId].description}</p>
             <div className='flex  gap-3'>
                <Rating />
-               <span className='text-xl text-bold'>{product.rating}</span>
+               <span className='text-xl text-bold'>
+                  {items[productId].rating}
+               </span>
             </div>
             <div className='flex justify-between mt-auto'>
                <div className='join'>
@@ -71,9 +73,32 @@ function ProductDetails() {
                   </div>
                   <div className='btn join-item'>+</div>
                </div>
-               <span className='text-2xl font-bold'>${product.price}</span>
+               <span className='text-2xl font-bold'>
+                  ${items[productId].price}
+               </span>
             </div>
-            <Button label='Add to cart' />
+            {!cartItems.find(item => item.id === items[productId].id) ? (
+               <Button
+                  onClick={() => dispatch(addToCart(items[productId]))}
+                  label={
+                     <>
+                        <span className='fa-solid fa-cart-shopping'></span>
+                        <span>Add to cart</span>
+                     </>
+                  }
+               />
+            ) : (
+               <Button
+                  onClick={() => dispatch(removeCartItem(items[productId].id))}
+                  secondary={true}
+                  label={
+                     <>
+                        <span className='fa-solid fa-xmark'></span>
+                        <span>Remove from cart</span>
+                     </>
+                  }
+               />
+            )}
          </div>
       </section>
    )

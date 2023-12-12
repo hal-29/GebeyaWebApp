@@ -7,6 +7,9 @@ const cartSlice = createSlice({
    name: 'cart',
    initialState,
    reducers: {
+      reset: state => {
+         state = initialState
+      },
       addToCart: (state, action) => {
          state.cartItems.find(item => item.id === action.payload.id) ||
             state.cartItems.push({ ...action.payload, count: 1 })
@@ -24,5 +27,10 @@ const cartSlice = createSlice({
    },
 })
 
-export const { addToCart, removeCartItem, setCartCount } = cartSlice.actions
+export const {
+   addToCart,
+   removeCartItem,
+   setCartCount,
+   reset: resetCart,
+} = cartSlice.actions
 export default cartSlice.reducer

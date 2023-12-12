@@ -27,6 +27,28 @@ const api = {
          throw handleError(error)
       }
    },
+
+   put: async (endpoint, data) => {
+      try {
+         const response = await axios.put(`${BASE_URL}${endpoint}`, data, {
+            headers,
+         })
+         return response.data
+      } catch (error) {
+         throw handleError(error)
+      }
+   },
+
+   delete: async endpoint => {
+      try {
+         const response = await axios.delete(`${BASE_URL}${endpoint}`, {
+            headers,
+         })
+         return response.data
+      } catch (error) {
+         throw handleError(error)
+      }
+   },
 }
 
 const handleError = error => {

@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(
    cors({
-      origin: 'http://127.0.0.1:3000',
+      origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
       credentials: true,
    })
 )
@@ -37,17 +37,3 @@ connectDb(function () {
       )
    )
 })
-// const options = {
-//    key: fs.readFileSync('server.key'),
-//    cert: fs.readFileSync('server.cert'),
-// }
-
-// connectDb(function () {
-//    https.createServer(options, app).listen(PORT, () => {
-//       console.log(
-//          chalk.bold.bgBlueBright(
-//             `SERVER STARTED ON http://localhost:${PORT} 📡`
-//          )
-//       )
-//    })
-// })
