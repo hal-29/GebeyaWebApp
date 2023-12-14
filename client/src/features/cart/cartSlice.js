@@ -8,7 +8,7 @@ const cartSlice = createSlice({
    initialState,
    reducers: {
       reset: state => {
-         state = initialState
+         state.cartItems = []
       },
       addToCart: (state, action) => {
          state.cartItems.find(item => item.id === action.payload.id) ||

@@ -16,14 +16,14 @@ function Card({ product }) {
    const isWishlisted = wishlists.some(list => list.id === id)
    return (
       <div className='flex '>
-         <div className='flex flex-col relative w-56 h-[22rem] max-w-xs overflow-hidden rounded-lg bg-white shadow-md'>
-            <a href={`/product/${id}`}>
+         <div className='flex flex-col relative w-64 min-h-[22rem] max-w-xs  rounded-lg bg-white shadow-md'>
+            <Link to={`/product/${id}`}>
                <img
                   className='h-40 w-full rounded-t-lg object-cover'
                   src={images[0]}
                   alt={name}
                />
-            </a>
+            </Link>
 
             <div className='my-2 gap-2 px-5  flex flex-col grow'>
                <Link to={`/product/${id}`}>

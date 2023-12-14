@@ -34,6 +34,22 @@ function App() {
                <Route path='/product/:productId' element={<ProductDetails />} />
                <Route path='/signin' element={<SignIn />} />
                <Route path='/signup' element={<SignUp />} />
+               <Route
+                  path='/success'
+                  element={
+                     <h1 className='text-5xl font-bold text-green-500'>
+                        Payment successful
+                     </h1>
+                  }
+               />
+               <Route
+                  path='/cancel'
+                  element={
+                     <h1 className='text-5xl font-bold text-red-500'>
+                        Payment canceled
+                     </h1>
+                  }
+               />
                <Route path='*' element={<NotFound />} />
             </Routes>
          </Main>

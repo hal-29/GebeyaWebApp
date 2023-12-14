@@ -10,7 +10,7 @@ import Button from '../../ui/Button'
 import { loginUser } from './authSlice'
 
 function LoginForm() {
-   const { loading, account, error } = useSelector(store => store.auth)
+   const loading = useSelector(store => store.auth.loading)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
@@ -26,26 +26,18 @@ function LoginForm() {
          password: Yup.string().required('Required'),
       }),
       onSubmit: values => {
-         dispatch(loginUser(values))
+         dispatch(
+            loginUser(values, () => {
+               navigate('/', {
+                  replace: true,
+                  state: {
+                     toast: { message: 'Login successful', type: 'success' },
+                  },
+               })
+            })
+         )
       },
    })
-
-   useEffect(() => {
-      if (account) {
-         navigate('/', {
-            replace: true,
-            state: {
-               toast: { message: 'Successfully Logged In!', type: 'success' },
-            },
-         })
-      }
-   }, [account, navigate])
-
-   useEffect(() => {
-      if (error) {
-         toast(error)
-      }
-   }, [error])
 
    return (
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 '>

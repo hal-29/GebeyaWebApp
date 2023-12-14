@@ -23,7 +23,7 @@ const authSlice = createSlice({
          state.account = action.payload
       },
       logout: state => {
-         state = initialState
+         state.account = null
       },
       setLoading: (state, action) => {
          state.loading = action.payload
@@ -46,19 +46,20 @@ export function authenticate() {
          const response = await api.get('auth')
          dispatch(login(response.account))
       } catch (error) {
-         dispatch(setError(error.message))
+         console.error(error)
       } finally {
          dispatch(setLoading(false))
       }
    }
 }
 
-export function loginUser(credential) {
+export function loginUser(credential, cb) {
    return async dispatch => {
       try {
          dispatch(setLoading(true))
          const response = await api.post('auth/login', credential)
          dispatch(login(response.account))
+         cb?.()
       } catch (error) {
          dispatch(setError(error.message))
       } finally {
@@ -70,18 +71,19 @@ export function loginUser(credential) {
 export function logoutUser() {
    return async dispatch => {
       await api.get('auth/logout')
+      dispatch(logout())
       dispatch(resetCart())
       dispatch(resetWishlist())
-      dispatch(logout())
    }
 }
 
-export function signupUser(credential) {
+export function signupUser(credential, cb) {
    return async dispatch => {
       try {
          dispatch(setLoading(true))
          const response = await api.post('auth/signup', credential)
          dispatch(signup(response.account))
+         cb?.()
       } catch (error) {
          dispatch(setError(error.message))
       } finally {

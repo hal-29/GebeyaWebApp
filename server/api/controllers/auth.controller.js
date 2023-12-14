@@ -5,7 +5,9 @@ const generateToken = require('../helperes/generateToken')
 
 async function createUser(req, res, next) {
    const { name, email, password, avatar } = req.body
-   const user = new User({ name, email, avatar, password })
+
+   const hashedPassword = await bcrypt.hash(password, 10)
+   const user = new User({ name, email, avatar, password: hashedPassword })
    const newUser = await user.save()
    if (!newUser) return next(ERRORS.INVALID_CREDIENTIAL)
 
@@ -34,7 +36,7 @@ async function loginUser(req, res, next) {
    const { email, password } = req.body
    if (!email || !password) return next(ERRORS.BAD_REQUEST)
 
-   const user = await User.findOne({ email })
+   const user = await User.findOne({ email }).select('-wishlist')
    if (!user) return next(ERRORS.INVALID_CREDIENTIAL)
 
    const isPasswordValid = await bcrypt.compare(password, user.password)
@@ -64,8 +66,14 @@ async function getAuth(req, res, next) {
 }
 
 async function logoutUser(req, res, next) {
-   res.clearCookie('jwt')
-   res.status(204).json({ message: 'logout successful' })
+   res.status(204)
+      .cookie('jwt', '', {
+         httpOnly: true,
+         sameSite: 'None',
+         secure: true,
+         maxAge: 0,
+      })
+      .end()
 }
 
 module.exports = {

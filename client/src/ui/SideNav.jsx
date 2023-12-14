@@ -1,15 +1,15 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Button from './Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../features/auth/authSlice'
+import { logoutUser } from '../features/auth/authSlice'
 
 function SideNav() {
    const navigate = useNavigate()
    const account = useSelector(store => store.auth.account)
    const dispatch = useDispatch()
 
-   const logoutHandler = async () => {
-      await dispatch(logout())
+   const logoutHandler = () => {
+      dispatch(logoutUser())
       navigate('/signin')
    }
 

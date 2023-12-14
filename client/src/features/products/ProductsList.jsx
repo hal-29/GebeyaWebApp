@@ -28,7 +28,7 @@ function ProductsList() {
                )}"`}</span>
             </h2>
          )}
-         <div className='grid grid-cols-5 gap-3'>
+         <div className='grid grid-cols-4 items-stretch gap-3'>
             {products[search] &&
                products[search].map(prod => (
                   <Card key={prod.id} product={prod} />

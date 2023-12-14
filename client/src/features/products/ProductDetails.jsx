@@ -60,10 +60,7 @@ function ProductDetails() {
             <h2 className='text-3xl font-semibold'>{items[productId].name}</h2>
             <p className=''>{items[productId].description}</p>
             <div className='flex  gap-3'>
-               <Rating />
-               <span className='text-xl text-bold'>
-                  {items[productId].rating}
-               </span>
+               <Rating value={items[productId].rating} />
             </div>
             <div className='flex justify-between mt-auto'>
                <div className='join'>

@@ -10,7 +10,7 @@ const wishlistSlice = createSlice({
    initialState,
    reducers: {
       resetState: state => {
-         state = initialState
+         state.wishlists = []
       },
       setLoading: (state, action) => {
          state.loading = action.payload
@@ -62,6 +62,7 @@ export function addWishlist(product) {
                id: product.id,
                name: product.name,
                price: product.price,
+               category: product.category,
             })
          )
       } catch (error) {

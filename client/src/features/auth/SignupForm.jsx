@@ -7,10 +7,10 @@ import * as Yup from 'yup'
 
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
-import { signupUser } from './authSlice'
+import { setError, signupUser } from './authSlice'
 
 function SignupForm() {
-   const { loading, account, error } = useSelector(store => store.auth)
+   const { loading, error } = useSelector(store => store.auth)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
@@ -23,7 +23,7 @@ function SignupForm() {
       },
       validationSchema: Yup.object({
          name: Yup.string()
-            .matches(/^[a-zA-Z]+$/, 'Only letters are allowed')
+            .matches(/^[a-zA-Z\s]+$/, 'Only letters are allowed')
             .min(3, 'Must be between 3 and 30 characters')
             .max(30, 'Must be between 3 and 30 characters')
             .required('Required'),
@@ -33,34 +33,40 @@ function SignupForm() {
          password: Yup.string()
             .required('Required')
             .matches(
-               /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,30}$/,
-               'Must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be between 6 and 30 characters'
-            ),
+               /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).*$/,
+               'Must contain uppercase, lowercase, number and special character'
+            )
+            .min(6, 'Must be at least 6 characters')
+            .max(30, 'Can not be more than 30 characters'),
          cpassword: Yup.string()
             .required('Required')
             .oneOf([Yup.ref('password'), null], 'Passwords must match'),
       }),
       onSubmit: values => {
-         dispatch(signupUser(values))
+         dispatch(
+            signupUser(values, () => {
+               navigate('/', {
+                  replace: true,
+                  state: {
+                     toast: {
+                        message: 'Account created successfully',
+                        type: 'success',
+                     },
+                  },
+               })
+            })
+         )
       },
    })
 
    useEffect(() => {
-      if (account) {
-         navigate('/', {
-            replace: true,
-            state: {
-               toast: { message: 'Successfully Created!', type: 'success' },
-            },
-         })
-      }
-   }, [account, navigate])
-
-   useEffect(() => {
       if (error) {
-         toast(error)
+         toast.error(error)
       }
-   }, [error])
+      return () => {
+         dispatch(setError(null))
+      }
+   }, [error, dispatch])
 
    return (
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8'>
