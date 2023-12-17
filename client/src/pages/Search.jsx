@@ -1,7 +1,11 @@
-import React from 'react'
+import SearchPage from '../features/search/SearchPage'
 
 function Search() {
-   return <div>Search</div>
+   return (
+      <section>
+         <SearchPage />
+      </section>
+   )
 }
 
 export default Search

@@ -20,11 +20,15 @@ async function getAllProducts(req, res, next) {
    if (query.category) filter.category = query.category
    if (query.brand) filter.brand = query.brand
 
-   const skip = query.skip || 0
-   const limit = query.limit || 10
+   const limit = query.limit || 20
+   const skip = query.page || 1
 
-   const products = await Product.find(filter).skip(skip).limit(limit)
-   res.status(200).json(products)
+   const count = await Product.countDocuments(filter)
+   const products = await Product.find(filter)
+      .skip((skip - 1) * limit)
+      .limit(limit)
+
+   res.status(200).json({ count, products })
 }
 
 // Best deals for smartphone
@@ -57,7 +61,8 @@ async function bestDealSmartphones(req, res, next) {
          ratingToPriceRatio: undefined,
       }
    })
-   res.status(200).json(prepared)
+   const count = await Product.countDocuments({ category: 'phone' })
+   res.status(200).json({ count, phones: prepared })
 }
 
 // Get a specific product by ID
@@ -71,6 +76,43 @@ async function getProductById(req, res) {
    } catch (error) {
       res.status(500).json({ error: error.message })
    }
+}
+
+async function searchProducts(req, res) {
+   const query = req.query.q
+   if (!query) {
+      return res.status(400).json({ error: 'Search query is required' })
+   }
+
+   const regex = new RegExp(query, 'i')
+
+   const limit = parseInt(req.query.limit) || 10
+   const skip = parseInt(req.query.page) || 1
+
+   const totalCount = await Product.countDocuments({
+      $or: [
+         { name: { $regex: regex } },
+         { description: { $regex: regex } },
+         { category: { $regex: regex } },
+         { brand: { $regex: regex } },
+      ],
+   })
+
+   const searchResults = await Product.find({
+      $or: [
+         { name: { $regex: regex } },
+         { description: { $regex: regex } },
+         { category: { $regex: regex } },
+         { brand: { $regex: regex } },
+      ],
+   })
+      .skip((skip - 1) * limit)
+      .limit(limit)
+
+   res.status(200).json({
+      count: totalCount,
+      products: searchResults,
+   })
 }
 
 // Update a product by ID
@@ -112,4 +154,5 @@ module.exports = {
    updateProductById,
    deleteProductById,
    bestDealSmartphones,
+   searchProducts,
 }

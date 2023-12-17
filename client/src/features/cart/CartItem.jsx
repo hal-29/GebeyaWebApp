@@ -6,7 +6,7 @@ function CartItem({ item }) {
    const dispatch = useDispatch()
 
    return (
-      <div className='flex  gap-3  p-4 border-b relative h-44'>
+      <div className='flex  gap-1 md:gap-3  p-1 md:p-2 border-b relative h-44'>
          <div className='basis-1/4 shrink-0 rounded-lg overflow-hidden'>
             <img
                className='h-full w-full object-cover'
@@ -14,12 +14,12 @@ function CartItem({ item }) {
                alt='cart item'
             />
          </div>
-         <div className='flex flex-col grow'>
-            <h3 className='text-lg font-semibold'>{item.name}</h3>
-            <p className='text-sm text-gray-700/80'>{item.brand}</p>
-         </div>
-         <div className='flex items-end'>
-            <div className='join '>
+         <div className='flex flex-col justify-between items-strech grow'>
+            <div className='flex flex-col grow'>
+               <h3 className='text-lg font-semibold'>{item.name}</h3>
+               <p className='text-sm text-gray-700/80'>{item.brand}</p>
+            </div>
+            <div className='flex justify-end gap-4'>
                <input
                   type='number'
                   value={item.count}
@@ -32,10 +32,10 @@ function CartItem({ item }) {
                   }}
                   className='join-item input input-bordered max-w-xs w-16 py-0 px-2 text-xl bg-gray-100'
                />
+               <div className='text-2xl font-bold flex items-end'>
+                  ${(item.price * item.count).toFixed(2)}
+               </div>
             </div>
-         </div>
-         <div className='text-2xl font-bold flex items-end'>
-            ${(item.price * item.count).toFixed(2)}
          </div>
          <span
             onClick={() => dispatch(removeCartItem(item.id))}

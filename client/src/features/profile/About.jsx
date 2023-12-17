@@ -6,7 +6,7 @@ function About() {
 
    if (!account) return <Redirect />
    return (
-      <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+      <div className='relative overflow-x-auto shadow-md sm:rounded-lg '>
          <table className='w-full text-sm text-left rtl:text-right text-gray-500'>
             <tbody>
                <tr className='bg-white border-b'>
@@ -46,7 +46,7 @@ function About() {
                   <td className='px-6 py-4'> {account.contact}</td>
                </tr>
             </tbody>
-         </table>{' '}
+         </table>
       </div>
    )
 }

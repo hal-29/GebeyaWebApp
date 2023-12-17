@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import api from '../../services/api'
 
 const initialState = {
+   resultsCount: {},
    products: {},
    items: {},
    loading: false,
@@ -12,6 +13,7 @@ const productSlice = createSlice({
    reducers: {
       setProducts: (state, action) => {
          state.products[action.payload.query] = action.payload.products
+         state.resultsCount[action.payload.query] = action.payload.count
       },
       setLoading: (state, action) => {
          state.loading = action.payload
@@ -46,7 +48,14 @@ export function fetchProducts(query) {
       try {
          dispatch(setLoading(true))
          const response = await api.get(`product${query}&limit=20`)
-         response.length && dispatch(setProducts({ query, products: response }))
+         response.products.length &&
+            dispatch(
+               setProducts({
+                  query,
+                  products: response.products,
+                  count: response.count,
+               })
+            )
       } catch (error) {
          console.error(error)
       } finally {

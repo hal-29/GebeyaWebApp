@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 import { loadStripe } from '@stripe/stripe-js'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Button from '../../ui/Button'
 import api from '../../services/api'
 
 function Bill({ sumOfPrice, shipping, tax }) {
    const cartItems = useSelector(store => store.cart.cartItems)
+   const account = useSelector(store => store.auth.account)
+
+   const navigate = useNavigate()
 
    const makePayment = async () => {
       const stripe = await loadStripe(
@@ -40,7 +43,15 @@ function Bill({ sumOfPrice, shipping, tax }) {
             <div>${Number(+sumOfPrice + +shipping + +tax).toFixed(2)}</div>
          </div>
          <div className='py-4 flex flex-col items-center'>
-            <Button label='Proceed to payment' onClick={makePayment} />
+            {account ? (
+               <Button label='Proceed to payment' onClick={makePayment} />
+            ) : (
+               <Button
+                  secondary={true}
+                  label='Log into account'
+                  onClick={() => navigate('/signin')}
+               />
+            )}
             <Link to='/' className='text-primary'>
                or Continue Shopping
             </Link>

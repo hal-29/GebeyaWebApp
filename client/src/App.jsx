@@ -15,6 +15,8 @@ import Wishlists from './pages/Wishlists'
 import Orders from './pages/Orders'
 import Update from './features/profile/Update'
 import ProductDetails from './features/products/ProductDetails'
+import Search from './pages/Search'
+import Success from './pages/Success'
 
 function App() {
    return (
@@ -32,24 +34,10 @@ function App() {
                <Route path='/cart' element={<Cart />} />
                <Route path='/product' element={<Product />} />
                <Route path='/product/:productId' element={<ProductDetails />} />
+               <Route path='/search' element={<Search />} />
                <Route path='/signin' element={<SignIn />} />
                <Route path='/signup' element={<SignUp />} />
-               <Route
-                  path='/success'
-                  element={
-                     <h1 className='text-5xl font-bold text-green-500'>
-                        Payment successful
-                     </h1>
-                  }
-               />
-               <Route
-                  path='/cancel'
-                  element={
-                     <h1 className='text-5xl font-bold text-red-500'>
-                        Payment canceled
-                     </h1>
-                  }
-               />
+               <Route path='/success' element={<Success />} />
                <Route path='*' element={<NotFound />} />
             </Routes>
          </Main>

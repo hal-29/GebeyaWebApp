@@ -31,7 +31,7 @@ export function fetchPhones(limit) {
       try {
          dispatch(setLoading(true))
          const response = await api.get(`product/phones?limit=${limit}`)
-         dispatch(loadPhones(response))
+         dispatch(loadPhones(response.phones))
       } catch (error) {
          console.error(error)
       } finally {

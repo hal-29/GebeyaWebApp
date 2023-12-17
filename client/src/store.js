@@ -4,6 +4,8 @@ import homeSlice from './features/dashboard/homeSlice'
 import productSlice from './features/products/productSlice'
 import cartSlice from './features/cart/cartSlice'
 import wishlistSlice from './features/wishlists/wishlistSlice'
+import searchSlice from './features/search/searchSlice'
+import orderSlice from './features/orders/orderSlice'
 
 export const store = configureStore({
    reducer: {
@@ -12,5 +14,7 @@ export const store = configureStore({
       product: productSlice,
       cart: cartSlice,
       wishlist: wishlistSlice,
+      search: searchSlice,
+      order: orderSlice,
    },
 })

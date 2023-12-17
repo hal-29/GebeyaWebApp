@@ -6,6 +6,7 @@ import { loadProduct } from './productSlice'
 import Button from '../../ui/Button'
 import Rating from '../../ui/Rating'
 import { addToCart, removeCartItem } from '../cart/cartSlice'
+import Loading from '../../ui/Loading'
 
 function ProductDetails() {
    const [activePhoto, setActivePhoto] = useState(0)
@@ -20,8 +21,7 @@ function ProductDetails() {
       if (!items[productId]) dispatch(loadProduct(productId))
    }, [productId, dispatch, items])
 
-   if (loading || !items[productId])
-      return <h2 className='text-4xl'>Loading...</h2>
+   if (loading || !items[productId]) return <Loading />
    return (
       <section className='flex gap-4 p-4 h-full'>
          <div className='basis-1/2 shrink-0 flex flex-col justify-between '>
@@ -63,13 +63,6 @@ function ProductDetails() {
                <Rating value={items[productId].rating} />
             </div>
             <div className='flex justify-between mt-auto'>
-               <div className='join'>
-                  <div className='btn join-item'>-</div>
-                  <div className='bg-gray-200 px-6 text-2xl  inline-flex justify-center items-center join-item  '>
-                     1
-                  </div>
-                  <div className='btn join-item'>+</div>
-               </div>
                <span className='text-2xl font-bold'>
                   ${items[productId].price}
                </span>

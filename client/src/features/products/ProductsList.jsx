@@ -5,36 +5,39 @@ import { useDispatch, useSelector } from 'react-redux'
 import Pagination from '../../ui/Pagination'
 import Card from '../dashboard/Card'
 import { fetchProducts } from './productSlice'
+import Loading from '../../ui/Loading'
+import calculateNextPage from '../../utils/calculateNextPage'
 
 function ProductsList() {
    const { search } = useLocation()
-   const [searchParams] = useSearchParams()
+   const [searchParams, setSearchParams] = useSearchParams()
 
-   const { products, loading } = useSelector(store => store.product)
+   const { products, loading, resultsCount } = useSelector(
+      store => store.product
+   )
    const dispatch = useDispatch()
 
    useEffect(() => {
       dispatch(fetchProducts(search))
    }, [search, dispatch, products])
 
-   if (loading) return <h2 className='text-4xl'>Loading...</h2>
+   const { prevPageQuery, nextPageQuery } = calculateNextPage(search)
+
+   if (loading) return <Loading />
    return (
       <section className='flex flex-col justify-center items-center gap-6'>
-         {searchParams.get('category') && (
-            <h2 className='text-2xl '>
-               Showing results for : &nbsp;
-               <span className='text-3xl font-bold'>{`"${searchParams.get(
-                  'category'
-               )}"`}</span>
-            </h2>
-         )}
-         <div className='grid grid-cols-4 items-stretch gap-3'>
+         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-stretch gap-3'>
             {products[search] &&
                products[search].map(prod => (
                   <Card key={prod.id} product={prod} />
                ))}
          </div>
-         <Pagination />
+         <Pagination
+            total={resultsCount[search]}
+            curPage={searchParams.get('page') || 1}
+            onNext={() => setSearchParams(nextPageQuery)}
+            onPrev={() => setSearchParams(prevPageQuery)}
+         />
       </section>
    )
 }

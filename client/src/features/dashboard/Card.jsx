@@ -15,8 +15,9 @@ function Card({ product }) {
    const { name, images, rating, price, id } = product
    const isWishlisted = wishlists.some(list => list.id === id)
    return (
-      <div className='flex '>
-         <div className='flex flex-col relative w-64 min-h-[22rem] max-w-xs  rounded-lg bg-white shadow-md'>
+      <div className='flex'>
+         {/* <div className='flex flex-col relative w-64 min-h-[22rem] max-w-xs  rounded-lg bg-white shadow-md'> */}
+         <div className='flex flex-col relative w-44 xs:w-52 sm:w-64 min-h-[22rem] max-w-xs  rounded-lg bg-white shadow-md'>
             <Link to={`/product/${id}`}>
                <img
                   className='h-40 w-full rounded-t-lg object-cover'
@@ -31,7 +32,9 @@ function Card({ product }) {
                      {name}
                   </h5>
                </Link>
-               <Rating />
+               <div className='scale-75'>
+                  <Rating />
+               </div>
                <div className='mt-auto flex justify-between items-center'>
                   <p>
                      <span className='text-xl font-bold text-slate-900'>{`$${Number(
@@ -69,7 +72,7 @@ function Card({ product }) {
                         label={
                            <>
                               <span className='fa-solid fa-xmark'></span>
-                              <span>Remove from cart</span>
+                              <span>Remove </span>
                            </>
                         }
                      />

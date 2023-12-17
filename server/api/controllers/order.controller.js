@@ -2,6 +2,14 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const Order = require('../models/order.model')
 const Product = require('../models/product.model')
 
+async function getOrders(req, res, next) {
+   const orders = await Order.find({ client: req.userId }).populate(
+      'products',
+      'category name'
+   )
+   res.status(200).json(orders)
+}
+
 async function orderProduct(req, res, next) {
    const { products } = req.body
 
@@ -31,7 +39,7 @@ async function orderProduct(req, res, next) {
       line_items: lineItems,
       mode: 'payment',
       success_url: 'http://127.0.0.1:3000/success',
-      cancel_url: 'http://127.0.0.1:3000/cancel',
+      cancel_url: 'http://127.0.0.1:3000',
    })
 
    const order = new Order({
@@ -44,4 +52,4 @@ async function orderProduct(req, res, next) {
    res.status(200).json({ id: session.id, order: newOrder })
 }
 
-module.exports = { orderProduct }
+module.exports = { orderProduct, getOrders }

@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux'
 import Card from './Card'
 import { Link } from 'react-router-dom'
+import Loading from '../../ui/Loading'
 
 function Featured() {
    const { phones, loading } = useSelector(store => store.home)
 
-   if (loading) {
-      return <div className='text-5xl'>Loading...</div>
-   }
+   if (loading) return <Loading />
    return (
       <section className='p-2 max-w-6xl mx-auto'>
          <div className='flex justify-between border-b-2 items-end py-2'>
@@ -16,7 +15,7 @@ function Featured() {
                <span className='text-primary'> Smartphones</span>
             </h2>
             <Link
-               to={`product?category=mobiles`}
+               to={`product?category=phone`}
                className='btn btn-sm btn-ghost rounded-full'
             >
                View All
