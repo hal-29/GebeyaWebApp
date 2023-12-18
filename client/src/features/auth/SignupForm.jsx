@@ -9,12 +9,16 @@ import Input from '../../ui/Input'
 import Button from '../../ui/Button'
 import { setError, signupUser } from './authSlice'
 import Steps from '../../ui/Steps'
+import Avatar from '../../ui/Avatar'
 
 function SignupForm() {
    const { loading, error } = useSelector(store => store.auth)
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [currStep, setCurrStep] = useState(1)
+   const [avatar, setAvatar] = useState(
+      'https://static.vecteezy.com/system/resources/thumbnails/019/896/012/small_2x/female-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png'
+   )
 
    const formik = useFormik({
       initialValues: {
@@ -22,7 +26,8 @@ function SignupForm() {
          email: '',
          password: '',
          address: '',
-         phone: '',
+         contact: '',
+         avatar: '',
       },
       validationSchema: Yup.object({
          name: Yup.string()
@@ -44,7 +49,7 @@ function SignupForm() {
       }),
       onSubmit: values => {
          dispatch(
-            signupUser(values, () => {
+            signupUser({ ...values, avatar }, () => {
                navigate('/', {
                   replace: true,
                   state: {
@@ -131,18 +136,63 @@ function SignupForm() {
                            onChange={formik.handleChange}
                         />
                         <Input
-                           label='Phone Number'
-                           name='phone'
+                           label='Contact Number'
+                           name='contact'
                            type='tel'
                            placeholder='e.g, +251987654321'
-                           value={formik.values.phone}
+                           value={formik.values.contact}
                            onChange={formik.handleChange}
                         />
                      </div>
                   )}
 
                   {currStep === 3 && (
-                     <div className='space-y-2 py-4'>choose avatar</div>
+                     <>
+                        <div className=''>
+                           <div className='w-24 h-24 rounded-full overflow-hidden cursor-pointer border-gray-500 border-2 mx-auto'>
+                              <img
+                                 src={avatar}
+                                 alt='avatar'
+                                 className='w-full h-full object-cover'
+                              />
+                           </div>
+                        </div>
+                        <p className='text-lg text-center'>Choose avatar</p>
+                        <div className='flex justify-center gap-2 py-4'>
+                           <Avatar
+                              onClick={e =>
+                                 setAvatar(e.target.getAttribute('src'))
+                              }
+                              src='https://static.vecteezy.com/system/resources/thumbnails/019/896/012/small_2x/female-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png'
+                           />
+
+                           <Avatar
+                              onClick={e =>
+                                 setAvatar(e.target.getAttribute('src'))
+                              }
+                              src='https://cdn5.vectorstock.com/i/1000x1000/51/99/icon-of-user-avatar-for-web-site-or-mobile-app-vector-3125199.jpg'
+                           />
+
+                           <Avatar
+                              onClick={e =>
+                                 setAvatar(e.target.getAttribute('src'))
+                              }
+                              src='https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png'
+                           />
+                           <Avatar
+                              onClick={e =>
+                                 setAvatar(e.target.getAttribute('src'))
+                              }
+                              src='https://cdn1.iconfinder.com/data/icons/user-pictures/100/female1-512.png'
+                           />
+                           <Avatar
+                              onClick={e =>
+                                 setAvatar(e.target.getAttribute('src'))
+                              }
+                              src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg'
+                           />
+                        </div>
+                     </>
                   )}
 
                   <div className='flex gap-1'>

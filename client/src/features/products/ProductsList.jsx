@@ -26,7 +26,7 @@ function ProductsList() {
    if (loading) return <Loading />
    return (
       <section className='flex flex-col justify-center items-center gap-6'>
-         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 items-stretch gap-3'>
+         <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 items-stretch gap-3'>
             {products[search] &&
                products[search].map(prod => (
                   <Card key={prod.id} product={prod} />

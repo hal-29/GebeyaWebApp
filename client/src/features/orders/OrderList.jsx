@@ -38,9 +38,20 @@ function OrderList() {
                </tr>
             </thead>
             <tbody>
-               {orders.map(order => (
-                  <OrderItem key={order.id} order={order} />
-               ))}
+               {orders.length ? (
+                  orders.map(order => (
+                     <OrderItem key={order.id} order={order} />
+                  ))
+               ) : (
+                  <tr>
+                     <td
+                        colSpan='5'
+                        className='py-6 text-3xl font-semibold text-center'
+                     >
+                        there are no orders.
+                     </td>
+                  </tr>
+               )}
             </tbody>
          </table>
       </div>

@@ -81,7 +81,7 @@ export function signupUser(credential, cb) {
    return async dispatch => {
       try {
          dispatch(setLoading(true))
-         const response = await api.post('auth/signup', credential)
+         const response = await api.post('user/create', credential)
          dispatch(signup(response.account))
          cb?.()
       } catch (error) {

@@ -37,7 +37,9 @@ function Navbar() {
          <div className='flex justify-between grow py-2  mx-auto flex-wrap gap-2  sm:py-4'>
             <div className='inline-flex gap-4 -order-4'>
                <Link to='/' className='text-xl btn btn-sm btn-ghost'>
-                  E-market
+                  <span className='w-16 h-8 overflow-hidden'>
+                     <img src='lg.png' alt='logo' className='w-full h-full ' />
+                  </span>
                </Link>
             </div>
             <div className='flex gap-3 items-center font-semibold sm:order-2'>

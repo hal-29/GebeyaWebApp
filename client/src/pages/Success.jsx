@@ -1,6 +1,10 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 function Success() {
+   useEffect(() => {
+      document.title = 'Payment successful'
+   })
    return (
       <>
          <div className='bg-gray-100'>

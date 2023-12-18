@@ -3,11 +3,16 @@ import { useSearchParams } from 'react-router-dom'
 import Pagination from '../../ui/Pagination'
 import calculateNextPage from '../../utils/calculateNextPage'
 import Card from '../dashboard/Card'
+import { useEffect } from 'react'
 
 function Results({ query, count, results }) {
    const [searchQuery, setSearchQuery] = useSearchParams()
-
    const { prevPageQuery, nextPageQuery } = calculateNextPage(query)
+
+   useEffect(() => {
+      document.title = `Search | ${searchQuery.get('q')}`
+   }, [searchQuery])
+
    return (
       <div className='flex flex-col gap-2 items-center '>
          <div className='text-2xl p-4'>

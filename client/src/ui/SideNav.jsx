@@ -47,11 +47,11 @@ function SideNav() {
                <Link to='signin'>Login or Signup to your account</Link>
             </div>
          )}
-         <ul className='px-4 inline-flex w-full max-w-[12rem] flex-col gap-2 font-semibold'>
+         <ul className='px-4 inline-flex w-full max-w-[12rem] flex-col gap-2 font-semibold '>
             <NavLink
                onClick={() => setOpenNav(false)}
                to='/'
-               className='bg-gray-600/10 px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-600 hover:text-gray-100'
+               className=' navlink px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-400 hover:text-gray-100'
             >
                <span className='pr-2 text-lg fa-solid fa-house'></span>
                Home
@@ -59,7 +59,7 @@ function SideNav() {
             <NavLink
                onClick={() => setOpenNav(false)}
                to='/profile'
-               className='bg-gray-600/10 px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-600 hover:text-gray-100'
+               className=' navlink px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-400 hover:text-gray-100'
             >
                <span className='pr-2 text-lg fa-solid fa-user'></span>
                Profile
@@ -67,7 +67,7 @@ function SideNav() {
             <NavLink
                onClick={() => setOpenNav(false)}
                to='/wishlist'
-               className='bg-gray-600/10 px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-600 hover:text-gray-100'
+               className=' navlink px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-400 hover:text-gray-100'
             >
                <span className='pr-2 text-lg fa-solid fa-bookmark'></span>
                Wishlist
@@ -75,7 +75,7 @@ function SideNav() {
             <NavLink
                onClick={() => setOpenNav(false)}
                to='/orders'
-               className='bg-gray-600/10 px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-600 hover:text-gray-100'
+               className=' navlink px-4 py-1 rounded-md cursor-pointer max-w-[10rem] hover:bg-gray-400 hover:text-gray-100'
             >
                <span className='pr-2 text-lg fa-solid fa-bag-shopping'></span>
                Orders

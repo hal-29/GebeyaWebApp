@@ -21,6 +21,10 @@ function ProductDetails() {
       if (!items[productId]) dispatch(loadProduct(productId))
    }, [productId, dispatch, items])
 
+   useEffect(() => {
+      document.title = items[productId]?.name || 'Product'
+   }, [items, productId])
+
    if (loading || !items[productId]) return <Loading />
    return (
       <section className='flex gap-4 p-4 h-full'>

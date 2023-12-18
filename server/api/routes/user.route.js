@@ -1,6 +1,8 @@
 const { Router } = require('express')
 const router = Router()
+const validateUserCrediential = require('../validations/validateUserCredential')
+const { createUser } = require('../controllers/user.controller')
 
-router.get('/', (req, res) => res.send('product'))
+router.post('/create', validateUserCrediential, createUser)
 
 module.exports = router
