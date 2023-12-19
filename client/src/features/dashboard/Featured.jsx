@@ -23,9 +23,10 @@ function Featured() {
             </Link>
          </div>
          <div className='flex py-4 gap-4 overflow-x-auto'>
-            {phones.map(phone => {
-               return <Card key={phone.id} product={phone} />
-            })}
+            {!!phones &&
+               phones.map(phone => {
+                  return <Card key={phone.id} product={phone} />
+               })}
          </div>
       </section>
    )
