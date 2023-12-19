@@ -19,7 +19,7 @@ function SideNav() {
 
    return (
       <aside
-         className={`row-start-1 row-end-3 h-screen pt-20 flex flex-col items-center gap-6 bg-gray-200/80 backdrop-blur-lg transition-all duration-300 w-full max-w-sm absolute top-0 z-[1000] lg:relative lg:left-0 ${
+         className={`row-start-1 row-end-3 h-screen pt-20 flex flex-col items-center gap-6 bg-gray-200/80 backdrop-blur-lg transition-all duration-300 w-full max-w-md absolute top-0 z-[1000] lg:relative lg:left-0 ${
             openNav ? 'left-0' : '-left-full'
          } `}
       >

@@ -34,15 +34,16 @@ function Navbar() {
                </div>
             </button>
          </div>
-         <div className='flex justify-between grow py-2  mx-auto flex-wrap gap-2  sm:py-4'>
-            <div className='inline-flex gap-4 -order-4'>
+         <div className='flex justify-end md:justify-between grow pb-2 pt-4  mx-auto flex-wrap gap-2  sm:py-4'>
+            <div className='gap-4 -order-4 hidden md:inline-flex'>
                <Link to='/' className='text-xl btn btn-sm btn-ghost'>
                   <span className='w-16 h-8 overflow-hidden'>
                      <img src='lg.png' alt='logo' className='w-full h-full ' />
                   </span>
+                  <span className='hidden md:block'>Emarket</span>
                </Link>
             </div>
-            <div className='flex gap-3 items-center font-semibold sm:order-2'>
+            <div className='flex gap-3 items-center font-semibold sm:order-2 md-auto '>
                {!account && (
                   <Link to='/signin' className='border-r-2 px-4'>
                      <span className='fa-solid fa-user'></span> Sign Up/Sign In
