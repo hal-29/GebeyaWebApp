@@ -19,6 +19,8 @@ app.use(
          'http://localhost:3000',
          'http://localhost:4173',
          'http://127.0.0.1:4173',
+         'https://emarket-29.vercel.app',
+         'https://emarket-et1sn1s78-haileiyesus-projects.vercel.app',
       ],
       credentials: true,
    })
