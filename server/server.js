@@ -35,10 +35,6 @@ app.use(handleErrors)
 
 connectDb(function () {
    app.listen(PORT, () =>
-      console.log(
-         chalk.bold.bgBlueBright(
-            `SERVER STARTED ON http://localhost:${PORT} 📡`
-         )
-      )
+      console.log(chalk.bold.bgBlueBright(`SERVER RUNNING📡`))
    )
 })
