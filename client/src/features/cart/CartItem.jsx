@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from 'react-redux'
 import { removeCartItem, setCartCount } from './cartSlice'
+import Image from '../../ui/Image'
 
 function CartItem({ item }) {
    const dispatch = useDispatch()
@@ -8,7 +9,7 @@ function CartItem({ item }) {
    return (
       <div className='flex  gap-1 md:gap-3  p-1 md:p-2 border-b relative h-44'>
          <div className='basis-1/4 shrink-0 rounded-lg overflow-hidden'>
-            <img
+            <Image
                className='h-full w-full object-cover'
                src={item.images[0]}
                alt='cart item'

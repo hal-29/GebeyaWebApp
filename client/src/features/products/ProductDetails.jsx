@@ -7,6 +7,7 @@ import Button from '../../ui/Button'
 import Rating from '../../ui/Rating'
 import { addToCart, removeCartItem } from '../cart/cartSlice'
 import Loading from '../../ui/Loading'
+import Image from '../../ui/Image'
 
 function ProductDetails() {
    const [activePhoto, setActivePhoto] = useState(0)
@@ -31,7 +32,7 @@ function ProductDetails() {
          <div className='basis-1/2 shrink-0 flex flex-col justify-between '>
             <div className='grow overflow-hidden'>
                {items[productId] && items[productId].images && (
-                  <img
+                  <Image
                      src={items[productId].images[activePhoto]}
                      alt={items[productId].name}
                      className='w-full h-full object-cover'
@@ -50,7 +51,7 @@ function ProductDetails() {
                            } `}
                            onClick={() => setActivePhoto(i)}
                         >
-                           <img
+                           <Image
                               src={img}
                               className='w-full h-full object-cover'
                               alt={items[productId].name}

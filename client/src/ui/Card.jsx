@@ -2,10 +2,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { addToCart, removeCartItem } from '../cart/cartSlice'
-import Button from '../../ui/Button'
-import Rating from '../../ui/Rating'
-import { addWishlist, removeWishlist } from '../wishlists/wishlistSlice'
+import { addToCart, removeCartItem } from '../features/cart/cartSlice'
+import Button from './Button'
+import Rating from './Rating'
+import {
+   addWishlist,
+   removeWishlist,
+} from '../features/wishlists/wishlistSlice'
+import Image from './Image'
 
 function Card({ product }) {
    const dispatch = useDispatch()
@@ -16,11 +20,10 @@ function Card({ product }) {
    const isWishlisted = wishlists.some(list => list.id === id)
    return (
       <div className='flex'>
-         {/* <div className='flex flex-col relative w-64 min-h-[22rem] max-w-xs  rounded-lg bg-white shadow-md'> */}
          <div className='flex flex-col relative w-44 xs:w-52 sm:w-64 min-h-[22rem] max-w-xs  rounded-lg bg-white shadow-md'>
             <Link to={`/product/${id}`}>
-               <img
-                  className='h-40 w-full rounded-t-lg object-cover'
+               <Image
+                  className='h-40 w-full rounded-t-lg object-contain mix-blend-multiply'
                   src={images[0]}
                   alt={name}
                />

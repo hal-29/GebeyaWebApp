@@ -1,12 +1,13 @@
 import { useSelector } from 'react-redux'
-import Card from './Card'
 import { Link } from 'react-router-dom'
 import Loading from '../../ui/Loading'
+import Card from '../../ui/Card'
 
 function Featured() {
    const { phones, loading } = useSelector(store => store.home)
 
    if (loading) return <Loading />
+   if (!phones.length) return <div></div>
    return (
       <section className='p-2 max-w-6xl mx-auto'>
          <div className='flex justify-between border-b-2 items-end py-2'>
