@@ -14,17 +14,19 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(
    cors({
-      origin: [
-         'http://127.0.0.1:3000',
-         'http://localhost:3000',
-         'http://localhost:4173',
-         'http://127.0.0.1:4173',
-         'https://emarket-29.vercel.app',
-         'https://emarket-et1sn1s78-haileiyesus-projects.vercel.app',
-      ],
+      origin: ['*'],
       credentials: true,
    })
 )
+app.use((req, res, next) => {
+   res.header('Access-Control-Allow-Credentials', true)
+   res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+   )
+   next()
+})
+
 app.use(cookieParser())
 
 app.use('/api/auth', require('./api/routes/auth.route'))
