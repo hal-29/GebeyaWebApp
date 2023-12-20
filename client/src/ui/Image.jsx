@@ -23,7 +23,10 @@ function Image({ src, alt, className }) {
       }
       fetchImageLink()
    }, [src])
-   if (loading) return <div>loading...</div>
+   if (loading)
+      return (
+         <div className='w-full h-full animate-pulse bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200'></div>
+      )
    return <img src={imageUrl} alt={alt} className={className} />
 }
 
