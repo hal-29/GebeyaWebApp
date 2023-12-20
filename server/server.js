@@ -17,8 +17,10 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(
    cors({
-      origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+      origin: process.env.FRONTEND_URL,
       credentials: true,
+      exposedHeaders: ['Content-Type', 'Authorization'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
    })
 )
 
@@ -35,6 +37,8 @@ app.use(handleErrors)
 
 connectDb(function () {
    app.listen(PORT, () =>
-      console.log(chalk.bold.bgBlueBright(`SERVER RUNNING📡`))
+      console.log(
+         chalk.bold.bgBlueBright(`SERVER LISTENING ON PORT ${PORT || ''}📡`)
+      )
    )
 })
