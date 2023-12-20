@@ -28,20 +28,19 @@ function ProductDetails() {
 
    if (loading || !items[productId]) return <Loading />
    return (
-      <section className='flex gap-4 p-4 h-full'>
+      <section className='flex flex-col sm:flex-row gap-4 p-4 h-full'>
          <div className='basis-1/2 shrink-0 flex flex-col justify-between '>
             <div className='grow overflow-hidden'>
                {items[productId] && items[productId].images && (
                   <Image
                      src={items[productId].images[activePhoto]}
                      alt={items[productId].name}
-                     className='w-full h-full object-cover'
+                     className='w-full h-full object-contain'
                   />
                )}
             </div>
             <div className=' shrink-0 overflow-x-auto whitespace-nowrap min-w-full'>
                {items[productId] &&
-                  items[productId].images &&
                   items[productId].images.map((img, i) => {
                      return (
                         <div
@@ -61,7 +60,7 @@ function ProductDetails() {
                   })}
             </div>
          </div>
-         <div className='flex flex-col gap-4'>
+         <div className='flex flex-col gap-4 py-4'>
             <h2 className='text-3xl font-semibold'>{items[productId].name}</h2>
             <p className=''>{items[productId].description}</p>
             <div className='flex  gap-3'>

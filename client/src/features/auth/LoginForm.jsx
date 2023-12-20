@@ -7,10 +7,11 @@ import * as Yup from 'yup'
 
 import Input from '../../ui/Input'
 import Button from '../../ui/Button'
-import { loginUser } from './authSlice'
+import { loginUser, setError } from './authSlice'
 
 function LoginForm() {
    const loading = useSelector(store => store.auth.loading)
+   const error = useSelector(store => store.auth.error)
    const dispatch = useDispatch()
    const navigate = useNavigate()
 
@@ -38,6 +39,15 @@ function LoginForm() {
          )
       },
    })
+
+   useEffect(() => {
+      if (error) {
+         toast.error(error)
+      }
+      return () => {
+         dispatch(setError(null))
+      }
+   }, [error, dispatch])
 
    return (
       <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 '>

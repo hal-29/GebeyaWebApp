@@ -8,10 +8,10 @@ async function loginUser(req, res, next) {
    if (!email || !password) return next(ERRORS.BAD_REQUEST)
 
    const user = await User.findOne({ email }).select('-wishlist')
-   if (!user) return next(ERRORS.INVALID_CREDIENTIAL)
+   if (!user) return next(ERRORS.WRONG_EMAIL_OR_PASSWORD)
 
    const isPasswordValid = await bcrypt.compare(password, user.password)
-   if (!isPasswordValid) return next(ERRORS.INVALID_CREDIENTIAL)
+   if (!isPasswordValid) return next(ERRORS.WRONG_EMAIL_OR_PASSWORD)
 
    const token = generateToken({ id: user._id })
 
@@ -31,7 +31,7 @@ async function getAuth(req, res, next) {
    if (!user) return next(ERRORS.NOT_FOUND)
    user.password = undefined
    res.status(200).json({
-      message: 'Successfully authenticated',
+      message: 'Authentication successful',
       account: user,
    })
 }

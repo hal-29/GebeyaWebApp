@@ -6,7 +6,10 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const chalk = require('chalk')
 
-const handleErrors = require('./api/middlewares/handleErrors')
+const {
+   handleErrors,
+   handleDatabaseError,
+} = require('./api/middlewares/handleErrors')
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -14,18 +17,10 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(
    cors({
-      origin: ['*'],
+      origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
       credentials: true,
    })
 )
-app.use((req, res, next) => {
-   res.header('Access-Control-Allow-Credentials', true)
-   res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-   )
-   next()
-})
 
 app.use(cookieParser())
 
@@ -35,6 +30,7 @@ app.use('/api/product', require('./api/routes/product.route'))
 app.use('/api/wishlist', require('./api/routes/wishList.route'))
 app.use('/api/order', require('./api/routes/order.route'))
 
+app.use(handleDatabaseError)
 app.use(handleErrors)
 
 connectDb(function () {

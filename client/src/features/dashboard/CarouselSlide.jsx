@@ -5,10 +5,6 @@ function CarouselSlide({ id, img }) {
          className='carousel-item relative w-full rounded-xl overflow-hidden after:content-[""] after:block after:w-full after:h-full after:absolute after:left-0 after:top-0  '
       >
          <img src={img} className='w-full h-full object-cover' />
-         <div className='absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2 z-50'>
-            <span className='btn btn-circle'>❮</span>
-            <span className='btn btn-circle'>❯</span>
-         </div>
       </div>
    )
 }
