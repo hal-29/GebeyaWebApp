@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true
 // const BASE_URL = `${
 //    import.meta.env.VITE_SERVER_DOMAIN || process.env.VITE_SERVER_DOMAIN
 // }/api/`
-const BASE_URL = 'https://emarket-server-api.vercel.app'
+const BASE_URL = 'https://emarket-server-api.vercel.app/api'
 
 const headers = {
    'Content-Type': 'application/json',
