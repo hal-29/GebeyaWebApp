@@ -38,8 +38,8 @@ async function orderProduct(req, res, next) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: 'http://127.0.0.1:3000/success',
-      cancel_url: 'http://127.0.0.1:3000',
+      success_url: `${process.env.FRONTEND_URL}/success`,
+      cancel_url: process.env.FRONTEND_URL,
    })
 
    const order = new Order({
