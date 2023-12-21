@@ -1,9 +1,10 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
-const BASE_URL = `${
-   import.meta.env.VITE_SERVER_DOMAIN || process.env.VITE_SERVER_DOMAIN
-}/api/`
+// const BASE_URL = `${
+//    import.meta.env.VITE_SERVER_DOMAIN || process.env.VITE_SERVER_DOMAIN
+// }/api/`
+const BASE_URL = 'https://emarket-api-zaoh.onrender.com/api'
 
 const headers = {
    'Content-Type': 'application/json',
@@ -12,7 +13,7 @@ const headers = {
 const api = {
    get: async endpoint => {
       try {
-         const response = await axios.get(`${BASE_URL}${endpoint}`)
+         const response = await axios.get(`${BASE_URL}/${endpoint}`)
          return response.data
       } catch (error) {
          throw handleError(error)
@@ -21,7 +22,7 @@ const api = {
 
    post: async (endpoint, data) => {
       try {
-         const response = await axios.post(`${BASE_URL}${endpoint}`, data, {
+         const response = await axios.post(`${BASE_URL}/${endpoint}`, data, {
             headers,
          })
          return response.data
@@ -32,7 +33,7 @@ const api = {
 
    put: async (endpoint, data) => {
       try {
-         const response = await axios.put(`${BASE_URL}${endpoint}`, data, {
+         const response = await axios.put(`${BASE_URL}/${endpoint}`, data, {
             headers,
          })
          return response.data
@@ -43,7 +44,7 @@ const api = {
 
    delete: async endpoint => {
       try {
-         const response = await axios.delete(`${BASE_URL}${endpoint}`, {
+         const response = await axios.delete(`${BASE_URL}/${endpoint}`, {
             headers,
          })
          return response.data
