@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+   db:
+      image: mongo
+      container_name: ecommerce-db
+      networks:
+         - ecommerce-network
+   api:
+      build: ./server
+      container_name: ecommerce-api
+      ports:
+         - '5000:5000'
+      volumes:
+         - './server:/app'
+         - '/app/node_modules'
+      depends_on:
+         - db
+      networks:
+         - ecommerce-network
+   ui:
+      build: ./client
+      container_name: ecommerce-ui
+      ports:
+         - '4000:4000'
+      volumes:
+         - './client:/app'
+         - '/app/node_modules'
+      depends_on:
+         - api
+         - db
+      networks:
+         - ecommerce-network
+networks:
+   ecommerce-network:
+      driver: bridge
