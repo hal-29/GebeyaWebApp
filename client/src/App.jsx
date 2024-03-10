@@ -1,16 +1,8 @@
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
-import Navbar from './ui/Navbar'
-import Footer from './components/Footer'
 
 function App() {
-   return (
-      <>
-         <Navbar />
-         <RouterProvider router={router} />
-         <Footer />
-      </>
-   )
+   return <RouterProvider router={router}></RouterProvider>
 }
 
 export default App
