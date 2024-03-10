@@ -1,4 +1,4 @@
-import Container from '../ui/Container'
+import { useOutletContext } from 'react-router-dom'
 import { PiListMagnifyingGlass, PiMagnifyingGlassBold } from 'react-icons/pi'
 import { RxRocket } from 'react-icons/rx'
 import { MdSupportAgent } from 'react-icons/md'
@@ -8,8 +8,11 @@ import { TiShoppingCart } from 'react-icons/ti'
 import { TbHeart } from 'react-icons/tb'
 
 function Hero() {
+   const state = useOutletContext()
+   console.log(state)
+
    return (
-      <Container className='inline-grid grid-cols-[minmax(24rem,1fr)_3fr] grid-rows-[min-content,1fr,minmax(min-content,10rem)] pb-10'>
+      <section className='inline-grid grid-cols-[minmax(24rem,1fr)_3fr] grid-rows-[min-content,1fr,minmax(min-content,10rem)] pb-10'>
          <div className='col-span-full flex justify-between items-center py-4 px-2'>
             <h1 className='font-semibold text-2xl text-gray-800/90'>
                Electronics
@@ -122,7 +125,7 @@ function Hero() {
                </div>
             </div>
          </section>
-      </Container>
+      </section>
    )
 }
 export default Hero
