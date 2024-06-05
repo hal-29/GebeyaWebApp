@@ -6,9 +6,10 @@ import { PiMagnifyingGlassBold } from 'react-icons/pi'
 
 Navbar.propTypes = {
    setIsOpen: PropTypes.func,
+   setShowAuth: PropTypes.func,
 }
 
-function Navbar({ setIsOpen }) {
+function Navbar({ setIsOpen, setShowAuth }) {
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>
          <Wrapper className='flex items-center gap-3'>
@@ -53,6 +54,12 @@ function Navbar({ setIsOpen }) {
             <div>
                <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
                   Sign out
+               </button>{' '}
+               <button
+                  className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'
+                  onClick={() => setShowAuth(true)}
+               >
+                  Sign in
                </button>
             </div>
          </Wrapper>
