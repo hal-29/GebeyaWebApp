@@ -2,6 +2,9 @@ import { createBrowserRouter } from 'react-router-dom'
 import Home from './pages/Home'
 import Products from './pages/Products'
 import Container from './ui/Container'
+import Wishlist from './pages/Wishlist'
+import Orders from './pages/Orders'
+import Account from './pages/Account'
 
 const router = createBrowserRouter([
    {
@@ -22,15 +25,15 @@ const router = createBrowserRouter([
          },
          {
             path: '/wishlist',
-            element: <main className=''>Wishlist</main>,
+            element: <Wishlist />,
          },
          {
-            path: '/history',
-            element: <main className=''>History</main>,
+            path: '/orders',
+            element: <Orders />,
          },
          {
-            path: '/profile',
-            element: <main className=''>Profile</main>,
+            path: '/account',
+            element: <Account />,
          },
       ],
    },

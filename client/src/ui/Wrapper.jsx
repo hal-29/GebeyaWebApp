@@ -7,7 +7,9 @@ Wrapper.propTypes = {
 
 function Wrapper({ children, className }) {
    return (
-      <div className={`mx-auto px-6 max-w-[1400px] ${className}`}>
+      <div
+         className={`mx-auto px-6 max-w-[1400px] transition-all ${className}`}
+      >
          {children}
       </div>
    )

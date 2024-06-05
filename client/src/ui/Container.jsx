@@ -12,10 +12,10 @@ function Container() {
       <>
          <Navbar setIsOpen={setIsOpen} />
          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-         <Wrapper>
+         <Wrapper className={`${isOpen ? 'blur-sm brightness-75' : ''}`}>
             <Outlet />
          </Wrapper>
-         <Footer />
+         <Footer className={`${isOpen ? 'blur-sm brightness-75' : ''}`} />
       </>
    )
 }

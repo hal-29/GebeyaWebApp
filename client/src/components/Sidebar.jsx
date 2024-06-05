@@ -11,15 +11,16 @@ function Sidebar({ isOpen, setIsOpen }) {
    const sidebarEl = useRef(null)
 
    useEffect(() => {
-      window.addEventListener(
-         'click',
-         e => {
-            if (sidebarEl.current && !sidebarEl.current.contains(e.target)) {
-               setIsOpen(false)
-            }
-         },
-         true
-      )
+      const handler = e => {
+         if (sidebarEl.current && !sidebarEl.current.contains(e.target)) {
+            setIsOpen(false)
+         }
+      }
+      window.addEventListener('click', handler, true)
+
+      return () => {
+         window.removeEventListener('click', handler, true)
+      }
    }, [isOpen, setIsOpen])
 
    return (

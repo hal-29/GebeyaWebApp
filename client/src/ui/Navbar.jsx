@@ -11,9 +11,12 @@ Navbar.propTypes = {
 function Navbar({ setIsOpen }) {
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>
-         <Wrapper className='flex  items-center gap-3'>
-            <h4 className=''>welcome to electonic store</h4>
-            <div className='flex max-w-md mx-auto min-w-[30rem]'>
+         <Wrapper className='flex items-center gap-3'>
+            <div className='flex items-end gap-1'>
+               <div className='bg-green-400/20 rounded-full w-8 h-8'></div>
+               <p>John Doe</p>
+            </div>
+            <div className='flex mx-auto min-w-[30rem] max-w-md'>
                <input
                   type='search'
                   name='search'
@@ -34,21 +37,23 @@ function Navbar({ setIsOpen }) {
             <NavLink to='/wishlist' className='[&.active]:text-red-800/80'>
                Wishlist
             </NavLink>
-            <NavLink to='/history' className='[&.active]:text-red-800/80'>
-               History
-            </NavLink>
-            <NavLink to='/profile' className='[&.active]:text-red-800/80'>
-               Profile
+            <NavLink to='/orders' className='[&.active]:text-red-800/80'>
+               Orders
             </NavLink>
 
             <div
-               className='flex gap-1 pl-2 text-red-800/90 cursor-pointer'
+               className='box-border flex gap-1 px-3 py-1 pl-2 border border-red-800 text-red-800 cursor-pointer'
                onClick={() => setIsOpen(prv => !prv)}
             >
                Carts
                <span className='text-2xl'>
                   <TiShoppingCart />
                </span>
+            </div>
+            <div>
+               <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
+                  Sign out
+               </button>
             </div>
          </Wrapper>
       </nav>

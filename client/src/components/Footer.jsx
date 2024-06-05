@@ -1,10 +1,13 @@
-import { TbHeart } from 'react-icons/tb'
+import { PropTypes } from 'prop-types'
 import Wrapper from '../ui/Wrapper'
-import { TiShoppingCart } from 'react-icons/ti'
 
-function Footer() {
+Footer.propTypes = {
+   className: PropTypes.string,
+}
+
+function Footer({ className }) {
    return (
-      <footer>
+      <footer className={className}>
          <section className='flex flex-col justify-center items-center gap-4 bg-gray-200/80 py-20'>
             <h1 className='font-semibold text-3xl text-gray-800/90'>
                Subscribe to our newsletter
@@ -63,7 +66,7 @@ function Footer() {
                   <p className='text-gray-50/40 text-sm'>About Us</p>
                   <p className='text-gray-50/40 text-sm'>Careers</p>
                   <p className='text-gray-50/40 text-sm'>Press</p>
-                  <p className='text-gray-50/40 text-sm'>Faq's</p>
+                  <p className='text-gray-50/40 text-sm'>Faq&apos;s</p>
                </div>
                <div className='flex flex-col gap-2'>
                   <h1 className='text-lg'>Company</h1>

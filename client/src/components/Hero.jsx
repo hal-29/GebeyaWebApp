@@ -9,10 +9,10 @@ function Hero() {
       <>
          <section className='flex bg-gray-200 mb-4 p-8 rounded-md min-h-96'>
             <div className='flex flex-col justify-center items-start gap-4'>
-               <h1 className='font-semibold text-4xl text-gray-800/90'>
+               <h1 className='text-6xl text-gray-900/90'>
                   Grub your favorite gadgets here
                </h1>
-               <h4 className='text-gray-700/70 text-xl'>
+               <h4 className='text-gray-900/70 text-xl'>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
                   doloremque, quidem, voluptas, quibusdam nemo laborum
                   exercitationem quod doloribus quae voluptates
