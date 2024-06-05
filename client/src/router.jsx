@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Home from './pages/Home'
-import Cart from './pages/Cart'
-import Product from './pages/Product'
+import Products from './pages/Products'
 import Container from './ui/Container'
 
 const router = createBrowserRouter([
@@ -14,12 +13,24 @@ const router = createBrowserRouter([
             element: <Home />,
          },
          {
-            path: '/cart',
-            element: <Cart />,
+            path: '/products',
+            element: <Products />,
          },
          {
-            path: '/product/:id',
-            element: <Product />,
+            path: '/products/:id',
+            element: <main className=''>Product item</main>,
+         },
+         {
+            path: '/wishlist',
+            element: <main className=''>Wishlist</main>,
+         },
+         {
+            path: '/history',
+            element: <main className=''>History</main>,
+         },
+         {
+            path: '/profile',
+            element: <main className=''>Profile</main>,
          },
       ],
    },

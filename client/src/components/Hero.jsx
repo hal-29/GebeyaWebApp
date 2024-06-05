@@ -1,131 +1,92 @@
-import { useOutletContext } from 'react-router-dom'
-import { PiListMagnifyingGlass, PiMagnifyingGlassBold } from 'react-icons/pi'
+import { Link } from 'react-router-dom'
 import { RxRocket } from 'react-icons/rx'
 import { MdSupportAgent } from 'react-icons/md'
 import { GiStarsStack } from 'react-icons/gi'
 import { IoGiftOutline } from 'react-icons/io5'
-import { TiShoppingCart } from 'react-icons/ti'
-import { TbHeart } from 'react-icons/tb'
 
 function Hero() {
-   const state = useOutletContext()
-   console.log(state)
-
    return (
-      <section className='inline-grid grid-cols-[minmax(24rem,1fr)_3fr] grid-rows-[min-content,1fr,minmax(min-content,10rem)] pb-10'>
-         <div className='col-span-full flex justify-between items-center py-4 px-2'>
-            <h1 className='font-semibold text-2xl text-gray-800/90'>
-               Electronics
-            </h1>
-            <div className='flex grow max-w-screen-md'>
-               <input
-                  type='search'
-                  name='search'
-                  id='search'
-                  placeholder='Search our catalog'
-                  className='border px-4 py-2 focus:outline-none grow'
-               />
-               <button className='bg-red-800 text-xl px-6 text-gray-100'>
-                  <PiMagnifyingGlassBold />
-               </button>
+      <>
+         <section className='flex bg-gray-200 mb-4 p-8 rounded-md min-h-96'>
+            <div className='flex flex-col justify-center items-start gap-4'>
+               <h1 className='font-semibold text-4xl text-gray-800/90'>
+                  Grub your favorite gadgets here
+               </h1>
+               <h4 className='text-gray-700/70 text-xl'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                  doloremque, quidem, voluptas, quibusdam nemo laborum
+                  exercitationem quod doloribus quae voluptates
+               </h4>
+               <Link
+                  to='/products'
+                  className='bg-red-800/90 px-4 py-2 text-gray-50'
+               >
+                  Shop Now
+               </Link>
             </div>
-            <div className='flex gap-2 text-3xl'>
-               <span>
-                  <TbHeart />
-               </span>
-               <span>
-                  <TiShoppingCart />
-               </span>
-            </div>
-         </div>
-         <ul className=''>
-            <div className='flex justify-between items-center text-lg  bg-gray-950 text-gray-50 px-3 py-2'>
-               <h3 className=''>Browse Catagories</h3>
-               <span className='text-3xl'>
-                  <PiListMagnifyingGlass />
-               </span>
-            </div>
-            <li className='border px-4 py-3 text-gray-900/80'>Computer</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Smartphone</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Camera</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Smartwatch</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Smart TV</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Speaker</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Airpod</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Macbook</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Pendrive</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Tablet</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Desktop</li>
-            <li className='border px-4 py-3 text-gray-900/80'>Mouse</li>
-         </ul>
-         <section className='p-2'>
-            <ul className='flex gap-4 items-center px-2 pb-2'>
-               <li className=''>Catagories</li>
-               <li className=''>Collection</li>
-               <li className=''>Pages</li>
-            </ul>
-            <div className=''>
+            <div className='basis-1/2 shrink-0'>
                <img
-                  src='https://images.unsplash.com/photo-1528297506728-9533d2ac3fa4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                  alt=''
+                  className='max-h-96 object-contain'
+                  src='https://cdn0.it4profit.com/s3size/rt:fill/w:1024/h:1024/g:no/el:1/f:webp/plain/s3://cms/product/0a/1e/0a1e4b0d06b4f5a846a8e717e19c0eab/221201150009625631.webp'
+                  alt='gadget image'
                />
             </div>
          </section>
-         <section className='col-span-full flex justify-evenly'>
+         <section className='flex justify-evenly col-span-full py-10'>
             <div className='flex items-center gap-2'>
-               <span className='row-span-full row-start-1 text-red-800  row-end-3 text-5xl'>
+               <span className='row-span-full row-start-1 row-end-3 text-5xl text-red-800'>
                   <RxRocket />
                </span>
                <div>
-                  <h2 className=' font-semibold text-gray-800/90 pt-2'>
+                  <h2 className='pt-2 font-semibold text-gray-800/90'>
                      Free adn fast delivery
                   </h2>
-                  <p className='text-sm text-gray-700/70 pb-2'>
+                  <p className='pb-2 text-gray-700/70 text-sm'>
                      fast order delivery at your door step
                   </p>
                </div>
             </div>
             <div className='flex items-center gap-2'>
-               <span className='row-span-full row-start-1 text-red-800  row-end-3 text-5xl'>
+               <span className='row-span-full row-start-1 row-end-3 text-5xl text-red-800'>
                   <IoGiftOutline />
                </span>
                <div>
-                  <h2 className=' font-semibold text-gray-800/90 pt-2'>
+                  <h2 className='pt-2 font-semibold text-gray-800/90'>
                      Gift card
                   </h2>
-                  <p className='text-sm text-gray-700/70 pb-2'>
+                  <p className='pb-2 text-gray-700/70 text-sm'>
                      get gift card on every purchase
                   </p>
                </div>
             </div>
             <div className='flex items-center gap-2'>
-               <span className='row-span-full row-start-1 text-red-800  row-end-3 text-5xl'>
+               <span className='row-span-full row-start-1 row-end-3 text-5xl text-red-800'>
                   <GiStarsStack />
                </span>
                <div>
-                  <h2 className=' font-semibold text-gray-800/90 pt-2'>
+                  <h2 className='pt-2 font-semibold text-gray-800/90'>
                      Best quality products
                   </h2>
-                  <p className='text-sm text-gray-700/70 pb-2'>
+                  <p className='pb-2 text-gray-700/70 text-sm'>
                      we provide best quality products
                   </p>
                </div>
             </div>
             <div className='flex items-center gap-2'>
-               <span className='row-span-full row-start-1 text-red-800  row-end-3 text-5xl'>
+               <span className='row-span-full row-start-1 row-end-3 text-5xl text-red-800'>
                   <MdSupportAgent />
                </span>
                <div>
-                  <h2 className=' font-semibold text-gray-800/90 pt-2'>
+                  <h2 className='pt-2 font-semibold text-gray-800/90'>
                      24/7 customer support
                   </h2>
-                  <p className='text-sm text-gray-700/70 pb-2'>
+                  <p className='pb-2 text-gray-700/70 text-sm'>
                      all time support for our customer
                   </p>
                </div>
             </div>
          </section>
-      </section>
+      </>
    )
 }
 export default Hero

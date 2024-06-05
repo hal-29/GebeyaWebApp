@@ -1,21 +1,34 @@
+import { useEffect, useRef } from 'react'
 import CartItem from './CartItem'
-import { FaAngleRight, FaAngleLeft } from 'react-icons/fa'
+import PropTypes from 'prop-types'
+
+Sidebar.propTypes = {
+   isOpen: PropTypes.bool,
+   setIsOpen: PropTypes.func,
+}
 
 function Sidebar({ isOpen, setIsOpen }) {
+   const sidebarEl = useRef(null)
+
+   useEffect(() => {
+      window.addEventListener(
+         'click',
+         e => {
+            if (sidebarEl.current && !sidebarEl.current.contains(e.target)) {
+               setIsOpen(false)
+            }
+         },
+         true
+      )
+   }, [isOpen, setIsOpen])
+
    return (
       <aside
-         className={`top-0 fixed flex flex-col gap-2 bg-white shadow-md p-4 w-80 h-full transition-all ${
+         ref={sidebarEl}
+         className={`top-12 fixed z-20  flex flex-col gap-2 bg-white shadow-md p-4 w-80 h-[calc(100svh_-3rem)] transition-all sidebar ${
             isOpen ? 'right-0' : '-right-full'
          }`}
       >
-         <div className='flex'>
-            <span
-               className='text-2xl hover:text-red-400 leading-none cursor-pointer'
-               onClick={() => setIsOpen(false)}
-            >
-               <FaAngleRight />
-            </span>
-         </div>
          <h2 className='py-2 border-b font-semibold'>There are 3 products</h2>
          <div className='flex flex-col gap-2 border-b overflow-auto grow'>
             <CartItem />

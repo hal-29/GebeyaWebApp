@@ -3,17 +3,20 @@ import Navbar from './Navbar'
 import Sidebar from '../components/Sidebar'
 import Footer from '../components/Footer'
 import { useState } from 'react'
+import Wrapper from './Wrapper'
 
 function Container() {
    const [isOpen, setIsOpen] = useState(false)
 
    return (
-      <div>
-         <Navbar />
+      <>
+         <Navbar setIsOpen={setIsOpen} />
          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-         <Outlet />
+         <Wrapper>
+            <Outlet />
+         </Wrapper>
          <Footer />
-      </div>
+      </>
    )
 }
 export default Container
