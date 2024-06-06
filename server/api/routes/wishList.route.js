@@ -7,11 +7,10 @@ const {
    removeWishList,
    getWishLists,
 } = require('../controllers/wishList.controller')
-const authenticate = require('../middlewares/authenticate')
 
-router.get('/', authenticate, getWishLists)
-router.post('/', authenticate, addToWishList)
-router.delete('/all', authenticate, removeAllWishList)
-router.delete('/:productId', authenticate, removeWishList)
+router.get('/', getWishLists)
+router.post('/', addToWishList)
+router.delete('/all', removeAllWishList)
+router.delete('/:productId', removeWishList)
 
 module.exports = router

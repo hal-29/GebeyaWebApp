@@ -3,7 +3,7 @@ const router = express.Router()
 const { orderProduct, getOrders } = require('../controllers/order.controller')
 const authenticate = require('../middlewares/authenticate')
 
-router.get('/', authenticate, getOrders)
-router.post('/', authenticate, orderProduct)
+router.get('/', getOrders)
+router.post('/', orderProduct)
 
 module.exports = router
