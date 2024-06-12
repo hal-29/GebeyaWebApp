@@ -4,6 +4,7 @@ import { FaXmark } from 'react-icons/fa6'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useKindeAuth } from '@kinde-oss/kinde-auth-react'
 
 const accountSchema = z.object({
    name: z.string().min(3, 'Name must be atleast 3 characters'),
@@ -23,12 +24,14 @@ Auth.propTypes = {
 }
 
 function Auth({ showAuth, setShowAuth }) {
+   const { login, register } = useKindeAuth()
    const formEl = useRef(null)
    const [activeForm, setActiveForm] = useState('login')
    const registerForm = useForm({
       resolver: zodResolver(accountSchema),
    })
-   const onRegisterSubmit = registerForm.handleSubmit(data => {
+   const onRegisterSubmit = registerForm.handleSubmit(async data => {
+      await register()
       console.log(data)
    })
 
@@ -36,7 +39,8 @@ function Auth({ showAuth, setShowAuth }) {
       resolver: zodResolver(loginSchema),
    })
 
-   const onLoginSubmit = loginForm.handleSubmit(data => {
+   const onLoginSubmit = loginForm.handleSubmit(async data => {
+      await login()
       console.log(data)
    })
 

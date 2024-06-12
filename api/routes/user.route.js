@@ -1,8 +1,8 @@
-const { Router } = require('express')
-const router = Router()
-const validateUserCrediential = require('../validations/validateUserCredential')
-const { createUser } = require('../controllers/user.controller')
+const { getUser } = require('@kinde-oss/kinde-node-express')
+const express = require('express')
+const { getUserInfo } = require('../controllers/user.controller')
+const router = express.Router()
 
-router.post('/create', validateUserCrediential, createUser)
+router.get('/', getUser, getUserInfo)
 
 module.exports = router
