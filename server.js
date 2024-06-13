@@ -62,9 +62,8 @@ app.use(handleErrors)
 connectDb(function () {
    app.listen(PORT, '127.0.0.1', () =>
       console.log(
-         chalk.bold.bgBlueBright(
-            `Server listening on http://127.0.0.1:${PORT}📡`
-         )
+         chalk.bgRedBright.bold(`Server listening on `),
+         chalk.bold(`http://127.0.0.1:${PORT} 📡`)
       )
    )
 })

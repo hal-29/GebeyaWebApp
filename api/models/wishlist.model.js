@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const orderSchema = new mongoose.Schema(
+const wishListSchema = new mongoose.Schema(
    {
-      client: {
+      user: {
          type: mongoose.Schema.Types.ObjectId,
          ref: 'User',
          required: true,
@@ -12,16 +12,6 @@ const orderSchema = new mongoose.Schema(
          ref: 'Product',
          required: true,
       },
-      total: {
-         type: Number,
-         required: true,
-      },
-      status: {
-         type: String,
-         required: true,
-         enum: ['pending', 'completed'],
-         default: 'pending',
-      },
    },
    {
       versionKey: false,
@@ -29,12 +19,13 @@ const orderSchema = new mongoose.Schema(
    }
 )
 
-orderSchema.set('toJSON', {
+wishListSchema.set('toJSON', {
    transform: function (doc, ret) {
       ret.id = ret._id
       delete ret._id
    },
 })
 
-const Order = mongoose.model('Order', orderSchema)
-module.exports = Order
+const WishList = mongoose.model('WishList', wishListSchema)
+
+module.exports = WishList

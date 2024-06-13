@@ -18,7 +18,7 @@ async function orderProduct(req, res, next) {
    const referenced = productReferences.map(ref => ({
       name: ref.name,
       price: ref.price * 1.16,
-      images: ref.images,
+      image: ref.image,
       count: products.find(pr => pr.id === ref.id.toString()).count,
    }))
 
@@ -27,7 +27,7 @@ async function orderProduct(req, res, next) {
          currency: 'usd',
          product_data: {
             name: product.name,
-            images: product.images,
+            image: product.image,
          },
          unit_amount: Math.round(product.price * 100),
       },

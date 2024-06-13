@@ -14,22 +14,15 @@ const productSchema = new mongoose.Schema(
          type: Number,
          required: true,
       },
-      stock: {
-         type: Number,
-         default: 1,
-      },
       category: {
          type: String,
          required: true,
       },
-      brand: {
+      image: {
          type: String,
          required: true,
       },
-      rating: {
-         type: Number,
-      },
-      images: {
+      tags: {
          type: [String],
          required: true,
       },
