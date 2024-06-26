@@ -1,6 +1,5 @@
 const { z } = require('zod')
 const Product = require('../models/product.model')
-const sendResponse = require('../../utils/sendResponse')
 
 const productSchema = z.object({
    name: z.string().min(3).max(100),
@@ -139,6 +138,50 @@ async function deleteProductById(req, res) {
    }
 }
 
+async function getCategories(req, res) {
+   const categories = await Product.aggregate([
+      {
+         $group: {
+            _id: { $toLower: '$category' },
+            count: { $sum: 1 },
+         },
+      },
+      {
+         $project: {
+            _id: 0,
+            category: '$_id',
+            count: 1,
+         },
+      },
+   ]).sort({ count: -1 })
+
+   res.status(200).json({ data: categories, error: null })
+}
+
+async function getTrendings(req, res) {
+   const { category, limit = 10, page = 1 } = req.query
+
+   const q = {}
+   if (category) {
+      Object.assign(q, { category })
+   }
+
+   const trendings = await Product.find(q)
+      .sort({ sold: -1 })
+      .limit(limit >= 1 ? limit : 10)
+      .skip((page >= 1 ? page - 1 : 1) * limit)
+
+   res.status(200).json({ data: trendings, error: null })
+}
+
+async function getSpecials(req, res) {
+   const specials = await Product.find({ price: { $lt: 300 } }).sort({
+      price: 1,
+   })
+
+   res.status(200).json({ data: specials, error: null })
+}
+
 module.exports = {
    createProduct,
    getAllProducts,
@@ -146,4 +189,7 @@ module.exports = {
    updateProductById,
    deleteProductById,
    searchProducts,
+   getCategories,
+   getTrendings,
+   getSpecials,
 }

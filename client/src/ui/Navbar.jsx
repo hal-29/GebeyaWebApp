@@ -10,17 +10,7 @@ Navbar.propTypes = {
 }
 
 function Navbar({ setIsOpen }) {
-   const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-   useEffect(() => {
-      const fetchUser = async () => {
-         const response = await fetch('/api/user')
-         if (response.ok) {
-            setIsAuthenticated(true)
-         }
-      }
-      fetchUser()
-   }, [])
+   const [isAuthenticated, setIsAuthenticated] = useState(true)
 
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>

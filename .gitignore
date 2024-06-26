@@ -25,3 +25,11 @@ dist-ssr
 
 # vercel
 vercel.json
+
+# env
+.env
+
+# local request tests
+requests
+# local dummy data
+dummy*
