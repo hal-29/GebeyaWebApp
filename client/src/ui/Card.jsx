@@ -1,8 +1,19 @@
+import { PropTypes } from 'prop-types'
 import { FaHeart, FaPlus } from 'react-icons/fa'
 
-function Card() {
+Card.propTypes = {
+   product: PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      category: PropTypes.string,
+      image: PropTypes.string,
+      price: PropTypes.number,
+   }),
+}
+
+function Card({ product }) {
    return (
-      <div className='relative flex flex-col shadow-sm min-w-52 h-full overflow-clip group'>
+      <div className='relative flex flex-col gap-2 shadow-sm min-w-52 h-full overflow-clip group'>
          <span className='group-hover:top-0 -top-10 left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer'>
             <FaHeart className='m-3 text-gray-50 text-lg' />
          </span>
@@ -16,11 +27,18 @@ function Card() {
                className='w-full h-full object-contain'
             />
          </div>
-         <div className='flex flex-col justify-center items-center py-4 grow'>
-            <span className='text-gray-600/90'>watch</span>
+         <div className='text-center'>
+            <h2 className='font-semibold text-gray-800/90 text-xl'>
+               {product.name}
+            </h2>
+         </div>
+         <div className='flex flex-col justify-center items-center pb-4'>
+            <span className='text-gray-600/90'>{product.category}</span>
             <span>
-               <strong>Rs.110.00 </strong>
-               <strike className='text-gray-500'>Rs.130.00</strike>
+               <strong>Rs.{Number(product.price).toFixed(2)} </strong>
+               <strike className='text-gray-500'>
+                  Rs.{Number(product.price * 1.15).toFixed(2)}
+               </strike>
             </span>
          </div>
       </div>

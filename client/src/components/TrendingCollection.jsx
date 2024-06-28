@@ -1,6 +1,18 @@
+import { useQuery } from '@tanstack/react-query'
 import Card from '../ui/Card'
+import api from '../api/axios'
+import { endpoints } from '../api/endpoints'
 
 function TrendingCollection() {
+   const query = useQuery({
+      queryKey: ['trending', 'products'],
+      queryFn: async () => {
+         const { data } = await api.get(endpoints.getTrendings())
+         return data
+      },
+   })
+
+   if (query.isLoading) return <div>Loading...</div>
    return (
       <section className='flex flex-col justify-center py-2 min-h-80'>
          <h1 className='py-6 font-semibold text-2xl text-center text-gray-900/90 capitalize'>
@@ -18,16 +30,9 @@ function TrendingCollection() {
             </div>
          </div>
          <div className='gap-6 grid grid-cols-5 grid-rows-[repeat(auto-fill,_25rem)] p-3'>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {query.data?.data.map(product => (
+               <Card key={product.id} product={product} />
+            ))}
          </div>
       </section>
    )

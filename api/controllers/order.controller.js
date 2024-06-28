@@ -1,11 +1,20 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const { z } = require('zod')
 const Order = require('../models/order.model')
 const Product = require('../models/product.model')
+
+const orderSchema = z.object({
+   products: z.array(
+      z.object({
+         id: z.string(),
+         count: z.number().int().positive(),
+      })
+   ),
+})
 
 async function getOrders(req, res, next) {
    const orders = await Order.find({ client: req.userId }).populate(
       'products',
-      'category name'
+      'product quantity'
    )
    res.status(200).json(orders)
 }
@@ -13,43 +22,53 @@ async function getOrders(req, res, next) {
 async function orderProduct(req, res, next) {
    const { products } = req.body
 
-   const productIds = products.map(prod => prod.id)
-   const productReferences = await Product.find({ _id: { $in: productIds } })
-   const referenced = productReferences.map(ref => ({
-      name: ref.name,
-      price: ref.price * 1.16,
-      image: ref.image,
-      count: products.find(pr => pr.id === ref.id.toString()).count,
-   }))
+   if (!orderSchema.safeParse(req.body).success) {
+      return res.status(400).json({ message: 'Invalid request' })
+   }
 
-   const lineItems = referenced.map(product => ({
-      price_data: {
-         currency: 'usd',
-         product_data: {
-            name: product.name,
-            image: product.image,
-         },
-         unit_amount: Math.round(product.price * 100),
-      },
-      quantity: product.count,
-   }))
+   const references = await Product.find({
+      _id: { $in: products.map(p => p.id) },
+   }).select('price name category image')
 
-   const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: lineItems,
-      mode: 'payment',
-      success_url: `${process.env.FRONTEND_URL}/success`,
-      cancel_url: process.env.FRONTEND_URL,
-   })
+   const productIds = references.map(p => p.id.toString())
+
+   for (const product of products) {
+      if (product.count < 1 || !productIds.includes(product.id)) {
+         return res.status(400).json({ message: 'Invalid request' })
+      }
+   }
+
+   const total = references.reduce((acc, product) => {
+      const productCount = products.find(p => p.id === product.id).count
+      return acc + product.price * productCount
+   }, 0)
 
    const order = new Order({
       client: req.userId,
-      products: productIds,
-      price: referenced.reduce((cur, ref) => cur + ref.price, 0),
+      products: products.map(p => ({
+         product: p.id,
+         quantity: p.count,
+      })),
+      total,
    })
 
-   const newOrder = await order.save()
-   res.status(200).json({ id: session.id, order: newOrder })
+   await order.save()
+
+   references.forEach(async p => {
+      await Product.findByIdAndUpdate(p.id, {
+         $inc: { sold: products.find(pr => pr.id === p.id).count },
+      })
+   })
+
+   res.status(201).json(order)
 }
 
-module.exports = { orderProduct, getOrders }
+async function getOrderById(req, res, next) {
+   const order = await Order.findById(req.params.id).populate(
+      'products',
+      'category name'
+   )
+   res.status(200).json(order)
+}
+
+module.exports = { orderProduct, getOrders, getOrderById }
