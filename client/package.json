@@ -18,7 +18,8 @@
     "react-hook-form": "^7.51.5",
     "react-router-dom": "^6.22.2",
     "zod": "^3.23.8",
-    "zod-validator": "^1.0.1"
+    "zod-validator": "^1.0.1",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

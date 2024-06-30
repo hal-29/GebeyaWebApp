@@ -1,7 +1,24 @@
-import Card from '../ui/Card'
+import { useQuery } from '@tanstack/react-query'
 import { PiListMagnifyingGlass } from 'react-icons/pi'
+import api from '../api/axios'
+import { endpoints } from '../api/endpoints'
+import CategoryItems from '../components/CategoryItems'
+import { useSearchParams } from 'react-router-dom'
+import SearchResults from '../components/SearchResults'
 
 function Products() {
+   const [searchParams, setSearchParams] = useSearchParams()
+
+   const categories = useQuery({
+      queryKey: ['categories'],
+      queryFn: async () => {
+         const { data } = await api.get(endpoints.getCategories('?limit=12'))
+         return data
+      },
+      staleTime: Infinity,
+   })
+
+   if (searchParams.get('category')) return <SearchResults />
    return (
       <main className=''>
          <section className='inline-grid grid-cols-[minmax(24rem,1fr)_3fr] grid-rows-[min-content,1fr,minmax(min-content,10rem)]'>
@@ -17,18 +34,17 @@ function Products() {
                      <PiListMagnifyingGlass />
                   </span>
                </div>
-               <li className='border px-4 py-3 text-gray-900/80'>Computer</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Smartphone</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Camera</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Smartwatch</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Smart TV</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Speaker</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Airpod</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Macbook</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Pendrive</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Tablet</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Desktop</li>
-               <li className='border px-4 py-3 text-gray-900/80'>Mouse</li>
+               {categories.data?.data.map(category => (
+                  <li
+                     key={Math.random()}
+                     onClick={() =>
+                        setSearchParams({ category: category.name })
+                     }
+                     className='border px-4 py-3 text-gray-900/80 cursor-pointer'
+                  >
+                     {category.name}
+                  </li>
+               ))}
             </ul>
             <section className='p-2'>
                <ul className='flex gap-4 items-center px-2 pb-2'>
@@ -44,54 +60,10 @@ function Products() {
                </div>
             </section>
          </section>
-         <section className='flex flex-col justify-center py-2 min-h-80'>
-            <h1 className='py-6 font-semibold text-2xl  text-gray-900/90 capitalize'>
-               Smart Watches
-            </h1>
-            <div className='grid grid-cols-4 gap-4'>
-               {Array(4)
-                  .fill('')
-                  .map((_, i) => (
-                     <Card key={i} />
-                  ))}
-            </div>
-         </section>
-         <section className='flex flex-col justify-center py-2 min-h-80'>
-            <h1 className='py-6 font-semibold text-2xl  text-gray-900/90 capitalize'>
-               Smartphones
-            </h1>
-            <div className='grid grid-cols-4 gap-4'>
-               {Array(4)
-                  .fill('')
-                  .map((_, i) => (
-                     <Card key={i} />
-                  ))}
-            </div>
-         </section>
-         <section className='flex flex-col justify-center py-2 min-h-80'>
-            <h1 className='py-6 font-semibold text-2xl  text-gray-900/90 capitalize'>
-               Laptops
-            </h1>
-            <div className='grid grid-cols-4 gap-4'>
-               {Array(4)
-                  .fill('')
-                  .map((_, i) => (
-                     <Card key={i} />
-                  ))}
-            </div>
-         </section>
-         <section className='flex flex-col justify-center py-2 min-h-80'>
-            <h1 className='py-6 font-semibold text-2xl  text-gray-900/90 capitalize'>
-               Cameras
-            </h1>
-            <div className='grid grid-cols-4 gap-4'>
-               {Array(4)
-                  .fill('')
-                  .map((_, i) => (
-                     <Card key={i} />
-                  ))}
-            </div>
-         </section>
+
+         {categories.data?.data.slice(0, 5).map(category => (
+            <CategoryItems key={category.name} category={category} />
+         ))}
       </main>
    )
 }

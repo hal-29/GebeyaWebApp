@@ -5,6 +5,7 @@ import Container from './ui/Container'
 import Wishlist from './pages/Wishlist'
 import Orders from './pages/Orders'
 import Account from './pages/Account'
+import ProductItem from './pages/ProductItem'
 
 const router = createBrowserRouter([
    {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
          },
          {
             path: '/products/:id',
-            element: <main className=''>Product item</main>,
+            element: <ProductItem />,
          },
          {
             path: '/wishlist',

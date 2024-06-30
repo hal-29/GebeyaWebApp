@@ -1,5 +1,6 @@
 import { PropTypes } from 'prop-types'
 import { FaHeart, FaPlus } from 'react-icons/fa'
+import useCart from '../store/useCart'
 
 Card.propTypes = {
    product: PropTypes.shape({
@@ -12,12 +13,25 @@ Card.propTypes = {
 }
 
 function Card({ product }) {
+   const { isInCart, addToCart, removeFromCart } = useCart(state => state)
+
    return (
       <div className='relative flex flex-col gap-2 shadow-sm min-w-52 h-full overflow-clip group'>
-         <span className='group-hover:top-0 -top-10 left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer'>
+         <span
+            className={`group-hover:top-0 -top-10 left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer`}
+         >
             <FaHeart className='m-3 text-gray-50 text-lg' />
          </span>
-         <span className='group-hover:top-0 -top-10 right-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer'>
+         <span
+            className={`group-hover:top-0 -top-10 right-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer ${
+               isInCart(product.id) ? 'bg-red-800' : 'bg-gray-400'
+            }`}
+            onClick={() =>
+               isInCart(product.id)
+                  ? removeFromCart(product.id)
+                  : addToCart(product)
+            }
+         >
             <FaPlus className='m-3 text-gray-50 text-lg' />
          </span>
          <div className='bg-gray-200/80 p-8'>
@@ -28,7 +42,7 @@ function Card({ product }) {
             />
          </div>
          <div className='text-center'>
-            <h2 className='font-semibold text-gray-800/90 text-xl'>
+            <h2 className='font-semibold text-gray-800/90 text-xl truncate whitespace-nowrap'>
                {product.name}
             </h2>
          </div>

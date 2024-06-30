@@ -34,19 +34,14 @@ async function createProduct(req, res) {
 
 // Get all products
 async function getAllProducts(req, res, next) {
-   const { category, limit = 20, page = 1, tags } = req.query
-   const tagList = tags ? tags.split(',') : []
+   const { category, limit = 20, page = 1 } = req.query
 
-   const count = await Product.countDocuments({
-      category,
-      $or: tagList.map(tag => ({ tags: tag })),
-   })
-   const products = await Product.find({
-      category,
-      $or: tagList.map(tag => ({ tags: tag })),
-   })
-      .skip((page >= 1 || 1) * limit)
-      .limit(limit >= 1 || 20)
+   const query = Object.assign({}, category ? { category } : {})
+
+   const count = await Product.countDocuments(query)
+   const products = await Product.find(query)
+      .skip((page >= 1 ? page - 1 : 0) * limit)
+      .limit(limit >= 1 ? +limit : 20)
 
    res.status(200).json({ data: products, count, error: null })
 }
@@ -139,21 +134,25 @@ async function deleteProductById(req, res) {
 }
 
 async function getCategories(req, res) {
+   const { limit = 10 } = req.query
+
    const categories = await Product.aggregate([
       {
          $group: {
-            _id: { $toLower: '$category' },
+            _id: '$category',
             count: { $sum: 1 },
          },
       },
       {
          $project: {
             _id: 0,
-            category: '$_id',
+            name: '$_id',
             count: 1,
          },
       },
-   ]).sort({ count: -1 })
+   ])
+      .sort({ count: -1 })
+      .limit(limit >= 1 ? +limit : 10)
 
    res.status(200).json({ data: categories, error: null })
 }

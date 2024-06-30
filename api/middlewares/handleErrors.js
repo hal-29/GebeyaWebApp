@@ -3,6 +3,7 @@ const { MongoError } = require('mongodb')
 const ERRORS = require('../../config/errors')
 
 function handleErrors(err, req, res, next) {
+   console.error(err)
    const errorResponse = {
       message: err.message || 'Internal server error',
    }
