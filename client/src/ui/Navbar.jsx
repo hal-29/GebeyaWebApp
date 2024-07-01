@@ -3,14 +3,14 @@ import { NavLink } from 'react-router-dom'
 import Wrapper from './Wrapper'
 import { TiShoppingCart } from 'react-icons/ti'
 import { PiMagnifyingGlassBold } from 'react-icons/pi'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 Navbar.propTypes = {
    setIsOpen: PropTypes.func,
 }
 
 function Navbar({ setIsOpen }) {
-   const [isAuthenticated, setIsAuthenticated] = useState(true)
+   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>
@@ -56,19 +56,13 @@ function Navbar({ setIsOpen }) {
             <div>
                {isAuthenticated ? (
                   <a href='/logout'>
-                     <button
-                        className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'
-                        // onClick={() => logout()}
-                     >
+                     <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
                         Sign out
                      </button>
                   </a>
                ) : (
                   <a href='/login'>
-                     <button
-                        className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'
-                        // onClick={() => login()}
-                     >
+                     <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
                         Sign in
                      </button>
                   </a>
