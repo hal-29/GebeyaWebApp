@@ -1,4 +1,4 @@
-function sendResponse({ data, error }) {
+function sendResponse({ data, error, token }) {
    if (error)
       return {
          data: null,
@@ -6,8 +6,9 @@ function sendResponse({ data, error }) {
       }
 
    return {
-      data: data,
+      data,
       error: null,
+      token,
    }
 }
 

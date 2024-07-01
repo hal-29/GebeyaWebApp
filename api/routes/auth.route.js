@@ -1,15 +1,15 @@
 const express = require('express')
+const {
+   loginUser,
+   registerUser,
+   logoutUser,
+   verifyUser,
+} = require('../controllers/auth.controller')
 const router = express.Router()
 
-router.get('/cb', (req, res) => {
-   console.log(req.session)
-   console.log('Callback')
-   res.send('Callback')
-})
-
-router.get('/login', (req, res) => {
-   console.log('Login')
-   res.send('Login')
-})
+router.post('/login', loginUser)
+router.post('/register', registerUser)
+router.post('/logout', logoutUser)
+router.post('/verify', verifyUser)
 
 module.exports = router

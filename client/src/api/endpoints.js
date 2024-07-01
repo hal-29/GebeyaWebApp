@@ -24,4 +24,10 @@ export const endpoints = {
    createWishlist: () => '/api/wishlist',
    deleteWishlist: id => `/api/wishlist/${id}`,
    deleteAllWishList: () => '/api/wishlist',
+
+   // Auth endpoints
+   login: () => '/api/auth/login',
+   register: () => '/api/auth/register',
+   logout: () => '/api/auth/logout',
+   verify: () => '/api/auth/verify',
 }

@@ -1,5 +1,8 @@
+const sendResponse = require('../../utils/sendResponse')
+
 function getUserInfo(req, res) {
-   res.json(req.user)
+   const user = req.user
+   res.json(sendResponse({ data: user }))
 }
 
 module.exports = {

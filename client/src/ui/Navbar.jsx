@@ -3,14 +3,15 @@ import { NavLink } from 'react-router-dom'
 import Wrapper from './Wrapper'
 import { TiShoppingCart } from 'react-icons/ti'
 import { PiMagnifyingGlassBold } from 'react-icons/pi'
-import { useState } from 'react'
+import useAuth from '../store/useAuth'
 
 Navbar.propTypes = {
    setIsOpen: PropTypes.func,
+   setShowAuth: PropTypes.func,
 }
 
-function Navbar({ setIsOpen }) {
-   const [isAuthenticated, setIsAuthenticated] = useState(false)
+function Navbar({ setIsOpen, setShowAuth }) {
+   const user = useAuth(store => store.user)
 
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>
@@ -54,18 +55,17 @@ function Navbar({ setIsOpen }) {
                </span>
             </div>
             <div>
-               {isAuthenticated ? (
-                  <a href='/logout'>
-                     <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
-                        Sign out
-                     </button>
-                  </a>
+               {user ? (
+                  <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
+                     Sign out
+                  </button>
                ) : (
-                  <a href='/login'>
-                     <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
-                        Sign in
-                     </button>
-                  </a>
+                  <button
+                     onClick={() => setShowAuth(true)}
+                     className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'
+                  >
+                     Sign in
+                  </button>
                )}
             </div>
          </Wrapper>
