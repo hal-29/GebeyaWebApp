@@ -12,8 +12,8 @@ function Products() {
    const categories = useQuery({
       queryKey: ['categories'],
       queryFn: async () => {
-         const { data } = await api.get(endpoints.getCategories('?limit=12'))
-         return data
+         const res = await api.get(endpoints.getCategories('?limit=12'))
+         return res.data
       },
       staleTime: Infinity,
    })
@@ -34,7 +34,7 @@ function Products() {
                      <PiListMagnifyingGlass />
                   </span>
                </div>
-               {categories.data?.data.map(category => (
+               {categories.data?.map(category => (
                   <li
                      key={Math.random()}
                      onClick={() =>
@@ -61,7 +61,7 @@ function Products() {
             </section>
          </section>
 
-         {categories.data?.data.slice(0, 5).map(category => (
+         {categories.data?.slice(0, 5).map(category => (
             <CategoryItems key={category.name} category={category} />
          ))}
       </main>

@@ -20,10 +20,10 @@ export const endpoints = {
    createOrder: () => '/api/order',
 
    // Wishlist endpoints
-   getAllWishlists: q => `/api/wishlist?${new URLSearchParams(q).toString()}}`,
+   getAllWishlists: () => `/api/wishlist`,
    createWishlist: () => '/api/wishlist',
    deleteWishlist: id => `/api/wishlist/${id}`,
-   deleteAllWishList: () => '/api/wishlist',
+   deleteAllWishList: () => '/api/wishlist/all',
 
    // Auth endpoints
    login: () => '/api/auth/login',

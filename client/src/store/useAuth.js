@@ -6,15 +6,33 @@ const useAuth = create(set => ({
    user: null,
    login: async data => {
       const res = await api.post(endpoints.login(), data)
-      console.log(res.data)
-      set({ user: res })
+      if (res.data) {
+         sessionStorage.setItem('token', res.token)
+         set({ user: res.data })
+      }
+      return res
    },
    register: async data => {
       const res = await api.post(endpoints.register(), data)
-      console.log(res)
-      set({ user: res })
+      if (res.data) {
+         sessionStorage.setItem('token', res.token)
+         set({ user: res.data })
+      }
+      return res
    },
-   logout: () => set({ user: null }),
+   logout: async () => {
+      await api.post(endpoints.logout())
+      sessionStorage.removeItem('token')
+      set({ user: null })
+   },
+   verify: async () => {
+      const res = await api.post(endpoints.verify())
+      if (res.data) {
+         sessionStorage.setItem('token', res.token)
+         set({ user: res.data })
+      }
+      return res
+   },
 }))
 
 export default useAuth

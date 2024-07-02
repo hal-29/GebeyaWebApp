@@ -11,15 +11,17 @@ Navbar.propTypes = {
 }
 
 function Navbar({ setIsOpen, setShowAuth }) {
-   const user = useAuth(store => store.user)
+   const { user, logout } = useAuth(store => store)
 
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>
          <Wrapper className='flex items-center gap-3'>
-            <div className='flex items-end gap-1'>
-               <div className='bg-green-400/20 rounded-full w-8 h-8'></div>
-               <p>John Doe</p>
-            </div>
+            {user && (
+               <div className='flex items-end gap-1'>
+                  <div className='bg-green-400/20 rounded-full w-8 h-8'></div>
+                  <p>{user.name}</p>
+               </div>
+            )}
             <div className='flex mx-auto min-w-[30rem] max-w-md'>
                <input
                   type='search'
@@ -56,7 +58,10 @@ function Navbar({ setIsOpen, setShowAuth }) {
             </div>
             <div>
                {user ? (
-                  <button className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'>
+                  <button
+                     onClick={logout}
+                     className='bg-gray-800 px-2 py-1 border text-white transition-all duration-200'
+                  >
                      Sign out
                   </button>
                ) : (

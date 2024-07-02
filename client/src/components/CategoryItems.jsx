@@ -15,10 +15,10 @@ function CategoryItems({ category }) {
    const query = useQuery({
       queryKey: ['category', category.name],
       queryFn: async () => {
-         const { data } = await api.get(
+         const res = await api.get(
             endpoints.getAllProducts('?category=' + category.name)
          )
-         return data
+         return res?.data
       },
       staleTime: Infinity,
    })
@@ -33,7 +33,7 @@ function CategoryItems({ category }) {
             {category.name}
          </h1>
          <div className='gap-4 grid grid-cols-6'>
-            {query.data?.data.map(product => (
+            {query.data?.map(product => (
                <Card key={product.id} product={product} />
             ))}
          </div>

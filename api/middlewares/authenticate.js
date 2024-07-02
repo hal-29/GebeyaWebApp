@@ -3,14 +3,14 @@ const ERRORS = require('../../config/errors')
 const User = require('../models/user.model')
 
 async function authenticate(req, _, next) {
-   const authHeader = req.headers.Authorization
+   const authHeader = req.headers.authorization
 
    const token = authHeader?.split(' ').at(1)
    if (!token) {
       return next(ERRORS.BAD_REQUEST)
    }
 
-   const secretKey = process.env.JWT_SECRET_KEY
+   const secretKey = process.env.JWT_ACCESS_KEY
 
    if (!secretKey) throw new Error('JWT secret key not found')
 
@@ -21,7 +21,7 @@ async function authenticate(req, _, next) {
       return next(ERRORS.BAD_REQUEST)
    }
 
-   const user = await User.findById(verified.id)
+   const user = await User.findById(verified.id).select('-password')
 
    if (!user) return next(ERRORS.BAD_REQUEST)
 

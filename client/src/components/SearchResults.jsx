@@ -10,8 +10,8 @@ function SearchResults() {
    const query = useQuery({
       queryKey: ['search', searchParams.toString()],
       queryFn: async () => {
-         const { data } = await api.get(endpoints.getAllProducts(searchParams))
-         return data
+         const res = await api.get(endpoints.getAllProducts(searchParams))
+         return res.data
       },
       staleTime: Infinity,
    })
@@ -33,10 +33,10 @@ function SearchResults() {
                </span>
             </div>
             <div className='gap-4 grid grid-cols-6'>
-               {query.data?.data.map(product => (
+               {query.data?.map(product => (
                   <Card key={product.id} product={product} />
                ))}
-               {query.data?.data.length === 0 && (
+               {query.data?.length === 0 && (
                   <div className='col-span-full text-center text-gray-900/70'>
                      No products found
                   </div>

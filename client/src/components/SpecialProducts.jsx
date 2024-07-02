@@ -7,8 +7,8 @@ function SpecialProducts() {
    const query = useQuery({
       queryKey: ['special', 'products'],
       queryFn: async () => {
-         const { data } = await api.get(endpoints.getSpecials())
-         return data
+         const res = await api.get(endpoints.getSpecials())
+         return res?.data
       },
    })
 
@@ -20,7 +20,7 @@ function SpecialProducts() {
             Special Products
          </h1>
          <div className='flex gap-4 p-3 h-96 whitespace-nowrap overflow-x-auto special-products'>
-            {query.data?.data.map(product => (
+            {query?.data.map(product => (
                <Card key={product.id} product={product} />
             ))}
          </div>

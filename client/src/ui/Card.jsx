@@ -1,6 +1,8 @@
 import { PropTypes } from 'prop-types'
 import { FaHeart, FaPlus } from 'react-icons/fa'
 import useCart from '../store/useCart'
+import useWishlist from '../store/useWishlist'
+import useAuth from '../store/useAuth'
 
 Card.propTypes = {
    product: PropTypes.shape({
@@ -13,15 +15,34 @@ Card.propTypes = {
 }
 
 function Card({ product }) {
+   const user = useAuth(state => state.user)
    const { isInCart, addToCart, removeFromCart } = useCart(state => state)
+   const { wishlists, addToWishlist, removeFromWishlist } = useWishlist(
+      state => state
+   )
+
+   const onWishlisting = () => {
+      if (!user) return
+      if (wishlists.some(item => item.id === product.id)) {
+         removeFromWishlist(product.id)
+      } else {
+         addToWishlist(product.id)
+      }
+   }
 
    return (
       <div className='relative flex flex-col gap-2 shadow-sm min-w-52 h-full overflow-clip group'>
-         <span
-            className={`group-hover:top-0 -top-10 left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer`}
+         <button
+            disabled={!user}
+            className={`group-hover:top-0 -top-10 left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer disabled:cursor-not-allowed ${
+               wishlists.some(item => item.id === product.id)
+                  ? 'bg-red-800'
+                  : 'bg-gray-400'
+            }`}
+            onClick={onWishlisting}
          >
             <FaHeart className='m-3 text-gray-50 text-lg' />
-         </span>
+         </button>
          <span
             className={`group-hover:top-0 -top-10 right-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer ${
                isInCart(product.id) ? 'bg-red-800' : 'bg-gray-400'

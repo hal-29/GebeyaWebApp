@@ -7,8 +7,8 @@ function TrendingCollection() {
    const query = useQuery({
       queryKey: ['trending', 'products'],
       queryFn: async () => {
-         const { data } = await api.get(endpoints.getTrendings())
-         return data
+         const res = await api.get(endpoints.getTrendings())
+         return res?.data
       },
    })
 
@@ -30,7 +30,7 @@ function TrendingCollection() {
             </div>
          </div>
          <div className='gap-6 grid grid-cols-5 grid-rows-[repeat(auto-fill,_25rem)] p-3'>
-            {query.data?.data.map(product => (
+            {query?.data.map(product => (
                <Card key={product.id} product={product} />
             ))}
          </div>

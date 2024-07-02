@@ -5,10 +5,20 @@ import Footer from '../components/Footer'
 import { useState } from 'react'
 import Wrapper from './Wrapper'
 import Auth from '../pages/Auth'
+import useAuth from '../store/useAuth'
+import { useQuery } from '@tanstack/react-query'
 
 function Container() {
    const [isOpen, setIsOpen] = useState(false)
    const [showAuth, setShowAuth] = useState(false)
+   const verify = useAuth(store => store.verify)
+
+   useQuery({
+      queryKey: ['auth'],
+      queryFn: verify,
+      staleTime: 1000 * 60 * 10,
+      enabled: !!verify,
+   })
 
    return (
       <>

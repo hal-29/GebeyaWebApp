@@ -1,19 +1,29 @@
 import { create } from 'zustand'
+import { endpoints } from '../api/endpoints'
+import api from '../api/axios'
 
 const useWishlist = create(set => ({
-   items: [],
-   setWishlist: items => set({ items }),
-   addToWishlist: product =>
+   wishlists: [],
+   fetchWishlists: async () => {
+      const res = await api.get(endpoints.getAllWishlists())
+      if (!res.data) return
+      set({ wishlists: res.data })
+   },
+   addToWishlist: async productId => {
+      const res = await api.post(endpoints.createWishlist(), { productId })
+      if (!res.data) return
+      set(state => ({ wishlists: [...state.wishlists, res.data] }))
+   },
+   removeFromWishlist: async productId => {
+      await api.delete(endpoints.deleteWishlist(productId))
       set(state => ({
-         items: state.items.concat(product),
-      })),
-   removeFromWishlist: id =>
-      set(state => ({
-         items: state.items.filter(item => item.id !== id),
-      })),
-   clearWishlist: () => set({ items: [] }),
-   isInWishlist: id =>
-      Boolean(useWishlist.getState().items.find(item => item.id === id)),
+         wishlists: state.wishlists.filter(product => product.id !== productId),
+      }))
+   },
+   removeAllWishlist: async () => {
+      await api.delete(endpoints.deleteAllWishList())
+      set({ wishlists: [] })
+   },
 }))
 
 export default useWishlist

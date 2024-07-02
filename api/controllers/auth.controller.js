@@ -10,7 +10,7 @@ const userSchema = z.object({
    name: z.string().min(3).max(50),
    email: z.string().email(),
    password: z.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/),
-   address: z.string().min(3).max(100),
+   address: z.string().optional(),
 })
 
 async function loginUser(req, res, next) {
@@ -49,15 +49,9 @@ async function registerUser(req, res, next) {
 
    const { name, email, password, address } = safeData.data
 
-   const existingUser = await User.findOne({
-      email,
-   })
+   if (await User.findOne({ email })) return next(ERRORS.DB_DUPLICATE_ENTRY)
 
-   if (existingUser) return next(ERRORS.DB_DUPLICATE_ENTRY)
-
-   console.time('hashing')
    const hashedPassword = await bcrypt.hash(password, 10)
-   console.timeEnd('hashing')
 
    const user = new User({
       name,

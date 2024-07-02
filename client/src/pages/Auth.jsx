@@ -7,10 +7,16 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import useAuth from '../store/useAuth'
 
 const accountSchema = z.object({
-   name: z.string().min(3, 'Name must be atleast 3 characters'),
+   name: z.string().min(3, 'Name should be atleast 3 characters long').max(50),
    email: z.string().email(),
-   address: z.string().min(1, 'Address is required'),
-   password: z.string().min(6),
+   password: z
+      .string()
+      .min(6, 'Password must be atleast 6 characters long')
+      .regex(
+         /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+         'Password must contain atleast one letter and one number'
+      ),
+   address: z.string().optional(),
 })
 
 const loginSchema = z.object({
@@ -30,16 +36,31 @@ function Auth({ showAuth, setShowAuth }) {
    const registerForm = useForm({
       resolver: zodResolver(accountSchema),
    })
-   const onRegisterSubmit = registerForm.handleSubmit(async data => {
-      await register(data)
-   })
-
    const loginForm = useForm({
       resolver: zodResolver(loginSchema),
    })
 
+   const onRegisterSubmit = registerForm.handleSubmit(async data => {
+      const res = await register(data)
+      if (res?.data) {
+         setShowAuth(false)
+      } else {
+         registerForm.setError('root', {
+            type: 'value',
+            message: res?.message || 'Something went wrong',
+         })
+      }
+   })
    const onLoginSubmit = loginForm.handleSubmit(async data => {
-      await login(data)
+      const res = await login(data)
+      if (res?.data) {
+         setShowAuth(false)
+      } else {
+         loginForm.setError('root', {
+            type: 'value',
+            message: res?.message || 'Something went wrong',
+         })
+      }
    })
 
    useEffect(() => {
@@ -82,9 +103,9 @@ function Auth({ showAuth, setShowAuth }) {
          >
             <h2 className='py-4 text-3xl text-center'>Login</h2>
             {
-               <span className='text-red-500 text-sm'>
+               <div className='h-6 text-red-500 text-sm'>
                   {loginForm.formState.errors?.root?.message}
-               </span>
+               </div>
             }
             <div className='py-2'>
                <label htmlFor='email' className='block'>
@@ -123,9 +144,10 @@ function Auth({ showAuth, setShowAuth }) {
             <div className='py-2'>
                <button
                   type='submit'
-                  className='bg-red-800 hover:bg-red-800/80 px-6 py-2 text-gray-100 text-xl capitalize transition'
+                  disabled={loginForm.formState.isSubmitting}
+                  className='bg-red-800 hover:bg-red-800/80 disabled:opacity-50 px-6 py-2 text-gray-100 text-xl capitalize transition disabled:cursor-not-allowed'
                >
-                  Login
+                  {loginForm.formState.isSubmitting ? 'Logging in...' : 'Login'}
                </button>
             </div>
             <div>
@@ -147,8 +169,12 @@ function Auth({ showAuth, setShowAuth }) {
                activeForm === 'register' ? 'block' : 'hidden'
             }`}
          >
-            <h2 className='py-4 text-3xl text-center'>Login</h2>
-
+            <h2 className='py-4 text-3xl text-center'>Register</h2>
+            {
+               <div className='h-6 text-red-500 text-sm'>
+                  {registerForm.formState.errors?.root?.message}
+               </div>
+            }
             <div className='py-2'>
                <label htmlFor='name' className='block'>
                   Name
@@ -221,9 +247,12 @@ function Auth({ showAuth, setShowAuth }) {
             <div className='py-2'>
                <button
                   type='submit'
-                  className='bg-red-800 hover:bg-red-800/80 px-6 py-2 text-gray-100 text-xl transition cursor-pointer'
+                  disabled={registerForm.formState.isSubmitting}
+                  className='bg-red-800 hover:bg-red-800/80 disabled:opacity-50 px-6 py-2 text-gray-100 text-xl transition cursor-pointer disabled:cursor-not-allowed'
                >
-                  Register
+                  {registerForm.formState.isSubmitting
+                     ? 'Registering...'
+                     : 'Register'}
                </button>
             </div>
             <div>
