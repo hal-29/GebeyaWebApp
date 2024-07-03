@@ -1,36 +1,66 @@
 const ERRORS = {
    // Authentication and Authorization errors
-   INVALID_CREDIENTIAL: {
-      message: 'Invalid crediantials provided',
+   invalidCrediential: {
       status: 400,
+      error: 'Invalid crediantials provided',
+      data: null,
    },
-   FORBIDDEN: { message: 'Access forbidden', status: 403 },
-   BAD_REQUEST: { message: 'Bad request', status: 400 },
-   INVALID_TOKEN: { message: 'Invalid token provided', status: 400 },
-   UNAUTHORISED: { message: 'Unauthorized access requested', status: 401 },
-   NOT_FOUND: { message: 'Requested resource does not exist', status: 404 },
-   SERVER_FAILED: { message: 'Internal server failure', status: 500 },
-   WRONG_EMAIL_OR_PASSWORD: {
-      message: 'Invalid email or password',
+   forbidden: {
+      status: 403,
+      error: 'Access forbidden',
+      data: null,
+   },
+   badRequest: {
       status: 400,
+      error: 'Bad request',
+      data: null,
+   },
+   invalidToken: {
+      status: 400,
+      error: 'Invalid token provided',
+      data: null,
+   },
+   unauthorised: {
+      status: 401,
+      error: 'Unauthorized access requested',
+      data: null,
+   },
+   notFound: {
+      status: 404,
+      error: 'Resource not found',
+      data: null,
+   },
+   serverFailed: {
+      status: 500,
+      error: 'Server failed to process request',
+      data: null,
+   },
+   wrongEmailOrPassword: {
+      status: 400,
+      error: 'Wrong email or password',
+      data: null,
    },
 
    // Validation errors
-   VALIDATION_ERROR: { message: 'Validation failed', status: 422 },
+   validationError: {
+      status: 422,
+      error: 'Invalid input data provided',
+      data: null,
+   },
 
    // General database-related errors
-   DB_CONNECTION_ERROR: {
-      message: 'Error connecting to the database',
-      status: 500,
-   },
-   DB_QUERY_ERROR: { message: 'Error executing a database query', status: 500 },
-   DB_DUPLICATE_ENTRY: {
-      message: 'Email address already in use',
+   dbDuplicateEntry: {
       status: 400,
+      error: 'Email already exists',
+      data: null,
    },
 
    // File upload errors
-   FILE_UPLOAD_ERROR: { message: 'Error uploading the file', status: 500 },
+   fileUploadError: {
+      status: 500,
+      error: 'Error uploading file',
+      data: null,
+   },
 }
 
 module.exports = ERRORS

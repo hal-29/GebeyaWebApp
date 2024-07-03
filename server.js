@@ -15,8 +15,18 @@ const app = express()
 
 const PORT = process.env.PORT
 
-app.use(express.json())
-app.use(cors())
+app.use((req, res, next) => {
+   if (req.originalUrl === '/api/order/webhook')
+      express.raw({ type: 'application/json' })(req, res, next)
+   else express.json()(req, res, next)
+})
+
+app.use(
+   cors({
+      origin: '*',
+      credentials: true,
+   })
+)
 app.use(cookieParser())
 app.use('/api/wishlist', require('./api/routes/wishList.route'))
 app.use('/api/order', require('./api/routes/order.route'))

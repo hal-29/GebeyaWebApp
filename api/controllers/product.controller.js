@@ -1,5 +1,7 @@
 const { z } = require('zod')
 const Product = require('../models/product.model')
+const ERRORS = require('../../config/errors')
+const formatResponse = require('../../utils/formatResponse')
 
 const productSchema = z.object({
    name: z.string().min(3).max(100),
@@ -20,16 +22,13 @@ const updateSchema = z.object({
 })
 
 // Create a new product
-async function createProduct(req, res) {
-   try {
-      const body = productSchema.parse(req.body)
-      const newProduct = new Product(body)
-      const savedProduct = await newProduct.save()
+async function createProduct(req, res, next) {
+   const safePayload = productSchema.safeParse(req.body)
+   if (!safePayload.success) return next(ERRORS.invalidCrediential)
 
-      res.status(201).json({ data: savedProduct, error: null })
-   } catch (error) {
-      res.status(400).json({ error: error.message, data: null })
-   }
+   const newProduct = await new Product(safePayload.data).save()
+
+   res.status(201).json(formatResponse({ data: newProduct, status: 201 }))
 }
 
 // Get all products
@@ -43,94 +42,70 @@ async function getAllProducts(req, res, next) {
       .skip((page >= 1 ? page - 1 : 0) * limit)
       .limit(limit >= 1 ? +limit : 20)
 
-   res.status(200).json({ data: products, count, error: null })
+   res.status(200).json(formatResponse({ data: products, count }))
 }
 
 // Get a specific product by ID
 async function getProductById(req, res) {
-   try {
-      const product = await Product.findById(req.params.productId)
-      if (!product) {
-         return res.status(404).json({ error: 'Product not found', data: null })
-      }
-      res.status(200).json({ data: product, error: null })
-   } catch (error) {
-      res.status(500).json({ error: error.message, data: null })
-   }
+   const product = await Product.findById(req.params.productId)
+   if (!product) return next(ERRORS.notFound)
+   res.status(200).json({ data: product, error: null })
 }
 
-async function searchProducts(req, res) {
-   const query = req.query.q
-   if (!query) {
-      return res
-         .status(400)
-         .json({ error: 'Search query is required', data: null })
-   }
-
+async function searchProducts(req, res, next) {
+   if (!req.query.q)
+      return next({
+         ...ERRORS.invalidCrediential,
+         error: 'Search query is required',
+      })
    const regex = new RegExp(query, 'i')
-
    const limit = 10
    const skip = 1
 
-   const totalCount = await Product.countDocuments({
+   const fetchQuery = {
       $or: [
          { name: { $regex: regex } },
          { description: { $regex: regex } },
          { category: { $regex: regex } },
          { tags: { $in: [regex] } },
       ],
-   })
+   }
 
-   const searchResults = await Product.find({
-      $or: [
-         { name: { $regex: regex } },
-         { description: { $regex: regex } },
-         { category: { $regex: regex } },
-         { tags: { $in: [regex] } },
-      ],
-   })
+   const totalCount = await Product.countDocuments(fetchQuery)
+
+   const searchResults = await Product.find(fetchQuery)
       .skip((skip - 1) * limit)
       .limit(limit)
 
-   res.status(200).json({
-      count: totalCount,
-      data: searchResults,
-      error: null,
-   })
+   res.status(200).json(
+      formatResponse({
+         count: totalCount,
+         data: searchResults,
+      })
+   )
 }
 
 // Update a product by ID
-async function updateProductById(req, res) {
-   try {
-      const body = updateSchema.parse(req.body)
+async function updateProductById(req, res, next) {
+   const safePayload = updateSchema.safeParse(req.body)
+   if (!safePayload.success) return next(ERRORS.invalidCrediential)
 
-      const updatedProduct = await Product.findByIdAndUpdate(
-         req.params.productId,
-         body,
-         { new: true }
-      )
-      if (!updatedProduct) {
-         return res.status(401).json({ error: 'Bad request', data: null })
-      }
-      res.status(200).json({ data: updatedProduct, error: null })
-   } catch (error) {
-      res.status(500).json({ error: error.message, data: null })
-   }
+   const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.productId,
+      safePayload.data,
+      { new: true }
+   )
+
+   if (!updatedProduct) return next(ERRORS.notFound)
+
+   res.status(200).json({ data: updatedProduct })
 }
 
 // Delete a product by ID
 async function deleteProductById(req, res) {
-   try {
-      const deletedProduct = await Product.findByIdAndDelete(
-         req.params.productId
-      )
-      if (!deletedProduct) {
-         return res.status(401).json({ error: 'Bad request', data: null })
-      }
-      res.sendStatus(204)
-   } catch (error) {
-      res.status(500).json({ error: error.message })
-   }
+   const deletedProduct = await Product.findByIdAndDelete(req.params.productId)
+   if (!deletedProduct) return next(ERRORS.badRequest)
+   res.sendStatus(204)
 }
 
 async function getCategories(req, res) {
@@ -154,7 +129,7 @@ async function getCategories(req, res) {
       .sort({ count: -1 })
       .limit(limit >= 1 ? +limit : 10)
 
-   res.status(200).json({ data: categories, error: null })
+   res.status(200).json(formatResponse({ data: categories, error: null }))
 }
 
 async function getTrendings(req, res) {
@@ -170,7 +145,7 @@ async function getTrendings(req, res) {
       .limit(limit >= 1 ? limit : 10)
       .skip((page >= 1 ? page - 1 : 1) * limit)
 
-   res.status(200).json({ data: trendings, error: null })
+   res.status(200).json(formatResponse({ data: trendings, error: null }))
 }
 
 async function getSpecials(req, res) {
@@ -178,7 +153,7 @@ async function getSpecials(req, res) {
       price: 1,
    })
 
-   res.status(200).json({ data: specials, error: null })
+   res.status(200).json(formatResponse({ data: specials, error: null }))
 }
 
 module.exports = {

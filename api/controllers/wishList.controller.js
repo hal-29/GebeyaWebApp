@@ -2,6 +2,7 @@ const User = require('../models/user.model')
 const ERRORS = require('../../config/errors')
 const WishList = require('../models/wishlist.model')
 const Product = require('../models/product.model')
+const formatResponse = require('../../utils/formatResponse')
 
 async function getWishLists(req, res, next) {
    const userId = req.user.id
@@ -11,7 +12,7 @@ async function getWishLists(req, res, next) {
       .populate('products')
       .then(doc => doc?.products)
 
-   res.status(200).json({ data: withLists, error: null })
+   res.status(200).json(formatResponse({ data: withLists }))
 }
 
 async function addToWishList(req, res, next) {
@@ -19,7 +20,7 @@ async function addToWishList(req, res, next) {
    const userId = req.user.id
 
    const product = await Product.findById(productId)
-   if (!product) return next(ERRORS.NOT_FOUND)
+   if (!product) return next(ERRORS.notFound)
 
    if (!(await WishList.findOne({ user: userId }))) {
       const newWishList = new WishList({
@@ -28,7 +29,7 @@ async function addToWishList(req, res, next) {
       })
 
       await newWishList.save()
-      return res.status(201).json({ data: product, error: null })
+      return res.status(201).json(formatResponse({ data: product }))
    }
 
    await WishList.findOneAndUpdate(
@@ -40,12 +41,12 @@ async function addToWishList(req, res, next) {
       .populate('products')
       .then(doc => doc.products)
 
-   res.status(201).json({ data: product, error: null })
+   res.status(201).json(formatResponse({ data: product, status: 201 }))
 }
 
 async function removeAllWishList(req, res, next) {
    await WishList.findOneAndDelete({ user: req.user.id })
-   res.status(204).end()
+   res.sendStatus(204)
 }
 
 async function removeWishList(req, res, next) {
@@ -56,7 +57,7 @@ async function removeWishList(req, res, next) {
       .select('products')
       .then(doc => doc.products)
 
-   if (!wishLists.includes(productId)) return next(ERRORS.BAD_REQUEST)
+   if (!wishLists.includes(productId)) return next(ERRORS.badRequest)
 
    await WishList.findOneAndUpdate(
       { user: userId },

@@ -1,10 +1,11 @@
 const { z } = require('zod')
 const ERRORS = require('../../config/errors')
 const generateToken = require('../../helpers/generateToken')
-const sendResponse = require('../../utils/sendResponse')
+const formatResponse = require('../../utils/formatResponse')
 const User = require('../models/user.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const cookieConfig = require('../../config/cookieConfig')
 
 const userSchema = z.object({
    name: z.string().min(3).max(50),
@@ -15,78 +16,56 @@ const userSchema = z.object({
 
 async function loginUser(req, res, next) {
    const { email, password } = req.body
-   if (!email || !password) return next(ERRORS.BAD_REQUEST)
+   if (!email || !password) return next(ERRORS.wrongEmailOrPassword)
 
    const user = await User.findOne({
       email,
    })
 
-   if (!user) return next(ERRORS.WRONG_EMAIL_OR_PASSWORD)
+   if (!user) return next(ERRORS.wrongEmailOrPassword)
 
    const isMatch = await bcrypt.compare(password, user.password)
-   if (!isMatch) return next(ERRORS.WRONG_EMAIL_OR_PASSWORD)
+   if (!isMatch) return next(ERRORS.wrongEmailOrPassword)
 
    const accessToken = await generateToken(user.id, 'access')
    const refreshToken = await generateToken(user.id, 'refresh')
 
-   res.cookie('refToken', refreshToken, {
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'development' ? 'none' : 'strict',
-      path: '/api/auth/verify',
-      secure: true,
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-   })
+   res.cookie('refToken', refreshToken, cookieConfig.refToken)
 
    const userData = user.toObject()
    delete userData.password
 
-   res.json(sendResponse({ data: userData, token: accessToken }))
+   res.json(formatResponse({ data: userData, token: accessToken }))
 }
 
 async function registerUser(req, res, next) {
    const safeData = userSchema.safeParse(req.body)
-   if (!safeData.success) return next(ERRORS.INVALID_CREDIENTIAL)
+   if (!safeData.success) return next(ERRORS.invalidCrediential)
 
-   const { name, email, password, address } = safeData.data
+   if (await User.findOne({ email })) return next(ERRORS.dbDuplicateEntry)
 
-   if (await User.findOne({ email })) return next(ERRORS.DB_DUPLICATE_ENTRY)
+   const hashedPassword = await bcrypt.hash(safeData.data.password, 10)
 
-   const hashedPassword = await bcrypt.hash(password, 10)
-
-   const user = new User({
-      name,
-      email,
-      password: hashedPassword,
-      address,
-   })
-
-   const newUser = (await user.save())?.toObject()
-   if (!newUser) return next(ERRORS.SERVER_FAILED)
+   const newUser = (
+      await new User({
+         name: safeData.data.name,
+         email: safeData.data.email,
+         password: hashedPassword,
+         address: safeData.data.address,
+      }).save()
+   ).toObject()
    delete newUser.password
 
    const accessToken = await generateToken(newUser.id, 'access')
    const refreshToken = await generateToken(newUser.id, 'refresh')
 
-   res.cookie('refToken', refreshToken, {
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'development' ? 'none' : 'strict',
-      path: '/api/auth/verify',
-      secure: true,
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-   })
+   res.cookie('refToken', refreshToken, cookieConfig.refToken)
 
-   res.json(sendResponse({ data: newUser, token: accessToken }))
+   res.json(formatResponse({ data: newUser, token: accessToken }))
 }
 
 async function logoutUser(_, res, _) {
-   res.cookie('refToken', '', {
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'development' ? 'none' : 'strict',
-      path: '/api/auth/verify',
-      secure: true,
-      expires: new Date(Date.now() - 1000),
-   })
-
+   res.cookie('refToken', '', cookieConfig.refTokenExp)
    res.sendStatus(204)
 }
 
@@ -101,26 +80,21 @@ async function verifyUser(req, res, next) {
    try {
       verified = jwt.verify(refToken, secretKey)
    } catch (error) {
-      console.error(error)
-      return next(ERRORS.INVALID_TOKEN)
+      return next(ERRORS.invalidToken)
    }
 
-   const user = await User.findById(verified.id).select('-password')
+   const user = (
+      await User.findById(verified.id).select('-password')
+   ).toObject()
 
-   if (!user) return next(ERRORS.BAD_REQUEST)
+   if (!user) return next(ERRORS.invalidToken)
 
    const accessToken = await generateToken(user.id, 'access')
    const refreshToken = await generateToken(user.id, 'refresh')
 
-   res.cookie('refToken', refreshToken, {
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'development' ? 'none' : 'strict',
-      path: '/api/auth/verify',
-      secure: true,
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-   })
+   res.cookie('refToken', refreshToken, cookieConfig.refToken)
 
-   res.json(sendResponse({ data: user, token: accessToken }))
+   res.json(formatResponse({ data: user, token: accessToken }))
 }
 
 module.exports = {

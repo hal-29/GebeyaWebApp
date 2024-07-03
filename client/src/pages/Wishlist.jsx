@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
-import api from '../api/axios'
 import Card from '../ui/Card'
 import useAuth from '../store/useAuth'
 import useWishlist from '../store/useWishlist'

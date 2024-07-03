@@ -7,7 +7,7 @@ async function authenticate(req, _, next) {
 
    const token = authHeader?.split(' ').at(1)
    if (!token) {
-      return next(ERRORS.BAD_REQUEST)
+      return next(ERRORS.badRequest)
    }
 
    const secretKey = process.env.JWT_ACCESS_KEY
@@ -18,12 +18,14 @@ async function authenticate(req, _, next) {
    try {
       verified = jwt.verify(token, secretKey)
    } catch (error) {
-      return next(ERRORS.BAD_REQUEST)
+      return next(ERRORS.invalidToken)
    }
+
+   if (!verified) return next(ERRORS.invalidToken)
 
    const user = await User.findById(verified.id).select('-password')
 
-   if (!user) return next(ERRORS.BAD_REQUEST)
+   if (!user) return next(ERRORS.invalidToken)
 
    req.user = user
 

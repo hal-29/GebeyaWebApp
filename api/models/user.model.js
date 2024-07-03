@@ -14,14 +14,16 @@ const userSchema = new mongoose.Schema(
    {
       versionKey: false,
       toObject: {
+         virtuals: true,
          transform: function (doc, ret) {
-            ret.id = ret._id.toString()
+            ret.id = ret._id
             delete ret._id
          },
       },
       toJSON: {
+         virtuals: true,
          transform: function (doc, ret) {
-            ret.id = ret._id.toString()
+            ret.id = ret._id
             delete ret._id
          },
       },

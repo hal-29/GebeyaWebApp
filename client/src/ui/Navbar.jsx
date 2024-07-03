@@ -4,6 +4,7 @@ import Wrapper from './Wrapper'
 import { TiShoppingCart } from 'react-icons/ti'
 import { PiMagnifyingGlassBold } from 'react-icons/pi'
 import useAuth from '../store/useAuth'
+import useCart from '../store/useCart'
 
 Navbar.propTypes = {
    setIsOpen: PropTypes.func,
@@ -12,6 +13,7 @@ Navbar.propTypes = {
 
 function Navbar({ setIsOpen, setShowAuth }) {
    const { user, logout } = useAuth(store => store)
+   const items = useCart(store => store.items)
 
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>
@@ -48,13 +50,18 @@ function Navbar({ setIsOpen, setShowAuth }) {
             </NavLink>
 
             <div
-               className='box-border flex gap-1 px-3 py-1 pl-2 border border-red-800 text-red-800 cursor-pointer'
+               className='relative box-border flex gap-1 px-3 py-1 pl-2 border border-red-800 text-red-800 cursor-pointer'
                onClick={() => setIsOpen(prv => !prv)}
             >
                Carts
                <span className='text-2xl'>
                   <TiShoppingCart />
                </span>
+               {!!items.length && (
+                  <span className='-top-2 -right-2 absolute flex justify-center items-center bg-red-800 rounded-full w-5 h-5 text-white text-xs'>
+                     {items.length}
+                  </span>
+               )}
             </div>
             <div>
                {user ? (

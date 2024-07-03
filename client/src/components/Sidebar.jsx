@@ -1,7 +1,9 @@
-import { useCallback, useContext, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import CartItem from './CartItem'
 import PropTypes from 'prop-types'
 import useCart from '../store/useCart'
+import api from '../api/axios'
+import { endpoints } from '../api/endpoints'
 
 Sidebar.propTypes = {
    isOpen: PropTypes.bool,
@@ -11,6 +13,23 @@ Sidebar.propTypes = {
 function Sidebar({ isOpen, setIsOpen }) {
    const sidebarEl = useRef(null)
    const cartItems = useCart(state => state.items)
+
+   const onCheckout = async () => {
+      const checkoutFormat = cartItems.map(item => ({
+         id: item.product.id,
+         quantity: item.quantity,
+      }))
+
+      try {
+         const res = await api.post(endpoints.createOrder(), {
+            products: checkoutFormat,
+         })
+         console.log(res)
+         if (res.url) window.location.href = res.url
+      } catch (error) {
+         console.error(error)
+      }
+   }
 
    const subTotal = useCallback(() => {
       return cartItems.reduce(
@@ -55,6 +74,8 @@ function Sidebar({ isOpen, setIsOpen }) {
          </div>
          <div className='flex flex-col gap-4 py-3'>
             <button
+               onClick={onCheckout}
+               disabled={!cartItems.length}
                className={` p-3 text-gray-50 ${
                   cartItems.length
                      ? 'bg-red-800/90'

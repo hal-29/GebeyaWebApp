@@ -33,15 +33,22 @@ const productSchema = new mongoose.Schema(
    },
    {
       versionKey: false,
+      toObject: {
+         virtuals: true,
+         transform: function (doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+         },
+      },
+      toJSON: {
+         virtuals: true,
+         transform: function (doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+         },
+      },
    }
 )
-
-productSchema.set('toJSON', {
-   transform: function (doc, ret) {
-      ret.id = ret._id
-      delete ret._id
-   },
-})
 
 const Product = mongoose.model('Product', productSchema)
 

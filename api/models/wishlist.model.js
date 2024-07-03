@@ -16,15 +16,22 @@ const wishListSchema = new mongoose.Schema(
    {
       versionKey: false,
       timestamps: true,
+      toObject: {
+         virtuals: true,
+         transform: function (doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+         },
+      },
+      toJSON: {
+         virtuals: true,
+         transform: function (doc, ret) {
+            ret.id = ret._id
+            delete ret._id
+         },
+      },
    }
 )
-
-wishListSchema.set('toJSON', {
-   transform: function (doc, ret) {
-      ret.id = ret._id
-      delete ret._id
-   },
-})
 
 const WishList = mongoose.model('WishList', wishListSchema)
 

@@ -1,56 +1,30 @@
 import { PropTypes } from 'prop-types'
-const orderData = [
-   {
-      id: 1,
-      products: 'Product Directives Officer',
-      date: 'Jan 21, 2021',
-      address: 'Sidney No. 1 Lake Park',
-      total: 255,
-      status: 'Pending',
-   },
-   {
-      id: 2,
-      products: 'Product Manager',
-      date: 'Feb 10, 2021',
-      address: 'New York No. 1 Lake Park',
-      total: 150,
-      status: 'Arrived',
-   },
-   {
-      id: 3,
-      products: 'Product Designer',
-      date: 'Mar 5, 2021',
-      address: 'London No. 1 Lake Park',
-      total: 300,
-      status: 'Pending',
-   },
-   {
-      id: 4,
-      products: 'Product Developer',
-      date: 'Apr 15, 2021',
-      address: 'Paris No. 1 Lake Park',
-      total: 200,
-      status: 'Arrived',
-   },
-   {
-      id: 5,
-      products: 'Product Analyst',
-      date: 'May 20, 2021',
-      address: 'Tokyo No. 1 Lake Park',
-      total: 180,
-      status: 'Pending',
-   },
-   {
-      id: 6,
-      products: 'Product Tester',
-      date: 'Jun 30, 2021',
-      address: 'Berlin No. 1 Lake Park',
-      total: 250,
-      status: 'Arrived',
-   },
-]
+import { useQuery } from '@tanstack/react-query'
+import api from '../api/axios'
+import { endpoints } from '../api/endpoints'
+import useAuth from '../store/useAuth'
 
 function Orders() {
+   const user = useAuth(state => state.user)
+
+   const query = useQuery({
+      queryKey: ['orders'],
+      queryFn: async () => {
+         const res = await api.get(endpoints.getAllOrders())
+         return res.data
+      },
+      enabled: !!user,
+   })
+
+   if (!user)
+      return (
+         <main className='flex justify-center items-center py-6 min-h-80'>
+            <h1 className='text-2xl text-center'>
+               Please login to view your orders
+            </h1>
+         </main>
+      )
+
    return (
       <main className='p-4 min-h-[70svh]'>
          <div className='flex flex-col'>
@@ -60,7 +34,7 @@ function Orders() {
                      <table className='divide-y divide-gray-200 min-w-full'>
                         <Headers />
                         <tbody className='divide-y divide-gray-200'>
-                           {orderData.map(order => (
+                           {query.data?.map(order => (
                               <OrderRow key={order.id} order={order} />
                            ))}
                         </tbody>
@@ -72,13 +46,14 @@ function Orders() {
       </main>
    )
 }
+
 export default Orders
 
 OrderRow.propTypes = {
    order: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       products: PropTypes.string,
-      date: PropTypes.string,
+      createdAt: PropTypes.string,
       address: PropTypes.string,
       total: PropTypes.number,
       status: PropTypes.string,
@@ -91,11 +66,16 @@ function OrderRow({ order }) {
          <td className='px-6 py-4 font-medium text-gray-800 text-sm whitespace-nowrap'>
             {order.id}
          </td>
-         <td className='px-6 py-4 text-gray-800 text-sm whitespace-nowrap'>
+         <td className='px-6 py-4 max-w-32 lg:max-w-fit text-gray-800 text-sm truncate whitespace-nowrap overflow-hidden'>
             {order.products}
          </td>
          <td className='px-6 py-4 text-gray-800 text-sm whitespace-nowrap'>
-            {order.date}
+            {new Date(order.createdAt).toLocaleTimeString('en-US', {
+               month: 'short',
+               day: '2-digit',
+               hour: '2-digit',
+               minute: '2-digit',
+            })}
          </td>
          <td className='px-6 py-4 text-gray-800 text-sm whitespace-nowrap'>
             {order.address}
