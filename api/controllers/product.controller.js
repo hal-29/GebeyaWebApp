@@ -2,6 +2,7 @@ const { z } = require('zod')
 const Product = require('../models/product.model')
 const ERRORS = require('../../config/errors')
 const formatResponse = require('../../utils/formatResponse')
+const { default: mongoose } = require('mongoose')
 
 const productSchema = z.object({
    name: z.string().min(3).max(100),
@@ -46,7 +47,11 @@ async function getAllProducts(req, res, next) {
 }
 
 // Get a specific product by ID
-async function getProductById(req, res) {
+async function getProductById(req, res, next) {
+   if (!req.params.productId) return next(ERRORS.invalidCrediential)
+   if (!mongoose.Types.ObjectId.isValid(req.params.productId))
+      return next(ERRORS.invalidCrediential)
+
    const product = await Product.findById(req.params.productId)
    if (!product) return next(ERRORS.notFound)
    res.status(200).json({ data: product, error: null })

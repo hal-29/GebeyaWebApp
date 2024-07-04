@@ -42,7 +42,8 @@ async function registerUser(req, res, next) {
    const safeData = userSchema.safeParse(req.body)
    if (!safeData.success) return next(ERRORS.invalidCrediential)
 
-   if (await User.findOne({ email })) return next(ERRORS.dbDuplicateEntry)
+   if (await User.findOne({ email: safeData.data.email }))
+      return next(ERRORS.dbDuplicateEntry)
 
    const hashedPassword = await bcrypt.hash(safeData.data.password, 10)
 

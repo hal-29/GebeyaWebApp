@@ -20,7 +20,7 @@ function SpecialProducts() {
             Special Products
          </h1>
          <div className='flex gap-4 p-3 h-96 whitespace-nowrap overflow-x-auto special-products'>
-            {query?.data.map(product => (
+            {query.data?.map(product => (
                <Card key={product.id} product={product} />
             ))}
          </div>

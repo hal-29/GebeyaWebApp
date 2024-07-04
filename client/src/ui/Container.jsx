@@ -18,6 +18,7 @@ function Container() {
       queryFn: verify,
       staleTime: 1000 * 60 * 10,
       enabled: !!verify,
+      refetchIntervalInBackground: true,
    })
 
    return (

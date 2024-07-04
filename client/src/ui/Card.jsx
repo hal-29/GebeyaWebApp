@@ -3,6 +3,7 @@ import { FaHeart, FaPlus } from 'react-icons/fa'
 import useCart from '../store/useCart'
 import useWishlist from '../store/useWishlist'
 import useAuth from '../store/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 Card.propTypes = {
    product: PropTypes.shape({
@@ -15,6 +16,7 @@ Card.propTypes = {
 }
 
 function Card({ product }) {
+   const navigate = useNavigate()
    const user = useAuth(state => state.user)
    const { isInCart, addToCart, removeFromCart } = useCart(state => state)
    const { wishlists, addToWishlist, removeFromWishlist } = useWishlist(
@@ -43,7 +45,7 @@ function Card({ product }) {
          >
             <FaHeart className='m-3 text-gray-50 text-lg' />
          </button>
-         <span
+         <button
             className={`group-hover:top-0 -top-10 right-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer ${
                isInCart(product.id) ? 'bg-red-800' : 'bg-gray-400'
             }`}
@@ -54,8 +56,11 @@ function Card({ product }) {
             }
          >
             <FaPlus className='m-3 text-gray-50 text-lg' />
-         </span>
-         <div className='bg-gray-200/80 p-8'>
+         </button>
+         <div
+            className='bg-gray-200/80 p-8 cursor-pointer'
+            onClick={() => navigate(`/products/${product.id}`)}
+         >
             <img
                src='https://cdn0.it4profit.com/s3size/rt:fill/w:1024/h:1024/g:no/el:1/f:webp/plain/s3://cms/product/0a/1e/0a1e4b0d06b4f5a846a8e717e19c0eab/221201150009625631.webp'
                alt='product image'

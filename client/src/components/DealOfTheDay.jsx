@@ -1,4 +1,35 @@
+import { useEffect, useState } from 'react'
+
+const SECONDS = 1000
+const MINUTES = 60 * SECONDS
+const HOURS = 60 * MINUTES
+const DAYS = 24 * HOURS
+const endDate = new Date().getTime() + 15 * DAYS
+
 function DealOfTheDay() {
+   const [time, setTime] = useState({
+      days: 15,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+   })
+
+   const countDown = () => {
+      const difference = endDate - new Date().getTime()
+
+      const days = Math.floor(difference / DAYS)
+      const hours = Math.floor((difference % DAYS) / HOURS)
+      const minutes = Math.floor((difference % HOURS) / MINUTES)
+      const seconds = Math.floor((difference % MINUTES) / SECONDS)
+
+      setTime({ days, hours, minutes, seconds })
+   }
+
+   useEffect(() => {
+      const interval = setInterval(countDown, SECONDS)
+      return () => clearInterval(interval)
+   }, [time])
+
    return (
       <section className='flex flex-col bg-blue-200/50 py-14 min-h-80'>
          <h1 className='py-6 font-semibold text-2xl text-center text-gray-900/90 capitalize'>
@@ -21,22 +52,30 @@ function DealOfTheDay() {
                   </span>
                   <div className='inline-flex items-center gap-2'>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>17</time>
+                        <time className='font-bold text-red-800'>
+                           {time.days}
+                        </time>
                         <span>Day</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>14</time>
+                        <time className='font-bold text-red-800'>
+                           {time.hours}
+                        </time>
                         <span>Hrs</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>28</time>
+                        <time className='font-bold text-red-800'>
+                           {time.minutes}
+                        </time>
                         <span>Min</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>30</time>
+                        <time className='font-bold text-red-800'>
+                           {time.seconds}
+                        </time>
                         <span>Sec</span>
                      </span>
                   </div>
@@ -69,22 +108,30 @@ function DealOfTheDay() {
                   </span>
                   <div className='inline-flex items-center gap-2'>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>17</time>
+                        <time className='font-bold text-red-800'>
+                           {time.days}
+                        </time>
                         <span>Day</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>14</time>
+                        <time className='font-bold text-red-800'>
+                           {time.hours}
+                        </time>
                         <span>Hrs</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>28</time>
+                        <time className='font-bold text-red-800'>
+                           {time.minutes}
+                        </time>
                         <span>Min</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
-                        <time className='font-bold text-red-800'>30</time>
+                        <time className='font-bold text-red-800'>
+                           {time.seconds}
+                        </time>
                         <span>Sec</span>
                      </span>
                   </div>

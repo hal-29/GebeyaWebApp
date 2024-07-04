@@ -26,7 +26,7 @@ function Orders() {
       )
 
    return (
-      <main className='p-4 min-h-[70svh]'>
+      <main className='p-4 min-h-[70svh] max-h-[90svh] overflow-y-auto'>
          <div className='flex flex-col'>
             <div className='-m-1.5 overflow-x-auto'>
                <div className='inline-block p-1.5 min-w-full align-middle'>
@@ -66,7 +66,7 @@ function OrderRow({ order }) {
          <td className='px-6 py-4 font-medium text-gray-800 text-sm whitespace-nowrap'>
             {order.id}
          </td>
-         <td className='px-6 py-4 max-w-32 lg:max-w-fit text-gray-800 text-sm truncate whitespace-nowrap overflow-hidden'>
+         <td className='px-6 py-4 max-w-32 lg:max-w-64 text-gray-800 text-sm truncate whitespace-nowrap overflow-hidden'>
             {order.products}
          </td>
          <td className='px-6 py-4 text-gray-800 text-sm whitespace-nowrap'>
@@ -83,7 +83,11 @@ function OrderRow({ order }) {
          <td className='px-6 py-4 text-gray-800 text-sm whitespace-nowrap'>
             ${order.total}
          </td>
-         <td className='px-6 py-4 font-medium text-end text-sm whitespace-nowrap'>
+         <td
+            className={`px-6 py-4 font-medium text-end text-sm whitespace-nowrap ${
+               order.status === 'completed' ? 'text-green-500' : 'text-blue-500'
+            }`}
+         >
             {order.status}
          </td>
       </tr>
