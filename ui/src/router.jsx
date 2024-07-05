@@ -6,6 +6,7 @@ import Wishlist from './pages/Wishlist'
 import Orders from './pages/Orders'
 import Account from './pages/Account'
 import ProductItem from './pages/ProductItem'
+import Notfound from './pages/Notfound'
 
 const router = createBrowserRouter([
    {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             element: <Account />,
          },
       ],
+   },
+   {
+      path: '*',
+      element: <Notfound />,
    },
 ])
 

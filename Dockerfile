@@ -4,10 +4,18 @@ WORKDIR /app
 
 COPY package.json .
 
+COPY package-lock.json .
+
 RUN npm install
+
+COPY ui/package.json ui/package-lock.json ./ui/
+
+RUN npm install --prefix ui
 
 COPY . .
 
-EXPOSE 5000
+RUN npm run build --prefix ui
 
-CMD [ "npm","run","server" ]
+EXPOSE 8000
+
+CMD [ "npm","start" ]

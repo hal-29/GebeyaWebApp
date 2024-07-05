@@ -22,8 +22,11 @@ function CartItem({ item }) {
       <div className='flex gap-2 p-2 border'>
          <span className='grow-0 basis-1/3 shrink-0'>
             <img
-               src='https://cdn0.it4profit.com/s3size/rt:fill/w:510/h:510/g:no/el:1/f:webp/plain/s3://cms/product/3a/6b/3a6b6051d423deb8f329bc3538138d1a/231117150016627996.webp'
-               alt='product image'
+               src={
+                  item.product.image ||
+                  'https://i0.wp.com/port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png?fit=1200%2C800&ssl=1'
+               }
+               alt={item.product.name}
             />
          </span>
          <div className='flex flex-col gap-2 overflow-hidden grow'>
@@ -31,7 +34,6 @@ function CartItem({ item }) {
                {item.product.name}
             </h3>
             <p className='flex gap-3'>
-               {/* <span>1x</span> */}
                <span className='font-semibold'>
                   Rs.{Number(item.product.price * item.quantity).toFixed(2)}
                </span>

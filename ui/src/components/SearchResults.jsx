@@ -10,7 +10,10 @@ function SearchResults() {
    const query = useQuery({
       queryKey: ['search', searchParams.toString()],
       queryFn: async () => {
-         const res = await api.get(endpoints.getAllProducts(searchParams))
+         const endpoint = searchParams.get('category')
+            ? endpoints.getAllProducts(searchParams)
+            : endpoints.searchProducts(searchParams)
+         const res = await api.get(endpoint)
          return res.data
       },
       staleTime: Infinity,
@@ -22,7 +25,11 @@ function SearchResults() {
          <section className='flex flex-col justify-center py-2 min-h-80'>
             <div className='flex justify-between items-center px-2 py-4'>
                <h2 className='py-6 font-semibold text-2xl text-gray-900/90 capitalize'>
-                  Showing results for &quot;
+                  Showing results for{' '}
+                  {searchParams.get('category')
+                     ? ' Category: '
+                     : 'Search query: '}{' '}
+                  &quot;
                   {searchParams.get('category') || searchParams.get('q')}&quot;
                </h2>
                <span

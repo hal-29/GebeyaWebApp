@@ -6,13 +6,13 @@ export const endpoints = {
    updateProduct: id => `/api/product/${id}`,
    deleteProduct: id => `/api/product/${id}`,
    searchProducts: q =>
-      `/api/product/search?${new URLSearchParams(q).toString()}}`,
+      `/api/product/search?${new URLSearchParams(q).toString()}`,
    getCategories: q =>
-      `/api/product/categories?${new URLSearchParams(q).toString()}}`,
+      `/api/product/categories?${new URLSearchParams(q).toString()}`,
    getTrendings: q =>
-      `/api/product/trendings?${new URLSearchParams(q).toString()}}`,
+      `/api/product/trendings?${new URLSearchParams(q).toString()}`,
    getSpecials: q =>
-      `/api/product/specials?${new URLSearchParams(q).toString()}}`,
+      `/api/product/specials?${new URLSearchParams(q).toString()}`,
 
    // Order endpoints
    getAllOrders: q => `/api/order?${new URLSearchParams(q).toString()}`,

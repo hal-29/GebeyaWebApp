@@ -27,7 +27,7 @@ dist-ssr
 vercel.json
 
 # env
-.env
+*.env
 
 # local request tests
 requests

@@ -18,7 +18,8 @@ function Products() {
       staleTime: Infinity,
    })
 
-   if (searchParams.get('category')) return <SearchResults />
+   if (searchParams.get('category') || searchParams.get('q'))
+      return <SearchResults />
    return (
       <main className=''>
          <section className='inline-grid grid-cols-[minmax(24rem,1fr)_3fr] grid-rows-[min-content,1fr,minmax(min-content,10rem)]'>

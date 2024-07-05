@@ -1,10 +1,11 @@
 import { PropTypes } from 'prop-types'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Wrapper from './Wrapper'
 import { TiShoppingCart } from 'react-icons/ti'
 import { PiMagnifyingGlassBold } from 'react-icons/pi'
 import useAuth from '../store/useAuth'
 import useCart from '../store/useCart'
+import { useState } from 'react'
 
 Navbar.propTypes = {
    setIsOpen: PropTypes.func,
@@ -14,6 +15,16 @@ Navbar.propTypes = {
 function Navbar({ setIsOpen, setShowAuth }) {
    const { user, logout } = useAuth(store => store)
    const items = useCart(store => store.items)
+   const [search, setSearch] = useState('')
+   const navigate = useNavigate()
+
+   const handleSearch = e => {
+      e.preventDefault()
+      if (search) {
+         navigate(`/products?q=${search}`)
+         setSearch('')
+      }
+   }
 
    return (
       <nav className='top-0 z-50 sticky bg-white py-2 border-red-800/20 border-b text-gray-800/90 text'>
@@ -24,18 +35,26 @@ function Navbar({ setIsOpen, setShowAuth }) {
                   <p>{user.name}</p>
                </div>
             )}
-            <div className='flex mx-auto min-w-[30rem] max-w-md'>
+            <form
+               onClick={handleSearch}
+               className='flex mx-auto min-w-[30rem] max-w-md'
+            >
                <input
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
                   type='search'
                   name='search'
                   id='search'
                   placeholder='Search our catalog'
                   className='px-4 py-2 border focus:outline-none grow'
                />
-               <button className='bg-red-800 px-6 text-gray-100 text-xl'>
+               <button
+                  type='submit'
+                  className='bg-red-800 px-6 text-gray-100 text-xl'
+               >
                   <PiMagnifyingGlassBold />
                </button>
-            </div>
+            </form>
             <NavLink to='/' className='[&.active]:text-red-800/80'>
                Home
             </NavLink>

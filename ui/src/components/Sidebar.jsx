@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import useCart from '../store/useCart'
 import api from '../api/axios'
 import { endpoints } from '../api/endpoints'
+import useAuth from '../store/useAuth'
 
 Sidebar.propTypes = {
    isOpen: PropTypes.bool,
@@ -13,6 +14,7 @@ Sidebar.propTypes = {
 function Sidebar({ isOpen, setIsOpen }) {
    const sidebarEl = useRef(null)
    const cartItems = useCart(state => state.items)
+   const user = useAuth(state => state.user)
 
    const onCheckout = async () => {
       const checkoutFormat = cartItems.map(item => ({
@@ -75,9 +77,9 @@ function Sidebar({ isOpen, setIsOpen }) {
          <div className='flex flex-col gap-4 py-3'>
             <button
                onClick={onCheckout}
-               disabled={!cartItems.length}
+               disabled={!cartItems.length || !user}
                className={` p-3 text-gray-50 ${
-                  cartItems.length
+                  cartItems.length && user
                      ? 'bg-red-800/90'
                      : 'bg-red-800/40 cursor-not-allowed'
                }`}

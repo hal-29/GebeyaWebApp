@@ -86,7 +86,7 @@ async function verifyUser(req, res, next) {
 
    const user = (
       await User.findById(verified.id).select('-password')
-   ).toObject()
+   )?.toObject()
 
    if (!user) return next(ERRORS.invalidToken)
 

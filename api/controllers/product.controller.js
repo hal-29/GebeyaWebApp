@@ -58,7 +58,8 @@ async function getProductById(req, res, next) {
 }
 
 async function searchProducts(req, res, next) {
-   if (!req.query.q)
+   const query = req.query.q
+   if (!query)
       return next({
          ...ERRORS.invalidCrediential,
          error: 'Search query is required',

@@ -13,8 +13,6 @@ const {
 
 const app = express()
 
-const PORT = process.env.PORT
-
 app.use((req, res, next) => {
    if (req.originalUrl === '/api/order/webhook')
       express.raw({ type: 'application/json' })(req, res, next)
@@ -34,19 +32,21 @@ app.use('/api/user', require('./api/routes/user.route'))
 app.use('/api/product', require('./api/routes/product.route'))
 app.use('/api/auth', require('./api/routes/auth.route'))
 
-app.use(express.static(path.join(__dirname, './client/dist')))
+app.use(express.static(path.join(__dirname, './ui/dist')))
 app.get('*', (_, res) => {
-   res.sendFile(path.join(__dirname, './client/dist/index.html'))
+   res.sendFile(path.join(__dirname, './ui/dist/index.html'))
 })
 
 app.use(handleDatabaseError)
 app.use(handleErrors)
 
+const PORT = process.env.PORT
+const HOST = process.env.HOST
 connectDb(function () {
-   app.listen(PORT, '127.0.0.1', () =>
+   app.listen(PORT, () =>
       console.log(
          chalk.bgRedBright.bold(`Server listening on `),
-         chalk.bold(`http://127.0.0.1:${PORT} 📡`)
+         chalk.bold(`http://${HOST}:${PORT} 📡`)
       )
    )
 })
