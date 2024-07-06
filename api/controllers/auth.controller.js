@@ -19,7 +19,7 @@ async function loginUser(req, res, next) {
    if (!email || !password) return next(ERRORS.wrongEmailOrPassword)
 
    const user = await User.findOne({
-      email,
+      email: new RegExp(email, 'i'),
    })
 
    if (!user) return next(ERRORS.wrongEmailOrPassword)
@@ -42,7 +42,7 @@ async function registerUser(req, res, next) {
    const safeData = userSchema.safeParse(req.body)
    if (!safeData.success) return next(ERRORS.invalidCrediential)
 
-   if (await User.findOne({ email: safeData.data.email }))
+   if (await User.findOne({ email: new RegExp(safeData.data.email, 'i') }))
       return next(ERRORS.dbDuplicateEntry)
 
    const hashedPassword = await bcrypt.hash(safeData.data.password, 10)
@@ -72,7 +72,7 @@ async function logoutUser(_, res, _) {
 
 async function verifyUser(req, res, next) {
    const refToken = req.cookies?.refToken
-   if (!refToken) return next(ERRORS.BAD_REQUEST)
+   if (!refToken) return next(ERRORS.badRequest)
 
    const secretKey = process.env.JWT_REFRESH_KEY
    if (!secretKey) throw new Error('JWT refresh key not found')

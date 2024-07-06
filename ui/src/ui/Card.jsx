@@ -36,7 +36,7 @@ function Card({ product }) {
       <div className='relative flex flex-col gap-2 shadow-sm min-w-52 h-full overflow-clip group'>
          <button
             disabled={!user}
-            className={`group-hover:top-0 -top-10 left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer disabled:cursor-not-allowed ${
+            className={`left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer disabled:cursor-not-allowed ${
                wishlists.some(item => item.id === product.id)
                   ? 'bg-red-800'
                   : 'bg-gray-400'
@@ -46,7 +46,7 @@ function Card({ product }) {
             <FaHeart className='m-3 text-gray-50 text-lg' />
          </button>
          <button
-            className={`group-hover:top-0 -top-10 right-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer ${
+            className={`right-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer ${
                isInCart(product.id) ? 'bg-red-800' : 'bg-gray-400'
             }`}
             onClick={() =>
