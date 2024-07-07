@@ -5,3 +5,6 @@
 body {
    font-family: 'Roboto', sans-serif, Arial, Helvetica;
 }
+#root {
+   @apply relative overflow-y-auto h-svh w-svw;
+}

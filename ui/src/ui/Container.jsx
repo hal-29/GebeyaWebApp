@@ -12,6 +12,7 @@ function Container() {
    const [isOpen, setIsOpen] = useState(false)
    const [showAuth, setShowAuth] = useState(false)
    const verify = useAuth(store => store.verify)
+   const [navOpen, setNavOpen] = useState(false)
 
    useQuery({
       queryKey: ['auth'],
@@ -23,16 +24,27 @@ function Container() {
 
    return (
       <>
-         <Navbar setIsOpen={setIsOpen} setShowAuth={setShowAuth} />
+         <Navbar
+            setIsOpen={setIsOpen}
+            isOpen={isOpen}
+            setShowAuth={setShowAuth}
+            showAuth={showAuth}
+            navOpen={navOpen}
+            setNavOpen={setNavOpen}
+         />
          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
          <Auth showAuth={showAuth} setShowAuth={setShowAuth} />
          <Wrapper
-            className={`${isOpen || showAuth ? 'blur-sm brightness-75' : ''}`}
+            className={`${
+               isOpen || showAuth || navOpen ? 'blur-sm brightness-75' : ''
+            }`}
          >
             <Outlet />
          </Wrapper>
          <Footer
-            className={`${isOpen || showAuth ? 'blur-sm brightness-75' : ''}`}
+            className={`${
+               isOpen || showAuth || navOpen ? 'blur-sm brightness-75' : ''
+            }`}
          />
       </>
    )

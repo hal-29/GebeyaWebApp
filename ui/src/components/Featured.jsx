@@ -1,6 +1,7 @@
 function Featured() {
    return (
-      <section className='flex justify-stretch items-center gap-3'>
+      // <section className='flex justify-stretch items-center gap-3'>
+      <section className='flex lg:flex-row flex-col gap-3'>
          <div className='flex bg-yellow-100/70 shadow-sm p-4 rounded-md max-h-60 overflow-hidden basis-1/3'>
             <div className='flex flex-col justify-center px-3 basis-1/2'>
                <h3 className='font-semibold text-gray-800/90 text-lg capitalize'>

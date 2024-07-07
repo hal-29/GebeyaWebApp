@@ -22,13 +22,9 @@ function Products() {
       return <SearchResults />
    return (
       <main className=''>
-         <section className='inline-grid grid-cols-[minmax(24rem,1fr)_3fr] grid-rows-[min-content,1fr,minmax(min-content,10rem)]'>
-            <div className='col-span-full flex justify-between items-center py-4 px-2'>
-               <h1 className='font-semibold text-2xl text-gray-800/90'>
-                  Electronics
-               </h1>
-            </div>
-            <ul className=''>
+         {/* <section className='inline-grid grid-cols-[minmax(24rem,1fr)_3fr] grid-rows-[min-content,1fr,minmax(min-content,10rem)]'> */}
+         <section className='flex flex-col md:flex-row gap-4'>
+            <ul className='order-1 md:-order-1 basis-2/5 shrink-0 md:max-w-md'>
                <div className='flex justify-between items-center text-lg  bg-gray-950 text-gray-50 px-3 py-2'>
                   <h3 className=''>Browse Catagories</h3>
                   <span className='text-3xl'>
@@ -47,7 +43,7 @@ function Products() {
                   </li>
                ))}
             </ul>
-            <section className='p-2'>
+            <div className='p-2 grow'>
                <ul className='flex gap-4 items-center px-2 pb-2'>
                   <li className=''>Catagories</li>
                   <li className=''>Collection</li>
@@ -59,7 +55,7 @@ function Products() {
                      alt=''
                   />
                </div>
-            </section>
+            </div>
          </section>
 
          {categories.data?.slice(0, 5).map(category => (

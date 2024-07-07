@@ -35,8 +35,8 @@ function DealOfTheDay() {
          <h1 className='py-6 font-semibold text-2xl text-center text-gray-900/90 capitalize'>
             Deal of the Day
          </h1>
-         <div className='flex justify-center gap-4 p-6'>
-            <div className='flex bg-gray-50 p-4 max-w-lg max-h-80 overflow-hidden'>
+         <div className='flex lg:flex-row flex-col justify-center items-center gap-4 p-2 md:p-6'>
+            <div className='flex sm:flex-row flex-col bg-gray-50 p-4 max-w-lg overflow-hidden'>
                <div className='bg-blue-200/50 p-3 basis-2/5 shrink-0'>
                   <img
                      src='https://pngimg.com/uploads/headphones/headphones_PNG101933.png'
@@ -53,28 +53,28 @@ function DealOfTheDay() {
                   <div className='inline-flex items-center gap-2'>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.days}
+                           {time.days.toString().padStart(2, '0')}
                         </time>
                         <span>Day</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.hours}
+                           {time.hours.toString().padStart(2, '0')}
                         </time>
                         <span>Hrs</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.minutes}
+                           {time.minutes.toString().padStart(2, '0')}
                         </time>
                         <span>Min</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.seconds}
+                           {time.seconds.toString().padStart(2, '0')}
                         </time>
                         <span>Sec</span>
                      </span>
@@ -92,7 +92,7 @@ function DealOfTheDay() {
                   </div>
                </div>
             </div>
-            <div className='flex bg-gray-50 p-4 max-w-lg max-h-80 overflow-hidden'>
+            <div className='flex sm:flex-row flex-col bg-gray-50 p-4 max-w-lg overflow-hidden'>
                <div className='bg-blue-200/50 p-3 basis-2/5 shrink-0'>
                   <img
                      src='https://pngimg.com/uploads/headphones/headphones_PNG101933.png'
@@ -109,28 +109,28 @@ function DealOfTheDay() {
                   <div className='inline-flex items-center gap-2'>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.days}
+                           {time.days.toString().padStart(2, '0')}
                         </time>
                         <span>Day</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.hours}
+                           {time.hours.toString().padStart(2, '0')}
                         </time>
                         <span>Hrs</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.minutes}
+                           {time.minutes.toString().padStart(2, '0')}
                         </time>
                         <span>Min</span>
                      </span>
                      <span>:</span>
                      <span className='inline-flex flex-col items-center space-between'>
                         <time className='font-bold text-red-800'>
-                           {time.seconds}
+                           {time.seconds.toString().padStart(2, '0')}
                         </time>
                         <span>Sec</span>
                      </span>

@@ -19,7 +19,7 @@ function SpecialProducts() {
          <h1 className='py-6 font-semibold text-2xl text-center text-gray-900/90 capitalize'>
             Special Products
          </h1>
-         <div className='flex gap-4 p-3 h-96 whitespace-nowrap overflow-x-auto special-products'>
+         <div className='flex gap-4 p-3 h-96 whitespace-nowrap overflow-x-auto'>
             {query.data?.map(product => (
                <Card key={product.id} product={product} />
             ))}

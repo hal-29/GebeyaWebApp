@@ -32,7 +32,8 @@ function CategoryItems({ category }) {
          <h1 className='py-6 font-semibold text-2xl text-gray-900/90 capitalize'>
             {category.name}
          </h1>
-         <div className='gap-4 grid grid-cols-6'>
+         {/* <div className='gap-4 grid grid-cols-6'> */}
+         <div className='gap-4 grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] p-3'>
             {query.data?.map(product => (
                <Card key={product.id} product={product} />
             ))}

@@ -33,18 +33,19 @@ function Card({ product }) {
    }
 
    return (
-      <div className='relative flex flex-col gap-2 shadow-sm min-w-52 h-full overflow-clip group'>
-         <button
-            disabled={!user}
-            className={`left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer disabled:cursor-not-allowed ${
-               wishlists.some(item => item.id === product.id)
-                  ? 'bg-red-800'
-                  : 'bg-gray-400'
-            }`}
-            onClick={onWishlisting}
-         >
-            <FaHeart className='m-3 text-gray-50 text-lg' />
-         </button>
+      <div className='relative flex flex-col gap-2 shadow-sm min-w-60 h-full overflow-clip group'>
+         {!!user && (
+            <button
+               className={`left-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer disabled:cursor-not-allowed ${
+                  wishlists.some(item => item.id === product.id)
+                     ? 'bg-red-800'
+                     : 'bg-gray-400'
+               }`}
+               onClick={onWishlisting}
+            >
+               <FaHeart className='m-3 text-gray-50 text-lg' />
+            </button>
+         )}
          <button
             className={`right-0 absolute bg-gray-400 w-10 h-10 transition-all cursor-pointer ${
                isInCart(product.id) ? 'bg-red-800' : 'bg-gray-400'

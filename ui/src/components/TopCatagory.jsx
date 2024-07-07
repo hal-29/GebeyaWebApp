@@ -14,7 +14,7 @@ function TopCatagory() {
          <h1 className='py-6 font-semibold text-2xl text-center text-gray-900/90 capitalize'>
             top catagories
          </h1>
-         <div className='flex justify-between gap-2'>
+         <div className='flex flex-wrap md:justify-between gap-4'>
             <div
                className='flex flex-col gap-2 py-3 hover:scale-110 items-center transition'
                onClick={() => navigate('/products?category=Mobile')}

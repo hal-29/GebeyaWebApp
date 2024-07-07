@@ -34,7 +34,7 @@ function Wishlist() {
                Remove all
             </button>
          </div>
-         <section className='gap-3 grid grid-cols-5 py-6'>
+         <section className='gap-4 grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] p-3'>
             {wishlists.map(product => (
                <Card key={product.id} product={product} />
             ))}

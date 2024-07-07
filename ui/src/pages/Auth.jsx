@@ -84,7 +84,7 @@ function Auth({ showAuth, setShowAuth }) {
    return (
       <section
          ref={formEl}
-         className={` z-50 fixed bg-white shadow-md pt-12 w-[30rem] top-0 h-svh transition-all ${
+         className={`z-50 fixed bg-white shadow-md pt-12 w-full max-w-[25rem] top-0 h-svh transition-all ${
             showAuth ? 'right-0' : '-right-full'
          }`}
       >

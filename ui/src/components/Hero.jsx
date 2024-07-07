@@ -7,12 +7,12 @@ import { IoGiftOutline } from 'react-icons/io5'
 function Hero() {
    return (
       <>
-         <section className='flex bg-gray-200 mb-4 p-8 rounded-md min-h-96'>
+         <section className='flex md:flex-row flex-col gap-4 md:gap-1 bg-gray-200 mb-4 p-2 md:p-4 lg:p-8 rounded-md min-h-96'>
             <div className='flex flex-col justify-center items-start gap-4'>
-               <h1 className='text-6xl text-gray-900/90'>
+               <h1 className='text-4xl text-gray-900/90 md:text-6xl'>
                   Grub your favorite gadgets here
                </h1>
-               <h4 className='text-gray-900/70 text-xl'>
+               <h4 className='text-gray-900/70 md:text-xl'>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
                   doloremque, quidem, voluptas, quibusdam nemo laborum
                   exercitationem quod doloribus quae voluptates
@@ -32,7 +32,7 @@ function Hero() {
                />
             </div>
          </section>
-         <section className='flex justify-evenly col-span-full py-10'>
+         <section className='flex flex-wrap justify-between gap-2 py-10'>
             <div className='flex items-center gap-2'>
                <span className='row-span-full row-start-1 row-end-3 text-5xl text-red-800'>
                   <RxRocket />
