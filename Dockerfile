@@ -16,6 +16,8 @@ COPY . .
 
 RUN npm run build --prefix ui
 
+VOLUME [ "/app","/app/node_modules", "/app/ui/node_modules" ]
+
 EXPOSE 8000
 
 CMD [ "npm","start" ]
