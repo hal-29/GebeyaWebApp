@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { FaHeart, FaPlus } from 'react-icons/fa'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { endpoints } from '../api/endpoints'
 import api from '../api/axios'
 import useCart from '../store/useCart'
@@ -8,7 +8,6 @@ import useWishlist from '../store/useWishlist'
 import useAuth from '../store/useAuth'
 
 function ProductItem() {
-   // const navigate = useNavigate()
    const { id } = useParams()
    const user = useAuth(state => state.user)
    const { isInCart, addToCart, removeFromCart } = useCart(state => state)
@@ -97,16 +96,18 @@ function ProductItem() {
                   </span>
                </div>
                <div className='flex gap-3'>
-                  <button
-                     className={`  bg-gray-400 w-10 h-10 transition-all  disabled:cursor-not-allowed ${
-                        wishlists.some(item => item.id === query.data?.id)
-                           ? 'bg-red-800'
-                           : 'bg-gray-400'
-                     }`}
-                     onClick={onWishlisting}
-                  >
-                     <FaHeart className='m-3 text-gray-50 text-lg' />
-                  </button>
+                  {!!user && (
+                     <button
+                        className={`  bg-gray-400 w-10 h-10 transition-all  disabled:cursor-not-allowed ${
+                           wishlists.some(item => item.id === query.data?.id)
+                              ? 'bg-red-800'
+                              : 'bg-gray-400'
+                        }`}
+                        onClick={onWishlisting}
+                     >
+                        <FaHeart className='m-3 text-gray-50 text-lg' />
+                     </button>
+                  )}
                   <button
                      className={` bg-gray-400 w-10 h-10 transition-all  ${
                         isInCart(query.data?.id) ? 'bg-red-800' : 'bg-gray-400'

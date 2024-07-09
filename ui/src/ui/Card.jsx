@@ -59,7 +59,7 @@ function Card({ product }) {
             <FaPlus className='m-3 text-gray-50 text-lg' />
          </button>
          <div
-            className='bg-gray-200/80 p-8 cursor-pointer'
+            className='bg-gray-200/80 p-8 h-60 cursor-pointer'
             onClick={() => navigate(`/products/${product.id}`)}
          >
             <img
