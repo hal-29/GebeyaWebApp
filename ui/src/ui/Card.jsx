@@ -32,6 +32,10 @@ function Card({ product }) {
       }
    }
 
+   const imageLink =
+      'https://i0.wp.com/port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png?fit=1200%2C800&ssl=1'
+   // product.image ||
+
    return (
       <div className='relative flex flex-col gap-2 shadow-sm min-w-60 h-full overflow-clip group'>
          {!!user && (
@@ -63,10 +67,7 @@ function Card({ product }) {
             onClick={() => navigate(`/products/${product.id}`)}
          >
             <img
-               src={
-                  product.image ||
-                  'https://i0.wp.com/port2flavors.com/wp-content/uploads/2022/07/placeholder-614.png?fit=1200%2C800&ssl=1'
-               }
+               src={imageLink}
                alt={product.name}
                className='w-full h-full object-contain'
             />

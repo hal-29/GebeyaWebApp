@@ -11,6 +11,8 @@ const {
    handleDatabaseError,
 } = require('./api/middlewares/handleErrors')
 
+// require('./dummy_data')
+
 const app = express()
 
 app.use((req, res, next) => {
