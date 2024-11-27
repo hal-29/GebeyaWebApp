@@ -71,3 +71,15 @@ body {
       @apply bg-background text-foreground;
    }
 }
+
+@layer components {
+   .gradient {
+      background: linear-gradient(
+         120deg,
+         #f3f4f699 0%,
+         #f3f4f6 60%,
+         #dbeafe 60%,
+         #bfdbfe99 100%
+      );
+   }
+}
