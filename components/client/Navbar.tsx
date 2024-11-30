@@ -5,7 +5,7 @@ import { Button } from '../ui/button'
 
 function Navbar() {
    return (
-      <div className='top-0 left-0 z-50 fixed bg-white w-full'>
+      <div className='top-0 left-0 z-50 fixed bg-white shadow-sm w-full'>
          <nav className='flex justify-end items-center gap-6 backdrop-blur-md mx-auto px-8 py-4 max-w-screen-2xl'>
             <div className=''>Logo</div>
             <SearchForm />

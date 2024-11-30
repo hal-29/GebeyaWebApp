@@ -2,7 +2,7 @@ import { BadgeDollarSignIcon, Dices, Globe, TruckIcon } from 'lucide-react'
 
 function Features() {
    return (
-      <div className='flex items-center gap-8 mx-auto my-8 p-6 border rounded-3xl divide-x max-w-screen-2xl'>
+      <div className='flex items-center gap-8 bg-white mx-auto my-8 p-6 border rounded-3xl divide-x max-w-screen-2xl'>
          <div className='flex p-6 h-32 grow'>
             <span className='inline-flex justify-center items-center basis-1/4 shrink-0'>
                <TruckIcon size={28} />
